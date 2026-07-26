@@ -3,13 +3,13 @@
 Site portfolio d'une seule page, entierement statique.
 
 **En ligne : https://novaflow-ops.com**
-Depot : https://github.com/Zanth11/novaflow-site (public, requis par GitHub Pages en gratuit)
+Depot : https://github.com/novaflowops/novaflow-site (public, requis par GitHub Pages en gratuit)
 
 - Un seul fichier : `index.html`. CSS et JavaScript en ligne, aucune dependance,
   aucun CDN, aucune police distante, aucune image distante.
 - Fonctionne aussi en double-cliquant le fichier, sans serveur.
 - Bilingue FR / EN, francais par defaut, selecteur dans l'en-tete.
-- Theme clair et sombre, `prefers-color-scheme` respecte, bouton de bascule.
+- Theme sombre par defaut, clair accessible par le bouton de bascule.
 - `prefers-reduced-motion` respecte, navigation clavier, contrastes verifies.
 - Environ 103 Ko. Aucun traceur, aucun cookie, aucun appel reseau.
 
@@ -86,12 +86,12 @@ Puis http://localhost:4178
 limite de trafic utile a cette echelle.
 
 **Identite des commits.** Configuree en local sur ce depot uniquement :
-nom `NovaFlow`, adresse `64888772+Zanth11@users.noreply.github.com`. Votre
+nom `NovaFlow`, adresse `64888772+novaflowops@users.noreply.github.com`. Votre
 adresse personnelle n'apparait pas dans l'historique public. Si vous clonez le
 depot ailleurs, refaites ce reglage :
 
 ```bash
-git config user.email "64888772+Zanth11@users.noreply.github.com"
+git config user.email "64888772+novaflowops@users.noreply.github.com"
 ```
 
 **DNS chez IONOS.** Le parking IONOS a ete desactive, les enregistrements de
@@ -103,20 +103,20 @@ messagerie sont intacts.
 | A | @ | 185.199.109.153 |
 | A | @ | 185.199.110.153 |
 | A | @ | 185.199.111.153 |
-| CNAME | www | zanth11.github.io |
+| CNAME | www | novaflowops.github.io |
 | MX, TXT SPF, CNAME _dmarc, DKIM | @ et sous-domaines | inchanges, messagerie IONOS |
 
 **HTTPS.** Le certificat est emis automatiquement par GitHub via Let's Encrypt
 apres validation DNS. Une fois emis, forcer la redirection :
 
 ```bash
-gh api -X PUT "/repos/Zanth11/novaflow-site/pages" -F https_enforced=true
+gh api -X PUT "/repos/novaflowops/novaflow-site/pages" -F https_enforced=true
 ```
 
 Verifier l'etat :
 
 ```bash
-gh api "/repos/Zanth11/novaflow-site/pages"
+gh api "/repos/novaflowops/novaflow-site/pages"
 ```
 
 ## Si vous voulez passer a un depot prive
