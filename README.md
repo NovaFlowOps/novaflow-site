@@ -15,13 +15,13 @@ Depot : https://github.com/Zanth11/novaflow-site (public, requis par GitHub Page
 
 ## Contenu
 
-| Bloc | Chiffres |
-|---|---|
-| Rapprochement facture et banque | mesures reelles |
-| Boite mail vers tableau | mesures reelles |
-| Controle quotidien d'anomalies | mesures reelles |
-| Automatisation du poste de travail, RPA | **aucun chiffre**, positionne comme une offre |
-| Moderation multi-sites via ERP | **aucun chiffre**, positionne comme une offre |
+| Bloc | Chiffres | Prix affiche |
+|---|---|---|
+| 01 Rapprochement facture et banque | mesures reelles | 1 200 EUR, lancement |
+| 02 Boite mail vers tableau | mesures reelles | 1 400 EUR, lancement |
+| 03 Controle quotidien d'anomalies | mesures reelles | 1 100 EUR, lancement |
+| 04 Moderation multi-sites via ERP | **aucun chiffre** | sur devis |
+| 05 Automatisation du poste de travail, RPA | **aucun chiffre** | sur devis |
 
 Les deux derniers blocs affichent explicitement qu'ils ne sont pas mesures. Ne
 pas y ajouter de pourcentage : c'est ce qui fait tenir le reste de la page.
@@ -35,15 +35,23 @@ grep -iE "VHU|vehicule|recycl|casse auto|demolisseur" index.html
 
 Cette commande ne doit rien renvoyer.
 
-## Marqueurs restant a completer
+## Points ouverts
 
-Visibles a l'ecran, en jaune et en police a chasse fixe :
+Plus aucun marqueur visible sur le site. Restent deux decisions hors site :
 
-- `[PRIX RPA A DEFINIR]` dans le bloc RPA
-- `[PRIX A DEFINIR]` dans le bloc moderation multi-sites
-- `[MENTION TVA A DEFINIR]` sous le tableau des options
+- **Tarif des blocs 04 et 05.** Le document de tarification ne couvre que les
+  trois automatisations mesurees. Les deux autres blocs affichent donc
+  "sur devis". A remplacer par un montant quand il sera arrete.
+- **Regime de TVA.** Le site renvoie au devis, ce qui est exact. Le regime
+  applicable doit figurer sur les devis et factures, pas forcement sur le site.
 
-Cherchez `todo-inline` ou `class="todo"` dans `index.html`.
+## Theme
+
+Le sombre est le theme par defaut, pour tous les visiteurs, y compris ceux dont
+le systeme est en clair. Le bouton de bascule reste disponible et le choix est
+memorise dans le navigateur sous la cle `novaflow-theme`. Pour revenir a un
+comportement qui suit `prefers-color-scheme`, il faut retablir la media query
+retiree du bloc CSS de themes.
 
 ## Mettre le site a jour
 
