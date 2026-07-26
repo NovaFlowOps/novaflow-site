@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="auto">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NovaFlow, automatisation de processus</title>
 <meta name="description" content="Automatisation de processus administratifs : rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque livraison inclut son jeu de données de test labellé et un script de démonstration reproductible.">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#0b1020">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#080c16">
 <link rel="canonical" href="https://novaflow-ops.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://novaflow-ops.com/">
@@ -14,11 +14,12 @@
 <meta property="og:title" content="NovaFlow, automatisation de processus">
 <meta property="og:description" content="Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible.">
 <script>
-/* Applique le thème et la langue avant le premier rendu, pour éviter tout clignotement. */
+/* Applique le thème et la langue avant le premier rendu, pour éviter tout clignotement.
+   Le sombre est le défaut : seul un choix explicite pour le clair est restauré. */
 (function () {
   try {
     var t = localStorage.getItem('novaflow-theme');
-    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
     var l = localStorage.getItem('novaflow-lang');
     if (l === 'en' || l === 'fr') document.documentElement.setAttribute('lang', l);
   } catch (e) {}
@@ -28,27 +29,9 @@
 /* ------------------------------------------------------------------
    1. Thèmes
 ------------------------------------------------------------------ */
+/* Le thème sombre est le défaut. Le clair s'obtient par le bouton de bascule,
+   et le choix est mémorisé dans le navigateur. */
 :root {
-  --bg:        #f7f9fc;
-  --bg-2:      #ffffff;
-  --bg-3:      #eef2f8;
-  --ink:       #101828;
-  --ink-2:     #475467;
-  --ink-3:     #667085;
-  --line:      #dbe2ec;
-  --line-2:    #c6d0de;
-  --accent:    #0b5f8a;
-  --accent-2:  #5b2bd9;
-  --accent-ink:#ffffff;
-  --accent-soft:#e4f1f8;
-  --good:      #10693f;
-  --warn:      #8a5300;
-  --warn-soft: #fdf3e0;
-  --grid:      rgba(16, 24, 40, .06);
-  --shadow:    0 1px 2px rgba(16,24,40,.05), 0 12px 32px -18px rgba(16,24,40,.35);
-  --radius:    16px;
-}
-:root[data-theme="dark"] {
   --bg:        #080c16;
   --bg-2:      #0f1524;
   --bg-3:      #161d2f;
@@ -66,27 +49,26 @@
   --warn-soft: #2c2313;
   --grid:      rgba(255, 255, 255, .05);
   --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
+  --radius:    16px;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:        #080c16;
-    --bg-2:      #0f1524;
-    --bg-3:      #161d2f;
-    --ink:       #eaeff8;
-    --ink-2:     #b3bed1;
-    --ink-3:     #8a97ad;
-    --line:      #232c40;
-    --line-2:    #33405c;
-    --accent:    #67d3f5;
-    --accent-2:  #b39cff;
-    --accent-ink:#04121a;
-    --accent-soft:#10283a;
-    --good:      #4ddba0;
-    --warn:      #f0c274;
-    --warn-soft: #2c2313;
-    --grid:      rgba(255, 255, 255, .05);
-    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
-  }
+:root[data-theme="light"] {
+  --bg:        #f7f9fc;
+  --bg-2:      #ffffff;
+  --bg-3:      #eef2f8;
+  --ink:       #101828;
+  --ink-2:     #475467;
+  --ink-3:     #667085;
+  --line:      #dbe2ec;
+  --line-2:    #c6d0de;
+  --accent:    #0b5f8a;
+  --accent-2:  #5b2bd9;
+  --accent-ink:#ffffff;
+  --accent-soft:#e4f1f8;
+  --good:      #10693f;
+  --warn:      #8a5300;
+  --warn-soft: #fdf3e0;
+  --grid:      rgba(16, 24, 40, .06);
+  --shadow:    0 1px 2px rgba(16,24,40,.05), 0 12px 32px -18px rgba(16,24,40,.35);
 }
 
 /* ------------------------------------------------------------------
@@ -178,13 +160,8 @@ html[lang="en"] .en { display: inline; }
 }
 .icon-btn:hover { color: var(--ink); border-color: var(--accent); }
 .icon-btn svg { width: 17px; height: 17px; }
-:root[data-theme="dark"] .i-sun, .i-moon { display: block; }
-:root[data-theme="dark"] .i-moon { display: none; }
-.i-sun { display: none; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .i-sun { display: block; }
-  :root:not([data-theme="light"]) .i-moon { display: none; }
-}
+.i-sun { display: block; }
+.i-moon { display: none; }
 :root[data-theme="light"] .i-sun { display: none; }
 :root[data-theme="light"] .i-moon { display: block; }
 @media (max-width: 860px) { .nav { display: none; } .hdr-tools { margin-left: auto; } }
@@ -1115,11 +1092,93 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
   </div>
 </section>
 
-    <!-- ---------- VOLET RPA ---------- -->
+    <!-- ---------- 04, MODÉRATION MULTI-SITES ---------- -->
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num"><span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
+          <span class="case-num">04 <span class="fr">Quand plusieurs sites saisissent dans le même outil</span><span class="en">When several sites enter data into the same tool</span></span>
+          <h3><span class="fr">Modération des données d'exploitation, multi-sites, à travers l'ERP</span><span class="en">Multi-site operational data moderation, through the ERP</span></h3>
+          <p class="case-sub">
+            <span class="fr">Plusieurs établissements, le même ERP, et des pratiques qui divergent : des stocks qui ne collent plus au terrain, des articles qui dorment sans que personne ne le voie, des dossiers jamais clôturés, et chaque site qui compte à sa façon. Un robot de modération applique les mêmes règles partout, chaque nuit, et ne remonte à chaque site que ce qui le concerne.</span>
+            <span class="en">Several sites, one ERP, and habits that drift apart: stock that no longer matches the floor, items sitting idle with nobody noticing, records never closed, and each site counting its own way. A moderation robot applies the same rules everywhere, every night, and sends each site only what concerns it.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">ERP</span>
+            <span class="tag"><span class="fr">Multi-sites</span><span class="en">Multi-site</span></span>
+            <span class="tag"><span class="fr">Stock et rotation</span><span class="en">Stock and ageing</span></span>
+            <span class="tag"><span class="fr">Reporting par site</span><span class="en">Per-site reporting</span></span>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <svg viewBox="0 0 220 170" fill="none">
+            <rect x="72" y="12" width="76" height="40" rx="9" fill="var(--bg-3)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M86 26h48M86 34h34M86 42h42" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M110 52v22M110 74H30v18M110 74h80v18M110 74v18" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <g fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.5">
+              <rect x="6" y="92" width="48" height="42" rx="8"/>
+              <rect x="86" y="92" width="48" height="42" rx="8"/>
+              <rect x="166" y="92" width="48" height="42" rx="8"/>
+            </g>
+            <g stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" opacity=".7">
+              <path d="M18 122v-14l12-8 12 8v14M98 122v-14l12-8 12 8v14M178 122v-14l12-8 12 8v14"/>
+            </g>
+            <circle cx="46" cy="98" r="6" fill="var(--good)"/>
+            <circle cx="126" cy="98" r="6" fill="var(--warn)"/>
+            <circle cx="206" cy="98" r="6" fill="var(--good)"/>
+            <rect x="60" y="146" width="100" height="8" rx="4" fill="var(--ink-3)" opacity=".3"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="rpa-cols">
+        <div>
+          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <ul>
+            <li><span class="fr">Cohérence des stocks : écarts entre la base et le terrain, entrées sans sortie correspondante, articles présents en base et introuvables</span><span class="en">Stock consistency: gaps between the system and the floor, entries with no matching exit, items in the database that cannot be found</span></li>
+            <li><span class="fr">Rotation : ce qui dort, classé par ancienneté, avec le seuil au-delà duquel un article ou un dossier remonte tout seul</span><span class="en">Ageing: what sits idle, ranked by age, with the threshold beyond which an item or a record surfaces on its own</span></li>
+            <li><span class="fr">Uniformisation : la même règle appliquée partout, pour que le chiffre d'un site soit comparable à celui d'un autre</span><span class="en">Standardisation: the same rule applied everywhere, so one site's number is comparable to another's</span></li>
+            <li><span class="fr">Complétude et clôture : champs obligatoires vides, dossiers jamais clôturés, saisies hors délai, doublons d'un site à l'autre</span><span class="en">Completeness and closure: empty mandatory fields, records never closed, late entries, duplicates across sites</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
+          <ul>
+            <li><span class="fr">Un accès en lecture à la base ou aux exports de l'ERP, rien de plus</span><span class="en">Read access to the database or to the ERP exports, nothing more</span></li>
+            <li><span class="fr">Des règles écrites et validées par les métiers, jamais déduites à leur place</span><span class="en">Rules written and approved by the business, never inferred on their behalf</span></li>
+            <li><span class="fr">Un seuil accepté par tous : à partir de quand un écart ou une ancienneté devient une anomalie</span><span class="en">A threshold everyone agrees on: when a gap or an age becomes an anomaly</span></li>
+            <li><span class="fr">Un correspondant par site : une alerte qui ne tombe chez personne ne sert à rien</span><span class="en">One contact per site: an alert that lands nowhere is useless</span></li>
+          </ul>
+        </div>
+        <div class="rpa-limits">
+          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <ul>
+            <li><span class="fr">Le robot signale un écart, il ne décide pas à la place du site</span><span class="en">The robot flags a gap, it does not decide in the site's place</span></li>
+            <li><span class="fr">Il ne corrige pas le terrain : un écart de stock se solde par un inventaire, pas par une ligne de base</span><span class="en">It does not fix the floor: a stock gap is settled by a physical count, not by a database row</span></li>
+            <li><span class="fr">Sans correspondant identifié, le dispositif s'éteint en quelques semaines</span><span class="en">With no named contact, the whole thing dies within weeks</span></li>
+            <li><span class="fr">Une règle mal écrite produit du bruit, et le bruit tue l'adhésion plus vite que l'erreur</span><span class="en">A badly written rule produces noise, and noise kills adoption faster than the error itself</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rpa-foot">
+        <div class="honest">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
+          <p>
+            <span class="fr">Ce volet vient d'un contexte industriel multi-sites. Les données et les chiffres appartiennent à leur propriétaire et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.</span>
+            <span class="en">This offer comes from a multi-site industrial context. The data and the figures belong to their owner and are not published here. What I can show, and let you replay, are the three measured automations above.</span>
+          </p>
+        </div>
+        <p class="price-inline">
+          <span class="fr">Sur devis, selon le nombre de règles et de sites</span><span class="en">On quote, depending on rules and sites</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ---------- 05, RPA ---------- -->
+    <div class="rpa reveal">
+      <div class="rpa-head">
+        <div>
+          <span class="case-num">05 <span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
           <h3><span class="fr">Automatisation du poste de travail, RPA</span><span class="en">Desktop automation, RPA</span></h3>
           <p class="case-sub">
             <span class="fr">Certains logiciels métier n'ont ni API ni export propre : un ERP ancien, une application de saisie interne, un portail fournisseur qui n'expose rien. L'automatisation se fait alors sur le poste, avec Power Automate Desktop ou un robot équivalent : il ouvre l'application, saisit, contrôle, et journalise chaque action.</span>
@@ -1190,89 +1249,7 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
           </p>
         </div>
         <p class="price-inline">
-          <span class="fr">Forfait, selon le nombre d'écrans</span><span class="en">Fixed price, depending on the number of screens</span>
-          <span class="todo">[PRIX RPA A DEFINIR]</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- ---------- VOLET CONTRÔLE MULTI-SITES ---------- -->
-    <div class="rpa reveal">
-      <div class="rpa-head">
-        <div>
-          <span class="case-num"><span class="fr">Quand plusieurs sites saisissent dans le même outil</span><span class="en">When several sites enter data into the same tool</span></span>
-          <h3><span class="fr">Modération des données d'exploitation, multi-sites, à travers l'ERP</span><span class="en">Multi-site operational data moderation, through the ERP</span></h3>
-          <p class="case-sub">
-            <span class="fr">Plusieurs établissements, le même ERP, et des pratiques de saisie qui divergent : champs laissés vides, dossiers jamais clôturés, saisies hors délai, doublons d'un site à l'autre. Un robot de modération applique les mêmes règles à tous les sites, chaque nuit, et ne remonte à chaque site que ce qui le concerne.</span>
-            <span class="en">Several sites, one ERP, and data entry habits that drift apart: empty fields, records never closed, late entries, duplicates across sites. A moderation robot applies the same rules to every site, every night, and sends each site only what concerns it.</span>
-          </p>
-          <div class="tags">
-            <span class="tag">ERP</span>
-            <span class="tag"><span class="fr">Multi-sites</span><span class="en">Multi-site</span></span>
-            <span class="tag"><span class="fr">Règles métier</span><span class="en">Business rules</span></span>
-            <span class="tag"><span class="fr">Reporting par site</span><span class="en">Per-site reporting</span></span>
-          </div>
-        </div>
-        <div aria-hidden="true">
-          <svg viewBox="0 0 220 170" fill="none">
-            <rect x="72" y="12" width="76" height="40" rx="9" fill="var(--bg-3)" stroke="var(--accent)" stroke-width="1.6"/>
-            <path d="M86 26h48M86 34h34M86 42h42" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M110 52v22M110 74H30v18M110 74h80v18M110 74v18" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
-            <g fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.5">
-              <rect x="6" y="92" width="48" height="42" rx="8"/>
-              <rect x="86" y="92" width="48" height="42" rx="8"/>
-              <rect x="166" y="92" width="48" height="42" rx="8"/>
-            </g>
-            <g stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" opacity=".7">
-              <path d="M18 122v-14l12-8 12 8v14M98 122v-14l12-8 12 8v14M178 122v-14l12-8 12 8v14"/>
-            </g>
-            <circle cx="46" cy="98" r="6" fill="var(--good)"/>
-            <circle cx="126" cy="98" r="6" fill="var(--warn)"/>
-            <circle cx="206" cy="98" r="6" fill="var(--good)"/>
-            <rect x="60" y="146" width="100" height="8" rx="4" fill="var(--ink-3)" opacity=".3"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="rpa-cols">
-        <div>
-          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
-          <ul>
-            <li><span class="fr">Les règles métier vérifiées automatiquement sur les saisies de chaque site, toutes les nuits</span><span class="en">Business rules checked automatically against each site's entries, every night</span></li>
-            <li><span class="fr">Les écarts groupés par site et par responsable, plutôt qu'une liste globale que personne ne s'approprie</span><span class="en">Gaps grouped by site and by owner, rather than one global list nobody takes on</span></li>
-            <li><span class="fr">La reprise des dossiers anciens par lots, sans bloquer le flux courant</span><span class="en">Backlog clean-up in batches, without blocking the current flow</span></li>
-            <li><span class="fr">Un suivi dans le temps : ce qui a été corrigé, ce qui reste, et depuis quand</span><span class="en">Tracking over time: what was fixed, what remains, and since when</span></li>
-          </ul>
-        </div>
-        <div>
-          <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
-          <ul>
-            <li><span class="fr">Un accès en lecture à la base ou aux exports de l'ERP, rien de plus</span><span class="en">Read access to the database or to the ERP exports, nothing more</span></li>
-            <li><span class="fr">Des règles écrites et validées par les métiers, jamais déduites à leur place</span><span class="en">Rules written and approved by the business, never inferred on their behalf</span></li>
-            <li><span class="fr">Un correspondant par site : une alerte qui ne tombe chez personne ne sert à rien</span><span class="en">One contact per site: an alert that lands nowhere is useless</span></li>
-          </ul>
-        </div>
-        <div class="rpa-limits">
-          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
-          <ul>
-            <li><span class="fr">Le robot signale un écart, il ne décide pas à la place du site</span><span class="en">The robot flags a gap, it does not decide in the site's place</span></li>
-            <li><span class="fr">Sans correspondant identifié, le dispositif s'éteint en quelques semaines</span><span class="en">With no named contact, the whole thing dies within weeks</span></li>
-            <li><span class="fr">Une règle mal écrite produit du bruit, et le bruit tue l'adhésion plus vite que l'erreur</span><span class="en">A badly written rule produces noise, and noise kills adoption faster than the error itself</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="rpa-foot">
-        <div class="honest">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
-          <p>
-            <span class="fr">Ce volet vient d'un contexte industriel multi-sites. Les données et les chiffres appartiennent à leur propriétaire et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.</span>
-            <span class="en">This offer comes from a multi-site industrial context. The data and the figures belong to their owner and are not published here. What I can show, and let you replay, are the three measured automations above.</span>
-          </p>
-        </div>
-        <p class="price-inline">
-          <span class="fr">Forfait, selon le nombre de règles et de sites</span><span class="en">Fixed price, depending on rules and sites</span>
-          <span class="todo">[PRIX A DEFINIR]</span>
+          <span class="fr">Sur devis, selon le nombre d'écrans</span><span class="en">On quote, depending on the number of screens</span>
         </p>
       </div>
     </div>
@@ -1328,8 +1305,8 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       </table>
     </div>
     <p class="tbl-note">
-      <span class="fr">Montants en euros. Conversion indicative 1 EUR = 1,10 USD, confirmée au devis. Régime de TVA : <span class="todo-inline">[MENTION TVA A DEFINIR]</span></span>
-      <span class="en">Amounts in euros. Indicative conversion 1 EUR = 1.10 USD, confirmed in the quote. VAT status: <span class="todo-inline">[MENTION TVA A DEFINIR]</span></span>
+      <span class="fr">Montants en euros. Conversion indicative 1 EUR = 1,10 USD, confirmée au devis. Le régime de TVA applicable est précisé sur le devis.</span>
+      <span class="en">Amounts in euros. Indicative conversion 1 EUR = 1.10 USD, confirmed in the quote. The applicable VAT status is stated on the quote.</span>
     </p>
 
     <div class="cond">
@@ -1558,10 +1535,10 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     }
   }
 
+  /* Le sombre est le thème par défaut : tout ce qui n'est pas un choix explicite
+     pour le clair est traité comme sombre. */
   function currentTheme() {
-    var t = root.getAttribute('data-theme');
-    if (t === 'light' || t === 'dark') return t;
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
   }
 
   function applyTheme(theme) {
