@@ -1,7 +1,7 @@
 # NovaFlow
 
 > Automatisation de processus administratifs pour PME francophones, principalement
-> en Belgique, en Suisse romande et au Luxembourg. Chaque automatisation est
+> en France, en Belgique, en Suisse et au Luxembourg. Chaque automatisation est
 > livree avec son jeu de donnees de test labelle et un script de demonstration
 > reproductible : les chiffres publies sont mesures, pas estimes.
 
