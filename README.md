@@ -2,144 +2,128 @@
 
 Site portfolio d'une seule page, entierement statique.
 
+**En ligne : https://novaflow-ops.com**
+Depot : https://github.com/Zanth11/novaflow-site (public, requis par GitHub Pages en gratuit)
+
 - Un seul fichier : `index.html`. CSS et JavaScript en ligne, aucune dependance,
   aucun CDN, aucune police distante, aucune image distante.
-- Fonctionne en double-cliquant le fichier, sans serveur.
+- Fonctionne aussi en double-cliquant le fichier, sans serveur.
 - Bilingue FR / EN, francais par defaut, selecteur dans l'en-tete.
 - Theme clair et sombre, `prefers-color-scheme` respecte, bouton de bascule.
 - `prefers-reduced-motion` respecte, navigation clavier, contrastes verifies.
-- Poids : environ 87 Ko. Aucun traceur, aucun cookie, aucun appel reseau.
+- Environ 103 Ko. Aucun traceur, aucun cookie, aucun appel reseau.
 
-## Verifications faites en local
+## Contenu
 
-| Point | Resultat |
+| Bloc | Chiffres |
 |---|---|
-| Requetes externes | 0 |
-| Images bitmap | 0, illustrations en SVG en ligne |
-| Defilement horizontal a 375 px | aucun, le tableau des options defile dans son propre cadre |
-| Erreurs console | aucune |
-| Bascule FR / EN | 183 blocs traduits des deux cotes, aucun orphelin |
-| Contraste texte principal | 16,8 en clair, 16,9 en sombre |
+| Rapprochement facture et banque | mesures reelles |
+| Boite mail vers tableau | mesures reelles |
+| Controle quotidien d'anomalies | mesures reelles |
+| Automatisation du poste de travail, RPA | **aucun chiffre**, positionne comme une offre |
+| Moderation multi-sites via ERP | **aucun chiffre**, positionne comme une offre |
+
+Les deux derniers blocs affichent explicitement qu'ils ne sont pas mesures. Ne
+pas y ajouter de pourcentage : c'est ce qui fait tenir le reste de la page.
+
+Le bloc multi-sites est redige **sans marqueur sectoriel**. Aucun mot ne permet
+d'identifier un secteur ou un employeur. Verification automatique possible :
+
+```bash
+grep -iE "VHU|vehicule|recycl|casse auto|demolisseur" index.html
+```
+
+Cette commande ne doit rien renvoyer.
 
 ## Marqueurs restant a completer
 
-Ils sont visibles a l'ecran, en jaune et en police a chasse fixe :
+Visibles a l'ecran, en jaune et en police a chasse fixe :
 
-- `[MENTION TVA A DEFINIR]` dans la note sous le tableau des options.
-- `[DOMAINE A DEFINIR]` en pied de page.
+- `[PRIX RPA A DEFINIR]` dans le bloc RPA
+- `[PRIX A DEFINIR]` dans le bloc moderation multi-sites
+- `[MENTION TVA A DEFINIR]` sous le tableau des options
 
-Cherchez `todo-inline` dans `index.html` pour les retrouver.
+Cherchez `todo-inline` ou `class="todo"` dans `index.html`.
 
-## Previsualiser en local
+## Mettre le site a jour
 
-Le double-clic suffit. Pour un rendu identique a la production, avec un vrai
-serveur :
+Le site se redeploie a chaque push sur `main`. Comptez une a deux minutes.
+
+```bash
+git -C "C:/Users/laure/Desktop/freelance/03-site" add -A
+```
+
+```bash
+git -C "C:/Users/laure/Desktop/freelance/03-site" commit -m "maj contenu"
+```
+
+```bash
+git -C "C:/Users/laure/Desktop/freelance/03-site" push
+```
+
+Ne supprimez pas le fichier `CNAME` a la racine : c'est lui qui tient le nom de
+domaine cote GitHub.
+
+## Previsualiser en local avant de pousser
 
 ```bash
 python -m http.server 4178 --directory "C:/Users/laure/Desktop/freelance/03-site"
 ```
 
-Puis ouvrez http://localhost:4178
+Puis http://localhost:4178
 
-## Deploiement
+## Configuration en place
 
-Rien n'est deploye. Les trois hebergeurs ci-dessous sont gratuits pour ce type
-de site. Le plus simple des trois est Cloudflare Pages en glisser-deposer :
-aucun compte GitHub necessaire.
+**Hebergement.** GitHub Pages, branche `main`, racine du depot. Gratuit, sans
+limite de trafic utile a cette echelle.
 
-### 1. Cloudflare Pages
+**Identite des commits.** Configuree en local sur ce depot uniquement :
+nom `NovaFlow`, adresse `64888772+Zanth11@users.noreply.github.com`. Votre
+adresse personnelle n'apparait pas dans l'historique public. Si vous clonez le
+depot ailleurs, refaites ce reglage :
 
-**Sans depot Git, en glisser-deposer :**
+```bash
+git config user.email "64888772+Zanth11@users.noreply.github.com"
+```
 
-1. Creez un compte sur https://dash.cloudflare.com
-2. Menu **Workers & Pages**, puis **Create**, onglet **Pages**, bouton
-   **Upload assets**.
-3. Nommez le projet, par exemple `novaflow`.
-4. Glissez le **dossier** `03-site` dans la zone de depot, pas seulement le
-   fichier. Cloudflare sert automatiquement `index.html` a la racine.
-5. **Deploy site**. Le site est en ligne sur `novaflow.pages.dev`.
+**DNS chez IONOS.** Le parking IONOS a ete desactive, les enregistrements de
+messagerie sont intacts.
 
-Pour mettre a jour : meme ecran, **Create new deployment**, vous reglissez le
-dossier.
+| Type | Hote | Valeur |
+|---|---|---|
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | zanth11.github.io |
+| MX, TXT SPF, CNAME _dmarc, DKIM | @ et sous-domaines | inchanges, messagerie IONOS |
 
-**Avec un depot Git :** connectez le depot, laissez la commande de build vide et
-indiquez `/` comme repertoire de sortie. Chaque `git push` redeploie.
+**HTTPS.** Le certificat est emis automatiquement par GitHub via Let's Encrypt
+apres validation DNS. Une fois emis, forcer la redirection :
 
-**Nom de domaine :**
+```bash
+gh api -X PUT "/repos/Zanth11/novaflow-site/pages" -F https_enforced=true
+```
 
-1. Projet Pages, onglet **Custom domains**, **Set up a domain**.
-2. Saisissez `novaflow.be` (ou l'extension retenue).
-3. Si le domaine est deja gere par Cloudflare, l'enregistrement DNS est cree
-   tout seul. Sinon, Cloudflare affiche l'enregistrement `CNAME` a creer chez
-   votre registrar : nom `@` ou `www`, valeur `novaflow.pages.dev`.
-4. Le certificat HTTPS est emis automatiquement, comptez quelques minutes.
+Verifier l'etat :
 
-### 2. Netlify
+```bash
+gh api "/repos/Zanth11/novaflow-site/pages"
+```
 
-**Sans depot Git :**
+## Si vous voulez passer a un depot prive
 
-1. Compte sur https://app.netlify.com
-2. **Add new site**, puis **Deploy manually**.
-3. Glissez le dossier `03-site`. Le site est en ligne sur une adresse en
-   `*.netlify.app`.
-4. **Site configuration**, **Change site name** pour choisir le sous-domaine.
+GitHub Pages exige un depot public en gratuit. Pour garder le code prive :
+Cloudflare Pages accepte un depot prive, ou un simple glisser-deposer du
+dossier, sans depot du tout. Il faut creer un compte Cloudflare, connecter le
+depot ou deposer le dossier, puis repointer le DNS : supprimer les quatre
+enregistrements A et le CNAME `www` chez IONOS, et suivre les valeurs indiquees
+par Cloudflare.
 
-**Avec un depot Git :** connectez le depot, laissez **Build command** vide et
-mettez `.` dans **Publish directory**.
+## A verifier de temps en temps
 
-**Nom de domaine :**
-
-1. **Domain management**, **Add a domain**.
-2. Netlify propose deux voies : deleguer les serveurs de noms a Netlify, ou
-   garder votre DNS actuel et creer un `CNAME` vers votre adresse
-   `*.netlify.app`. La seconde voie est plus simple si vous avez deja des
-   adresses mail sur le domaine.
-3. HTTPS via Let's Encrypt, active depuis **Domain management**, section
-   **HTTPS**.
-
-### 3. GitHub Pages
-
-Ici un depot Git est obligatoire.
-
-1. Creez un depot, par exemple `novaflow-site`. **Public** suffit et reste
-   gratuit. Un depot prive exige un compte payant pour publier des Pages.
-2. Deposez `index.html` a la racine du depot.
-3. **Settings**, **Pages**, section **Build and deployment** : source
-   **Deploy from a branch**, branche `main`, dossier `/ (root)`, **Save**.
-4. Le site sort sur `https://<votre-compte>.github.io/novaflow-site/`.
-
-**Nom de domaine :**
-
-1. **Settings**, **Pages**, champ **Custom domain** : saisissez le domaine,
-   puis **Save**. GitHub cree un fichier `CNAME` dans le depot, ne le supprimez
-   pas.
-2. Chez votre registrar :
-   - pour `www.novaflow.be` : un `CNAME` vers `<votre-compte>.github.io`
-   - pour `novaflow.be` sans `www` : quatre enregistrements `A` vers
-     `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
-     `185.199.111.153`
-3. Revenez sur l'ecran Pages et cochez **Enforce HTTPS** une fois la
-   verification DNS passee.
-
-## Choisir entre les trois
-
-| Critere | Cloudflare Pages | Netlify | GitHub Pages |
-|---|---|---|---|
-| Sans compte Git | oui | oui | non |
-| Depot prive possible | oui | oui | non en gratuit |
-| Mise en ligne d'un domaine | la plus rapide si le DNS est chez Cloudflare | simple | manuelle chez le registrar |
-| Propagation d'une mise a jour | quelques secondes | quelques secondes | jusqu'a quelques minutes |
-
-Pour une activite freelance qui garde le code de son site hors de GitHub,
-Cloudflare Pages en glisser-deposer est le choix le plus direct.
-
-## Apres la mise en ligne
-
-- Verifiez le rendu sur telephone, en clair et en sombre.
-- Verifiez que le bouton de contact ouvre bien votre client mail avec l'objet et
-  le corps pre-remplis.
-- Remplacez les deux marqueurs restants.
-- Les prix affiches sont des tarifs de lancement, presentes comme tels dans la
-  section Tarifs. Quand les trois references sont acquises, il y a trois
-  montants a modifier dans les cartes et un paragraphe a reecrire dans le
-  bandeau explicatif.
+- Le bouton de contact ouvre bien votre client mail, objet et corps pre-remplis,
+  vers `novaflowops@gmail.com`.
+- Le rendu sur telephone, en clair et en sombre.
+- Le domaine expire le 26/07/2027. Le renouvellement automatique est desactive
+  sur le compte IONOS : a surveiller.
