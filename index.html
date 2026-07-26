@@ -13,6 +13,81 @@
 <meta property="og:site_name" content="NovaFlow">
 <meta property="og:title" content="NovaFlow, automatisation de processus">
 <meta property="og:description" content="Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://novaflow-ops.com/#site",
+      "url": "https://novaflow-ops.com/",
+      "name": "NovaFlow",
+      "inLanguage": ["fr", "en"],
+      "publisher": { "@id": "https://novaflow-ops.com/#org" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://novaflow-ops.com/#org",
+      "name": "NovaFlow",
+      "url": "https://novaflow-ops.com/",
+      "email": "novaflowops@gmail.com",
+      "description": "Automatisation de processus administratifs pour PME. Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible, ce qui rend les résultats annoncés vérifiables.",
+      "areaServed": [
+        { "@type": "Country", "name": "Belgique" },
+        { "@type": "Country", "name": "Suisse" },
+        { "@type": "Country", "name": "Luxembourg" }
+      ],
+      "availableLanguage": ["fr", "en"],
+      "knowsAbout": [
+        "automatisation de processus",
+        "n8n",
+        "rapprochement bancaire",
+        "extraction de données depuis une boîte mail",
+        "détection d'anomalies sur séries quotidiennes",
+        "RPA",
+        "Power Automate Desktop",
+        "contrôle de données ERP multi-sites"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Automatisations",
+        "itemListElement": [
+          {
+            "@type": "Service",
+            "name": "Rapprochement facture et banque",
+            "serviceType": "Automatisation de rapprochement comptable",
+            "description": "Compare un export comptable et un relevé bancaire de formats différents, agrège les encaissements par référence, classe chaque facture en sept catégories, et justifie chaque euro d'écart dans un tableau de bouclage. Aucun rapport n'est émis si le bouclage ne tombe pas au centime. Sur le jeu de démonstration livré : 60 factures contre 65 lignes bancaires, 16 anomalies, 2 doubles paiements pour 17 994,91 EUR, 100 % de concordance avec le jeu labellé."
+          },
+          {
+            "@type": "Service",
+            "name": "Boîte mail vers tableau",
+            "serviceType": "Extraction de données depuis une boîte mail",
+            "description": "Lit une boîte mail, extrait les champs des confirmations de commande, et n'ajoute que ce qui est réellement nouveau. Sur le jeu de démonstration livré : 46 messages traités, 35 lignes écrites, 259 valeurs de champ exactes sur 259, et 0 ligne en double à la seconde exécution."
+          },
+          {
+            "@type": "Service",
+            "name": "Contrôle quotidien d'anomalies",
+            "serviceType": "Surveillance de qualité de données",
+            "description": "Contrôle quotidien fondé sur la médiane et l'écart absolu médian, saisonnalité hebdomadaire retirée, détection des valeurs figées et mécanisme anti-fatigue d'alerte. Sur la simulation livrée : 120 exécutions sur 8 séries, 10 anomalies injectées sur 10 détectées, 4 faux positifs sur 960 jours-série."
+          },
+          {
+            "@type": "Service",
+            "name": "Modération des données d'exploitation multi-sites",
+            "serviceType": "Contrôle de données ERP multi-sites",
+            "description": "Applique les mêmes règles métier à tous les sites chaque nuit : cohérence des stocks, rotation et ancienneté, uniformisation des pratiques, complétude et clôture. Chaque site ne reçoit que ce qui le concerne. Aucun chiffre n'est publié sur ce volet."
+          },
+          {
+            "@type": "Service",
+            "name": "Automatisation du poste de travail, RPA",
+            "serviceType": "RPA sur poste Windows",
+            "description": "Pour les logiciels sans API ni export propre. Power Automate Desktop ou équivalent, chaque action journalisée, arrêt plutôt que devinette, test sur une liste de cas connus, aucun identifiant en clair. Aucun chiffre n'est publié sur ce volet."
+          }
+        ]
+      }
+    }
+  ]
+}
+</script>
 <script>
 /* Applique le thème et la langue avant le premier rendu, pour éviter tout clignotement.
    Le sombre est le défaut : seul un choix explicite pour le clair est restauré. */

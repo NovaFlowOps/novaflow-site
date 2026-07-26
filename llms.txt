@@ -1,0 +1,75 @@
+# NovaFlow
+
+> Automatisation de processus administratifs pour PME francophones, principalement
+> en Belgique, en Suisse romande et au Luxembourg. Chaque automatisation est
+> livree avec son jeu de donnees de test labelle et un script de demonstration
+> reproductible : les chiffres publies sont mesures, pas estimes.
+
+Site : https://novaflow-ops.com
+Contact : novaflowops@gmail.com
+Langues : francais, anglais ecrit
+Outils : n8n, Node.js, Power Automate Desktop, controles sur base ou exports ERP
+
+## Ce qui distingue cette offre
+
+Les resultats affiches proviennent de l'execution reelle des automatisations sur
+des jeux de donnees labelles, livres au client. Le resultat attendu est connu a
+l'avance, donc l'exactitude se verifie au lieu de se promettre. Aucun temoignage
+client n'est publie : il n'y en a pas encore, et rien n'est fabrique.
+
+## Les trois automatisations mesurees
+
+### 1. Rapprochement facture et banque
+Compare un export comptable et un releve bancaire aux formats differents, agrege
+les encaissements par reference, classe chaque facture en sept categories, et
+justifie chaque euro d'ecart dans un tableau de bouclage. Si le bouclage ne tombe
+pas au centime, aucun rapport n'est emis.
+Mesure : 60 factures contre 65 lignes bancaires, 16 anomalies remontees,
+2 doubles paiements pour 17 994,91 EUR, bouclage exact au centime,
+100 % de concordance avec le jeu labelle, moteur en 19 ms.
+
+### 2. Boite mail vers tableau
+Lit une boite mail, extrait les champs des confirmations de commande, et
+n'ajoute que ce qui est reellement nouveau. Idempotence par message, gestion des
+revisions, mise en quarantaine plutot que devinette.
+Mesure : 46 messages traites, 35 lignes ecrites, 470 004,01 EUR de commandes,
+259 valeurs de champ exactes sur 259, 0 doublon a la seconde execution,
+3 messages incomplets mis en quarantaine, 4 hors sujet ignores.
+
+### 3. Controle quotidien d'anomalies
+Controle quotidien fonde sur la mediane et l'ecart absolu median plutot que la
+moyenne et l'ecart-type, saisonnalite hebdomadaire retiree, anti-fatigue
+d'alerte, detection des valeurs figees.
+Mesure : 120 executions quotidiennes sur 8 series, soit 960 jours-serie,
+10 anomalies injectees sur 10 detectees, 7 sur 10 des le premier jour,
+4 faux positifs sur 960 jours-serie, aucun regard vers le futur,
+68 detections brutes compressees en 46 notifications.
+
+## Deux offres sans chiffres publies
+
+### 4. Moderation des donnees d'exploitation, multi-sites, via ERP
+Memes regles appliquees a tous les sites chaque nuit : coherence des stocks,
+rotation et anciennete, uniformisation des pratiques, completude et cloture.
+Chaque site ne recoit que ce qui le concerne. Aucun chiffre n'est publie sur ce
+volet, les donnees appartiennent a leur proprietaire.
+
+### 5. Automatisation du poste de travail, RPA
+Pour les logiciels sans API ni export propre : Power Automate Desktop ou
+equivalent, chaque action journalisee, arret plutot que devinette, test sur une
+liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
+
+## Conditions
+
+Forfait pour un perimetre ecrit, pas de facturation horaire. Prix de lancement
+affiches pour les trois premiers clients de chaque automatisation, en
+contrepartie d'une reference ecrite : 1 200 EUR, 1 400 EUR et 1 100 EUR selon
+l'automatisation. Les blocs 4 et 5 sont sur devis. Paiement 50 % a la commande
+et 50 % a la livraison acceptee. Delai de 10 jours ouvres a compter de la
+reception des donnees d'exemple. Une serie de corrections incluse sous 14 jours.
+Tout a distance, aucun rendez-vous physique, communication ecrite.
+
+## Ce qui n'est pas promis
+
+Aucun montant recupere n'est promis a un client : les chiffres ci-dessus
+proviennent de jeux de donnees representatifs, et servent a etablir le seuil a
+partir duquel l'automatisation est rentabilisee chez le client.
