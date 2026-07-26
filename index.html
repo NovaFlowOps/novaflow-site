@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NovaFlow, automatisation de processus</title>
+<meta name="description" content="Automatisation de processus administratifs : rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque livraison inclut son jeu de données de test labellé et un script de démonstration reproductible.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://novaflow-ops.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://novaflow-ops.com/">
+<meta property="og:site_name" content="NovaFlow">
+<meta property="og:title" content="NovaFlow, automatisation de processus">
+<meta property="og:description" content="Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible.">
+<script>
+/* Applique le thème et la langue avant le premier rendu, pour éviter tout clignotement. */
+(function () {
+  try {
+    var t = localStorage.getItem('novaflow-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    var l = localStorage.getItem('novaflow-lang');
+    if (l === 'en' || l === 'fr') document.documentElement.setAttribute('lang', l);
+  } catch (e) {}
+})();
+</script>
+<style>
+/* ------------------------------------------------------------------
+   1. Thèmes
+------------------------------------------------------------------ */
+:root {
+  --bg:        #f7f9fc;
+  --bg-2:      #ffffff;
+  --bg-3:      #eef2f8;
+  --ink:       #101828;
+  --ink-2:     #475467;
+  --ink-3:     #667085;
+  --line:      #dbe2ec;
+  --line-2:    #c6d0de;
+  --accent:    #0b5f8a;
+  --accent-2:  #5b2bd9;
+  --accent-ink:#ffffff;
+  --accent-soft:#e4f1f8;
+  --good:      #10693f;
+  --warn:      #8a5300;
+  --warn-soft: #fdf3e0;
+  --grid:      rgba(16, 24, 40, .06);
+  --shadow:    0 1px 2px rgba(16,24,40,.05), 0 12px 32px -18px rgba(16,24,40,.35);
+  --radius:    16px;
+}
+:root[data-theme="dark"] {
+  --bg:        #080c16;
+  --bg-2:      #0f1524;
+  --bg-3:      #161d2f;
+  --ink:       #eaeff8;
+  --ink-2:     #b3bed1;
+  --ink-3:     #8a97ad;
+  --line:      #232c40;
+  --line-2:    #33405c;
+  --accent:    #67d3f5;
+  --accent-2:  #b39cff;
+  --accent-ink:#04121a;
+  --accent-soft:#10283a;
+  --good:      #4ddba0;
+  --warn:      #f0c274;
+  --warn-soft: #2c2313;
+  --grid:      rgba(255, 255, 255, .05);
+  --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #080c16;
+    --bg-2:      #0f1524;
+    --bg-3:      #161d2f;
+    --ink:       #eaeff8;
+    --ink-2:     #b3bed1;
+    --ink-3:     #8a97ad;
+    --line:      #232c40;
+    --line-2:    #33405c;
+    --accent:    #67d3f5;
+    --accent-2:  #b39cff;
+    --accent-ink:#04121a;
+    --accent-soft:#10283a;
+    --good:      #4ddba0;
+    --warn:      #f0c274;
+    --warn-soft: #2c2313;
+    --grid:      rgba(255, 255, 255, .05);
+    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
+  }
+}
+
+/* ------------------------------------------------------------------
+   2. Base
+------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.62;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; }
+h1, h2, h3, h4 { line-height: 1.18; margin: 0 0 .5em; letter-spacing: -.02em; font-weight: 650; }
+h1 { font-size: clamp(2rem, 1.35rem + 2.7vw, 3.4rem); letter-spacing: -.035em; }
+h2 { font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem); }
+h3 { font-size: clamp(1.15rem, 1rem + .6vw, 1.5rem); }
+p  { margin: 0 0 1rem; color: var(--ink-2); }
+a  { color: var(--accent); text-underline-offset: 3px; }
+ul { margin: 0; padding: 0; list-style: none; }
+strong { font-weight: 650; color: var(--ink); }
+code, .mono, .num {
+  font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+@media (max-width: 560px) { .wrap { width: min(1120px, 100% - 1.75rem); } }
+section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--accent); color: var(--accent-ink);
+  padding: .7rem 1.1rem; border-radius: 0 0 10px 0; font-weight: 600;
+}
+.skip:focus { left: 0; }
+
+/* Bilingue : le français est visible par défaut, même sans JavaScript. */
+.en { display: none; }
+html[lang="en"] .fr { display: none; }
+html[lang="en"] .en { display: inline; }
+
+/* ------------------------------------------------------------------
+   3. En-tête
+------------------------------------------------------------------ */
+.hdr {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+@supports not (backdrop-filter: blur(4px)) { .hdr { background: var(--bg); } }
+.hdr-in { display: flex; align-items: center; gap: 1rem; height: 66px; }
+.brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; letter-spacing: -.02em; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+.brand svg { width: 26px; height: 26px; flex: none; }
+.nav { display: flex; gap: .35rem; margin-left: auto; }
+.nav a {
+  color: var(--ink-2); text-decoration: none; font-size: .93rem; font-weight: 550;
+  padding: .45rem .7rem; border-radius: 9px;
+}
+.nav a:hover { color: var(--ink); background: var(--bg-3); }
+.hdr-tools { display: flex; align-items: center; gap: .4rem; margin-left: auto; }
+.nav + .hdr-tools { margin-left: .6rem; }
+.seg {
+  display: flex; border: 1px solid var(--line-2); border-radius: 10px; overflow: hidden;
+  background: var(--bg-2);
+}
+.seg button {
+  font: inherit; font-size: .8rem; font-weight: 650; letter-spacing: .02em;
+  padding: .34rem .55rem; border: 0; background: transparent; color: var(--ink-3); cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.icon-btn {
+  display: grid; place-items: center; width: 36px; height: 34px;
+  border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg-2);
+  color: var(--ink-2); cursor: pointer; padding: 0;
+}
+.icon-btn:hover { color: var(--ink); border-color: var(--accent); }
+.icon-btn svg { width: 17px; height: 17px; }
+:root[data-theme="dark"] .i-sun, .i-moon { display: block; }
+:root[data-theme="dark"] .i-moon { display: none; }
+.i-sun { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .i-sun { display: block; }
+  :root:not([data-theme="light"]) .i-moon { display: none; }
+}
+:root[data-theme="light"] .i-sun { display: none; }
+:root[data-theme="light"] .i-moon { display: block; }
+@media (max-width: 860px) { .nav { display: none; } .hdr-tools { margin-left: auto; } }
+
+/* ------------------------------------------------------------------
+   4. Accroche
+------------------------------------------------------------------ */
+.hero { position: relative; padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem); }
+.hero::before {
+  content: ""; position: absolute; inset: -120px 0 auto 0; height: 620px; z-index: -1;
+  background:
+    radial-gradient(60% 55% at 78% 14%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+    radial-gradient(50% 50% at 12% 0%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 70%),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0 / 100% 44px,
+    linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0 / 44px 100%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent);
+  pointer-events: none;
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } .hero-art { order: -1; } }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1.1rem;
+  font-size: .8rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  padding: .3rem .7rem; border-radius: 999px;
+}
+.eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+.hero p.lede { font-size: clamp(1.02rem, .95rem + .35vw, 1.2rem); max-width: 44ch; }
+.cta-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.7rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .74rem 1.25rem; border-radius: 11px; font-weight: 620; font-size: .97rem;
+  text-decoration: none; border: 1px solid transparent; cursor: pointer;
+}
+.btn-1 { background: var(--accent); color: var(--accent-ink); }
+.btn-1:hover { filter: brightness(1.08); }
+.btn-2 { background: var(--bg-2); color: var(--ink); border-color: var(--line-2); }
+.btn-2:hover { border-color: var(--accent); color: var(--accent); }
+.btn svg { width: 16px; height: 16px; }
+.hero-note { margin-top: 1.1rem; font-size: .88rem; color: var(--ink-3); }
+.hero-art svg { width: 100%; height: auto; display: block; }
+
+/* ------------------------------------------------------------------
+   5. Bandeau de confiance
+------------------------------------------------------------------ */
+.trust {
+  border-block: 1px solid var(--line);
+  background: var(--bg-2);
+  padding: 1.25rem 0;
+}
+.trust-in { display: flex; gap: 1rem; align-items: flex-start; }
+.trust svg { width: 22px; height: 22px; flex: none; color: var(--accent); margin-top: .18rem; }
+.trust p { margin: 0; font-size: .97rem; }
+
+/* ------------------------------------------------------------------
+   6. Chiffres
+------------------------------------------------------------------ */
+.stats { padding-top: clamp(2.5rem, 6vw, 4rem); }
+.stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .stat-grid { grid-template-columns: minmax(0, 1fr); } }
+.stat {
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.3rem 1.25rem; box-shadow: var(--shadow); min-width: 0;
+}
+.stat .v {
+  display: block; font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2rem); font-weight: 700;
+  letter-spacing: -.03em; color: var(--ink); line-height: 1.15; word-break: break-word;
+}
+.stat .v em { font-style: normal; color: var(--accent); }
+.stat .k { display: block; margin-top: .5rem; font-size: .9rem; color: var(--ink-2); line-height: 1.45; }
+.stat-note { margin: 1rem 0 0; font-size: .85rem; color: var(--ink-3); }
+
+/* ------------------------------------------------------------------
+   7. Titres de section
+------------------------------------------------------------------ */
+.sec-head { max-width: 62ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.sec-head .kicker {
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-2); margin: 0 0 .6rem;
+}
+
+/* ------------------------------------------------------------------
+   8. Cartes réalisations
+------------------------------------------------------------------ */
+.case {
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 20px;
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 1.5rem;
+}
+.case-top {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  gap: clamp(1.25rem, 3vw, 2.5rem); align-items: center;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent);
+}
+@media (max-width: 820px) { .case-top { grid-template-columns: minmax(0, 1fr); } }
+.case-num {
+  display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+  color: var(--ink-3); margin-bottom: .5rem;
+}
+.case-top h3 { margin-bottom: .35rem; }
+.case-sub { margin: 0; font-size: .97rem; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+.tag {
+  font-size: .76rem; font-weight: 600; letter-spacing: .02em;
+  padding: .22rem .55rem; border-radius: 6px;
+  background: var(--bg-3); color: var(--ink-2); border: 1px solid var(--line);
+}
+.case-art svg { width: 100%; height: auto; display: block; border-radius: 12px; }
+.case-body {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+@media (max-width: 940px) { .case-body { grid-template-columns: minmax(0, 1fr); } }
+.blk { padding: clamp(1.3rem, 2.5vw, 1.8rem); border-right: 1px solid var(--line); min-width: 0; }
+.blk:last-child { border-right: 0; }
+@media (max-width: 940px) { .blk { border-right: 0; border-bottom: 1px solid var(--line); } .blk:last-child { border-bottom: 0; } }
+.blk h4 {
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: .8rem;
+}
+.blk p { font-size: .95rem; margin-bottom: 0; }
+.blk ul li {
+  position: relative; padding-left: 1.4rem; margin-bottom: .6rem;
+  font-size: .95rem; color: var(--ink-2);
+}
+.blk ul li::before {
+  content: ""; position: absolute; left: 0; top: .58em;
+  width: 7px; height: 7px; border-radius: 2px; background: var(--accent); opacity: .55;
+}
+.blk ul li:last-child { margin-bottom: 0; }
+.blk li.hi { color: var(--ink); font-weight: 600; }
+.blk li.hi::before { opacity: 1; background: var(--good); }
+.case-band {
+  display: flex; gap: .8rem; align-items: flex-start;
+  padding: 1.1rem clamp(1.3rem, 2.5vw, 1.8rem);
+  border-top: 1px solid var(--line); background: var(--bg-3);
+}
+.case-band svg { width: 19px; height: 19px; flex: none; color: var(--good); margin-top: .22rem; }
+.case-band p { margin: 0; font-size: .95rem; color: var(--ink); max-width: 78ch; }
+.threshold {
+  display: flex; gap: .8rem; align-items: flex-start;
+  padding: 1.1rem clamp(1.3rem, 2.5vw, 1.8rem);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.threshold svg { width: 19px; height: 19px; flex: none; color: var(--accent); margin-top: .22rem; }
+.threshold .lbl {
+  display: block; font-size: .74rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .1rem;
+}
+.threshold p { margin: 0; font-size: .95rem; color: var(--ink); max-width: 78ch; }
+.case-foot {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+  gap: clamp(1.2rem, 3vw, 2rem); align-items: start;
+  padding: 1.4rem clamp(1.3rem, 2.5vw, 1.8rem);
+  border-top: 1px solid var(--line); background: var(--bg-3);
+}
+@media (max-width: 820px) { .case-foot { grid-template-columns: minmax(0, 1fr); } }
+.scope { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.6rem; min-width: 0; }
+@media (max-width: 560px) { .scope { grid-template-columns: minmax(0, 1fr); } }
+.scope h5 {
+  margin: 0 0 .5rem; font-size: .74rem; font-weight: 700; letter-spacing: .11em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.scope li { position: relative; padding-left: 1.05rem; margin-bottom: .3rem; font-size: .87rem; color: var(--ink-2); }
+.scope li::before {
+  content: ""; position: absolute; left: 0; top: .58em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--good);
+}
+.scope .out li::before { background: var(--ink-3); opacity: .5; }
+.price-card {
+  background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 14px;
+  padding: 1.1rem 1.15rem; min-width: 0;
+}
+.price-card .pl { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--accent-2); }
+.price-card .pv {
+  display: block; margin: .25rem 0 .45rem; font-size: 1.62rem; font-weight: 700;
+  letter-spacing: -.02em; color: var(--ink); line-height: 1.1;
+}
+.price-card .pn { display: block; font-size: .82rem; color: var(--ink-3); line-height: 1.45; }
+.price-card .btn { margin-top: .9rem; width: 100%; justify-content: center; padding: .58rem 1rem; font-size: .9rem; }
+
+/* ------------------------------------------------------------------
+   8c. Volet RPA
+------------------------------------------------------------------ */
+.rpa {
+  background: var(--bg-2); border: 1px dashed var(--line-2); border-radius: 20px;
+  padding: clamp(1.5rem, 3.5vw, 2.4rem); margin-top: 2.5rem;
+}
+.rpa-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: clamp(1.2rem, 3vw, 2.5rem); align-items: center; }
+@media (max-width: 780px) { .rpa-head { grid-template-columns: minmax(0, 1fr); } }
+.rpa-head h3 { margin-bottom: .4rem; }
+.rpa-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.2rem, 3vw, 2rem); margin-top: 1.8rem; }
+@media (max-width: 940px) { .rpa-cols { grid-template-columns: minmax(0, 1fr); } }
+.rpa-cols h4 {
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: .8rem;
+}
+.rpa-cols li { position: relative; padding-left: 1.4rem; margin-bottom: .6rem; font-size: .93rem; color: var(--ink-2); }
+.rpa-cols li::before {
+  content: ""; position: absolute; left: 0; top: .56em;
+  width: 7px; height: 7px; border-radius: 2px; background: var(--accent-2); opacity: .6;
+}
+.rpa-limits li::before { background: var(--warn); opacity: .85; }
+.rpa-foot {
+  display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; justify-content: space-between;
+  margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
+}
+.rpa-foot .honest { display: flex; gap: .7rem; align-items: flex-start; max-width: 66ch; min-width: 0; }
+.rpa-foot .honest svg { width: 19px; height: 19px; flex: none; color: var(--warn); margin-top: .22rem; }
+.rpa-foot .honest p { margin: 0; font-size: .92rem; color: var(--ink); }
+.price-inline { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); }
+.price-inline .todo {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: .82rem; font-weight: 700;
+  color: var(--warn); background: var(--warn-soft);
+  border: 1px dashed var(--warn); border-radius: 8px; padding: .25rem .55rem;
+}
+
+/* ------------------------------------------------------------------
+   8b. Tarifs
+------------------------------------------------------------------ */
+.note-box {
+  display: flex; gap: .85rem; align-items: flex-start;
+  background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 0 14px 14px 0; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
+}
+.note-box svg { width: 20px; height: 20px; flex: none; color: var(--accent); margin-top: .2rem; }
+.note-box p { margin: 0; font-size: .94rem; }
+.note-box p + p { margin-top: .5rem; }
+.tbl-wrap {
+  overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--bg-2); box-shadow: var(--shadow); -webkit-overflow-scrolling: touch;
+}
+table { border-collapse: collapse; width: 100%; min-width: 430px; font-size: .93rem; }
+caption { text-align: left; padding: 1rem 1.15rem .2rem; font-weight: 650; color: var(--ink); }
+th, td { text-align: left; padding: .7rem 1.15rem; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+thead th {
+  font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-3); background: var(--bg-3); border-bottom: 1px solid var(--line-2);
+}
+tbody tr:last-child td { border-bottom: 0; }
+td.n, th.n {
+  text-align: right; white-space: nowrap;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums;
+}
+tbody td:first-child { color: var(--ink); }
+.tbl-note { margin: .8rem 0 0; font-size: .85rem; color: var(--ink-3); }
+.cond { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+@media (max-width: 900px) { .cond { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .cond { grid-template-columns: minmax(0, 1fr); } }
+.cond .mcard h4 { font-size: .95rem; }
+
+/* ------------------------------------------------------------------
+   9. Méthode et livrables
+------------------------------------------------------------------ */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+@media (max-width: 900px) { .split { grid-template-columns: minmax(0, 1fr); } }
+.mcards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 560px) { .mcards { grid-template-columns: minmax(0, 1fr); } }
+.mcard {
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem 1.2rem;
+}
+.mcard h4 { font-size: 1rem; margin-bottom: .35rem; }
+.mcard p { font-size: .9rem; margin: 0; }
+.mcard .ic { display: block; width: 22px; height: 22px; color: var(--accent); margin-bottom: .7rem; }
+.deliver {
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: clamp(1.3rem, 3vw, 1.9rem); box-shadow: var(--shadow);
+}
+.deliver li {
+  display: flex; gap: .7rem; align-items: flex-start;
+  padding: .7rem 0; border-bottom: 1px dashed var(--line); font-size: .95rem;
+}
+.deliver li:last-child { border-bottom: 0; padding-bottom: 0; }
+.deliver li svg { width: 18px; height: 18px; color: var(--good); flex: none; margin-top: .18rem; }
+.deliver li span.d { color: var(--ink-3); display: block; font-size: .87rem; }
+.about {
+  margin-top: 1.5rem; padding: 1.1rem 1.2rem; border-left: 3px solid var(--accent);
+  background: var(--bg-3); border-radius: 0 12px 12px 0;
+}
+.about p { margin: 0; font-size: .93rem; }
+
+/* ------------------------------------------------------------------
+   10. Contact
+------------------------------------------------------------------ */
+.contact-card {
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 20px;
+  box-shadow: var(--shadow); padding: clamp(1.6rem, 4vw, 3rem); text-align: center;
+  position: relative; overflow: hidden;
+}
+.contact-card::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+.contact-card h2 { margin-bottom: .6rem; }
+.contact-card p { max-width: 56ch; margin-inline: auto; }
+.mailrow { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin-top: 1.6rem; }
+.mail-lit {
+  font-size: .92rem; color: var(--ink-3); margin-top: 1.1rem; word-break: break-word;
+}
+.mail-lit a { color: var(--ink-2); }
+
+/* ------------------------------------------------------------------
+   11. Pied de page
+------------------------------------------------------------------ */
+footer { border-top: 1px solid var(--line); padding: 2rem 0 2.5rem; }
+.foot-in { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
+footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
+.todo-inline {
+  font-family: ui-monospace, Consolas, monospace; font-size: .78rem; font-weight: 700;
+  color: var(--warn); background: var(--warn-soft); border: 1px dashed var(--warn);
+  border-radius: 6px; padding: .12rem .45rem;
+}
+
+/* ------------------------------------------------------------------
+   12. Animations, désactivées si l'utilisateur les refuse
+------------------------------------------------------------------ */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+.reveal.on { opacity: 1; transform: none; }
+.flow-dot { animation: travel 3.6s linear infinite; }
+.flow-dot.d2 { animation-delay: 1.2s; }
+.flow-dot.d3 { animation-delay: 2.4s; }
+@keyframes travel {
+  0%   { transform: translateX(0);    opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { transform: translateX(96px); opacity: 0; }
+}
+.pulse { animation: pulse 3s ease-in-out infinite; transform-origin: center; }
+@keyframes pulse { 0%, 100% { opacity: .35; } 50% { opacity: .9; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .flow-dot, .pulse { animation: none; }
+  .flow-dot { opacity: .9; }
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+/* Impression : version lisible en noir sur blanc. */
+@media print {
+  .hdr, .hero-art, .cta-row { display: none; }
+  body { background: #fff; color: #000; font-size: 12px; }
+  .case, .stat, .deliver, .contact-card { box-shadow: none; border-color: #999; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main"><span class="fr">Aller au contenu</span><span class="en">Skip to content</span></a>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="#top" aria-label="NovaFlow">
+      <svg viewBox="0 0 32 32" aria-hidden="true" fill="none">
+        <rect x="1.2" y="1.2" width="29.6" height="29.6" rx="8.5" stroke="currentColor" stroke-opacity=".25" stroke-width="1.6"/>
+        <path d="M8 22.5V9.5l8 8.4V9.5" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19.5 22.5c3.6 0 4.5-2.4 4.5-6.5" stroke="var(--accent-2)" stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="24" cy="10.5" r="2.1" fill="var(--accent-2)"/>
+      </svg>
+      NovaFlow
+    </a>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#realisations"><span class="fr">Réalisations</span><span class="en">Case studies</span></a>
+      <a href="#tarifs"><span class="fr">Tarifs</span><span class="en">Pricing</span></a>
+      <a href="#methode"><span class="fr">Méthode</span><span class="en">How I work</span></a>
+      <a href="#livraison"><span class="fr">Livrables</span><span class="en">Deliverables</span></a>
+      <a href="#contact"><span class="fr">Contact</span><span class="en">Contact</span></a>
+    </nav>
+
+    <div class="hdr-tools">
+      <div class="seg" role="group" id="langGroup" aria-label="Langue du site">
+        <button type="button" id="btnFr" aria-pressed="true">FR</button>
+        <button type="button" id="btnEn" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="icon-btn" id="btnTheme" aria-pressed="false">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ================= ACCROCHE ================= -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span><span class="fr">Automatisation de processus : n8n, Node, ERP et RPA</span><span class="en">Process automation: n8n, Node, ERP and RPA</span></span>
+      <h1>
+        <span class="fr">L'automatisation qui trouve l'argent que personne ne voit.</span>
+        <span class="en">Automation that finds the money nobody sees.</span>
+      </h1>
+      <p class="lede">
+        <span class="fr">Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Des processus administratifs qui tournent seuls, et qui remontent ce qui cloche avant que cela ne coûte cher.</span>
+        <span class="en">Invoice reconciliation, inbox extraction, daily data health checks. Back office processes that run on their own, and surface what is wrong before it gets expensive.</span>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-1" href="#contact">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 6.5h17v11h-17z" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span class="fr">Décrire mon cas</span><span class="en">Describe my case</span>
+        </a>
+        <a class="btn btn-2" href="#realisations">
+          <span class="fr">Voir les trois réalisations</span><span class="en">See the three case studies</span>
+        </a>
+      </div>
+      <p class="hero-note">
+        <span class="fr">Travail entièrement à distance. Belgique, Suisse romande, Luxembourg. Français ou anglais.</span>
+        <span class="en">Fully remote. Belgium, French-speaking Switzerland, Luxembourg. French or English.</span>
+      </p>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 460 330" fill="none" role="img">
+        <defs>
+          <linearGradient id="gEng" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="var(--accent)" stop-opacity=".22"/>
+            <stop offset="1" stop-color="var(--accent-2)" stop-opacity=".14"/>
+          </linearGradient>
+        </defs>
+
+        <!-- entrées -->
+        <g>
+          <rect x="6" y="34" width="112" height="62" rx="13" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+          <rect x="24" y="52" width="34" height="26" rx="4" stroke="var(--ink-3)" stroke-width="1.6"/>
+          <path d="M24 61h34M41 52v26" stroke="var(--ink-3)" stroke-width="1.3"/>
+          <rect x="68" y="55" width="32" height="4" rx="2" fill="var(--ink-3)" opacity=".55"/>
+          <rect x="68" y="64" width="24" height="4" rx="2" fill="var(--ink-3)" opacity=".35"/>
+          <rect x="68" y="73" width="28" height="4" rx="2" fill="var(--ink-3)" opacity=".35"/>
+        </g>
+        <g>
+          <rect x="6" y="134" width="112" height="62" rx="13" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+          <rect x="24" y="152" width="38" height="27" rx="4" stroke="var(--ink-3)" stroke-width="1.6"/>
+          <path d="m24 155 19 13 19-13" stroke="var(--ink-3)" stroke-width="1.6" stroke-linejoin="round"/>
+          <rect x="72" y="157" width="28" height="4" rx="2" fill="var(--ink-3)" opacity=".55"/>
+          <rect x="72" y="167" width="20" height="4" rx="2" fill="var(--ink-3)" opacity=".35"/>
+        </g>
+        <g>
+          <rect x="6" y="234" width="112" height="62" rx="13" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+          <path d="M24 280v-26M24 280h40" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="m28 274 9-9 7 6 10-14" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="72" y="257" width="28" height="4" rx="2" fill="var(--ink-3)" opacity=".55"/>
+          <rect x="72" y="267" width="20" height="4" rx="2" fill="var(--ink-3)" opacity=".35"/>
+        </g>
+
+        <!-- connecteurs entrée vers moteur -->
+        <path d="M118 65h34c8 0 12 4 12 12v78" stroke="var(--line-2)" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M118 165h46" stroke="var(--line-2)" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M118 265h34c8 0 12-4 12-12v-78" stroke="var(--line-2)" stroke-width="1.6" stroke-linecap="round"/>
+        <g fill="var(--accent)">
+          <circle class="flow-dot" cx="120" cy="65" r="3.4"/>
+          <circle class="flow-dot d2" cx="120" cy="165" r="3.4"/>
+          <circle class="flow-dot d3" cx="120" cy="265" r="3.4"/>
+        </g>
+
+        <!-- moteur -->
+        <rect x="166" y="112" width="128" height="106" rx="18" fill="url(#gEng)" stroke="var(--accent)" stroke-width="1.6"/>
+        <g stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round">
+          <path d="M196 148h68M196 165h50M196 182h60"/>
+        </g>
+        <circle class="pulse" cx="230" cy="130" r="5" fill="var(--accent-2)"/>
+        <rect x="186" y="196" width="88" height="6" rx="3" fill="var(--accent)" opacity=".25"/>
+
+        <!-- connecteurs moteur vers sorties -->
+        <path d="M294 145h30c8 0 12-4 12-12v-8" stroke="var(--line-2)" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M294 185h30c8 0 12 4 12 12v8" stroke="var(--line-2)" stroke-width="1.6" stroke-linecap="round"/>
+
+        <!-- sorties -->
+        <rect x="312" y="46" width="140" height="76" rx="14" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+        <rect x="330" y="64" width="60" height="5" rx="2.5" fill="var(--ink-3)" opacity=".6"/>
+        <rect x="330" y="78" width="104" height="5" rx="2.5" fill="var(--ink-3)" opacity=".3"/>
+        <rect x="330" y="92" width="86" height="5" rx="2.5" fill="var(--ink-3)" opacity=".3"/>
+        <path d="M330 106h34" stroke="var(--good)" stroke-width="4" stroke-linecap="round"/>
+
+        <rect x="312" y="206" width="140" height="76" rx="14" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+        <path d="M368 226c-9 0-15 6-15 15 0 14-5 16-5 19h40c0-3-5-5-5-19 0-9-6-15-15-15Z" stroke="var(--accent-2)" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M363 266h10" stroke="var(--accent-2)" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="382" cy="226" r="6" fill="var(--warn)"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ================= BANDEAU DE CONFIANCE ================= -->
+<div class="trust">
+  <div class="wrap trust-in">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.8 4.5 6v6.2c0 4.6 3.1 7.6 7.5 9 4.4-1.4 7.5-4.4 7.5-9V6L12 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m8.6 12 2.5 2.6 4.4-5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p>
+      <span class="fr"><strong>Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible.</strong> Vous rejouez la démonstration sur votre poste, vous obtenez exactement les chiffres affichés sur cette page. Rien n'est affirmé sans être vérifiable.</span>
+      <span class="en"><strong>Every automation ships with its labelled test dataset and a reproducible demo script.</strong> Run the demo on your own machine and you get exactly the numbers shown on this page. Nothing is claimed that cannot be checked.</span>
+    </p>
+  </div>
+</div>
+
+<!-- ================= CHIFFRES ================= -->
+<section class="stats" aria-labelledby="stats-h">
+  <div class="wrap">
+    <h2 id="stats-h" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">
+      <span class="fr">Chiffres mesurés</span><span class="en">Measured results</span>
+    </h2>
+    <div class="stat-grid">
+      <div class="stat reveal">
+        <span class="v num"><em><span class="fr">17 994,91 EUR</span><span class="en">EUR 17,994.91</span></em></span>
+        <span class="k"><span class="fr">de doubles paiements détectés sur un seul mois de factures</span><span class="en">in duplicate payments found in a single month of invoices</span></span>
+      </div>
+      <div class="stat reveal">
+        <span class="v num"><em>259 / 259</em></span>
+        <span class="k"><span class="fr">valeurs de champ exactes à l'extraction, vérifiées contre un jeu labellé</span><span class="en">field values extracted exactly right, checked against a labelled set</span></span>
+      </div>
+      <div class="stat reveal">
+        <span class="v num"><em>10 / 10</em></span>
+        <span class="k"><span class="fr">anomalies injectées détectées, avec 4 faux positifs sur 960 jours-série</span><span class="en">injected anomalies caught, with 4 false positives over 960 series-days</span></span>
+      </div>
+      <div class="stat reveal">
+        <span class="v num"><em>0</em></span>
+        <span class="k"><span class="fr">ligne en double lors d'une seconde exécution sur la même boîte mail</span><span class="en">duplicate rows on a second run over the same mailbox</span></span>
+      </div>
+    </div>
+    <p class="stat-note">
+      <span class="fr">Ces chiffres sont mesurés sur les jeux de données livrés avec chaque automatisation. Ce ne sont pas des estimations.</span>
+      <span class="en">These figures are measured on the datasets shipped with each automation. They are not estimates.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= RÉALISATIONS ================= -->
+<section id="realisations" aria-labelledby="real-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span class="fr">Réalisations</span><span class="en">Case studies</span></p>
+      <h2 id="real-h">
+        <span class="fr">Trois automatisations qui tournent, avec leurs résultats vérifiés</span>
+        <span class="en">Three automations that run, with verified results</span>
+      </h2>
+      <p>
+        <span class="fr">Pour chacune : le problème tel qu'il se pose au quotidien, ce que fait la solution, et ce qu'elle a trouvé.</span>
+        <span class="en">For each one: the day to day problem, what the solution does, and what it found.</span>
+      </p>
+    </div>
+
+    <!-- ---------- CAS 1 ---------- -->
+    <article class="case reveal">
+      <div class="case-top">
+        <div>
+          <span class="case-num">01</span>
+          <h3><span class="fr">Rapprochement facture et banque</span><span class="en">Invoice to bank reconciliation</span></h3>
+          <p class="case-sub">
+            <span class="fr">Comparer un export comptable et un relevé bancaire, au centime près, sans y passer la journée.</span>
+            <span class="en">Compare an accounting export and a bank statement, to the cent, without spending the day on it.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">n8n</span><span class="tag">Node</span>
+            <span class="tag"><span class="fr">CSV multi-formats</span><span class="en">Multi-format CSV</span></span>
+            <span class="tag"><span class="fr">Rapport HTML</span><span class="en">HTML report</span></span>
+          </div>
+        </div>
+        <div class="case-art" aria-hidden="true">
+          <svg viewBox="0 0 340 170" fill="none">
+            <rect width="340" height="170" rx="12" fill="var(--bg-3)"/>
+            <g opacity=".9">
+              <rect x="22" y="26" width="86" height="9" rx="4.5" fill="var(--ink-3)" opacity=".5"/>
+              <rect x="22" y="44" width="70" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="22" y="62" width="80" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="22" y="80" width="62" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="22" y="98" width="76" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="22" y="116" width="66" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+            </g>
+            <g opacity=".9">
+              <rect x="232" y="26" width="86" height="9" rx="4.5" fill="var(--ink-3)" opacity=".5"/>
+              <rect x="248" y="44" width="70" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="238" y="62" width="80" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="256" y="80" width="62" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="242" y="98" width="76" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="252" y="116" width="66" height="9" rx="4.5" fill="var(--ink-3)" opacity=".35"/>
+            </g>
+            <path d="M118 62h44M118 80h44M222 62h-44M222 98h-44" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="170" cy="80" r="30" fill="var(--bg-2)" stroke="var(--accent)" stroke-width="1.8"/>
+            <path d="m157 80 9 9 18-19" stroke="var(--good)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <g>
+              <rect x="112" y="132" width="116" height="22" rx="7" fill="var(--bg-2)" stroke="var(--warn)" stroke-width="1.5"/>
+              <circle cx="128" cy="143" r="5" fill="var(--warn)"/>
+              <rect x="140" y="140" width="72" height="6" rx="3" fill="var(--warn)" opacity=".45"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div class="blk">
+          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <p>
+            <span class="fr">Un export comptable et un relevé bancaire du même mois n'ont jamais le même format : encodages, séparateurs, formats de date et de montant différents, et des libellés bancaires en texte libre. Le rapprochement se fait à la main, et les erreurs passent inaperçues.</span>
+            <span class="en">An accounting export and a bank statement for the same month never share a format: different encodings, separators, date and amount formats, plus free text bank labels. Reconciliation is done by hand, and errors go unnoticed.</span>
+          </p>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <ul>
+            <li><span class="fr">Un workflow n8n qui absorbe les deux formats sans préparation manuelle.</span><span class="en">An n8n workflow that swallows both formats with no manual prep.</span></li>
+            <li><span class="fr">Les encaissements sont agrégés par référence avant comparaison, pas ligne à ligne.</span><span class="en">Payments are aggregated by reference before comparison, not line by line.</span></li>
+            <li><span class="fr">Chaque facture est classée en sept catégories, du rapprochement net au paiement en double.</span><span class="en">Each invoice is sorted into seven categories, from clean match to duplicate payment.</span></li>
+            <li><span class="fr">Chaque euro d'écart entre les deux sources est justifié dans un tableau de bouclage. Si le bouclage ne tombe pas au centime, aucun rapport n'est émis.</span><span class="en">Every euro of gap between the two sources is explained in a bridge table. If the bridge does not balance to the cent, no report is issued.</span></li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">Résultats mesurés</span><span class="en">Measured results</span></h4>
+          <ul>
+            <li><span class="fr">60 factures contre 65 lignes bancaires, 16 anomalies remontées</span><span class="en">60 invoices against 65 bank lines, 16 anomalies raised</span></li>
+            <li class="hi"><span class="fr">2 doubles paiements pour 17 994,91 EUR à se faire rembourser</span><span class="en">2 duplicate payments worth EUR 17,994.91 to claim back</span></li>
+            <li><span class="fr">Bouclage exact au centime</span><span class="en">Bridge balanced to the cent</span></li>
+            <li><span class="fr">100 % de concordance avec un jeu de données labellé, sur les 60 factures</span><span class="en">100% agreement with a labelled dataset, across all 60 invoices</span></li>
+            <li><span class="fr">Moteur : 19 ms</span><span class="en">Engine: 19 ms</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-band">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>
+          <span class="fr"><strong>Ce que ça change.</strong> Le gain n'est pas la demi-journée de saisie économisée, c'est le double paiement de 17 994,91 EUR que personne n'aurait vu.</span>
+          <span class="en"><strong>What it changes.</strong> The value is not the half day of manual work saved, it is the EUR 17,994.91 duplicate payment nobody would have seen.</span>
+        </p>
+      </div>
+
+      <div class="threshold">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <span class="lbl"><span class="fr">Seuil d'amortissement</span><span class="en">Break-even threshold</span></span>
+          <p>
+            <span class="fr">L'automatisation est rentabilisée dès qu'elle détecte un seul double paiement supérieur à 1 200 EUR, ou qu'elle fait récupérer une seule facture impayée de ce montant. Sur le jeu de démonstration, elle en a trouvé deux, pour 17 994,91 EUR.</span>
+            <span class="en">The automation pays for itself the moment it catches a single duplicate payment above EUR 1,200, or recovers a single unpaid invoice of that size. On the demo dataset it found two, worth EUR 17,994.91.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="case-foot">
+        <div class="scope">
+          <div>
+            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <ul>
+              <li><span class="fr">Workflow n8n, à vous</span><span class="en">n8n workflow, yours to keep</span></li>
+              <li><span class="fr">Adaptation à deux formats de fichier</span><span class="en">Adaptation to two file formats</span></li>
+              <li><span class="fr">Rapport HTML et export CSV</span><span class="en">HTML report and CSV export</span></li>
+              <li><span class="fr">README FR et EN, jeu de test, script de démonstration</span><span class="en">README FR and EN, test dataset, demo script</span></li>
+              <li><span class="fr">Une série de corrections après livraison</span><span class="en">One round of fixes after delivery</span></li>
+            </ul>
+          </div>
+          <div class="out">
+            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <ul>
+              <li><span class="fr">Une devise supplémentaire</span><span class="en">An additional currency</span></li>
+              <li><span class="fr">Un troisième fichier source</span><span class="en">A third source file</span></li>
+              <li><span class="fr">L'écriture retour dans le logiciel comptable</span><span class="en">Write-back into the accounting software</span></li>
+              <li><span class="fr">L'hébergement de l'instance n8n</span><span class="en">Hosting of the n8n instance</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="price-card">
+          <span class="pl"><span class="fr">Forfait de lancement</span><span class="en">Launch price</span></span>
+          <span class="pv num"><span class="fr">1 200 EUR</span><span class="en">EUR 1,200</span></span>
+          <span class="pn">
+            <span class="fr">Réservé aux trois premiers clients, en contrepartie d'une référence écrite. <a href="#tarifs">Conditions</a></span>
+            <span class="en">For the first three clients only, in exchange for a written reference. <a href="#tarifs">Terms</a></span>
+          </span>
+          <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- CAS 2 ---------- -->
+    <article class="case reveal">
+      <div class="case-top">
+        <div>
+          <span class="case-num">02</span>
+          <h3><span class="fr">Boîte mail vers tableau</span><span class="en">Mailbox to table</span></h3>
+          <p class="case-sub">
+            <span class="fr">Les commandes reçues par mail arrivent dans un tableau propre, sans doublon et sans ressaisie.</span>
+            <span class="en">Orders received by email land in a clean table, with no duplicates and no retyping.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">n8n</span><span class="tag">IMAP</span>
+            <span class="tag"><span class="fr">FR et EN</span><span class="en">FR and EN</span></span>
+            <span class="tag"><span class="fr">Idempotent</span><span class="en">Idempotent</span></span>
+          </div>
+        </div>
+        <div class="case-art" aria-hidden="true">
+          <svg viewBox="0 0 340 170" fill="none">
+            <rect width="340" height="170" rx="12" fill="var(--bg-3)"/>
+            <g stroke="var(--ink-3)" stroke-width="1.6" fill="var(--bg-2)">
+              <rect x="20" y="26" width="52" height="34" rx="5"/>
+              <rect x="20" y="70" width="52" height="34" rx="5"/>
+              <rect x="20" y="114" width="52" height="34" rx="5"/>
+            </g>
+            <g stroke="var(--ink-3)" stroke-width="1.4" stroke-linejoin="round" fill="none">
+              <path d="m20 29 26 19 26-19M20 73l26 19 26-19M20 117l26 19 26-19"/>
+            </g>
+            <path d="M78 43h34c7 0 10 4 10 11v22M78 87h56M78 131h34c7 0 10-4 10-11v-22" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="140" y="24" width="180" height="88" rx="9" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+            <rect x="140" y="24" width="180" height="20" rx="9" fill="var(--accent)" opacity=".18"/>
+            <path d="M140 44h180M140 66h180M140 88h180M196 24v88M252 24v88" stroke="var(--line-2)" stroke-width="1.2"/>
+            <g fill="var(--good)" opacity=".8">
+              <rect x="150" y="52" width="34" height="6" rx="3"/>
+              <rect x="206" y="52" width="34" height="6" rx="3"/>
+              <rect x="262" y="52" width="44" height="6" rx="3"/>
+              <rect x="150" y="74" width="34" height="6" rx="3"/>
+              <rect x="206" y="74" width="34" height="6" rx="3"/>
+              <rect x="262" y="74" width="44" height="6" rx="3"/>
+              <rect x="150" y="96" width="34" height="6" rx="3"/>
+              <rect x="206" y="96" width="34" height="6" rx="3"/>
+              <rect x="262" y="96" width="44" height="6" rx="3"/>
+            </g>
+            <rect x="140" y="124" width="104" height="26" rx="8" fill="var(--bg-2)" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <path d="M158 137h8M172 131v12" stroke="var(--warn)" stroke-width="2" stroke-linecap="round"/>
+            <rect x="182" y="134" width="48" height="6" rx="3" fill="var(--warn)" opacity=".45"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div class="blk">
+          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <p>
+            <span class="fr">Les confirmations de commande arrivent par mail et quelqu'un les ressaisit dans un tableur. La ressaisie produit des doublons et des oublis, et personne ne s'en aperçoit avant que le client réclame.</span>
+            <span class="en">Order confirmations arrive by email and someone retypes them into a spreadsheet. Retyping creates duplicates and gaps, and nobody notices until a customer complains.</span>
+          </p>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <ul>
+            <li><span class="fr">Un workflow qui lit la boîte, extrait les champs, et n'ajoute que ce qui est réellement nouveau.</span><span class="en">A workflow that reads the mailbox, extracts the fields, and only adds what is genuinely new.</span></li>
+            <li><span class="fr">Idempotence par message : rejouer le traitement ne crée aucune ligne supplémentaire.</span><span class="en">Idempotency per message: replaying the run creates no extra rows.</span></li>
+            <li><span class="fr">Gestion des révisions : une commande corrigée met à jour la ligne existante, elle n'en crée pas une seconde.</span><span class="en">Revision handling: a corrected order updates the existing row instead of creating a second one.</span></li>
+            <li><span class="fr">Mise en quarantaine plutôt que devinette : un message incomplet part en revue humaine, il n'est jamais complété au jugé.</span><span class="en">Quarantine rather than guessing: an incomplete message goes to human review, it is never filled in by guesswork.</span></li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">Résultats mesurés</span><span class="en">Measured results</span></h4>
+          <ul>
+            <li><span class="fr">46 messages traités, 35 lignes écrites, 470 004,01 EUR de commandes extraites</span><span class="en">46 messages processed, 35 rows written, EUR 470,004.01 of orders extracted</span></li>
+            <li class="hi"><span class="fr">259 valeurs de champ exactes sur 259, vérifiées contre un jeu labellé</span><span class="en">259 field values correct out of 259, checked against a labelled set</span></li>
+            <li class="hi"><span class="fr">Deuxième exécution sur la même boîte : 0 ligne en double</span><span class="en">Second run over the same mailbox: 0 duplicate rows</span></li>
+            <li><span class="fr">3 messages incomplets mis en quarantaine, 4 hors sujet ignorés</span><span class="en">3 incomplete messages quarantined, 4 off topic ignored</span></li>
+            <li><span class="fr">Gère l'anglais et le français, le HTML seul, et les mails transférés dont l'historique cité contient une commande plus ancienne</span><span class="en">Handles English and French, HTML only bodies, and forwarded mails whose quoted history contains an older order</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-band">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>
+          <span class="fr"><strong>Ce que ça change.</strong> Le gain n'est pas la ressaisie évitée, c'est une base sans doublon et sans commande oubliée, sur laquelle vous pouvez enfin compter.</span>
+          <span class="en"><strong>What it changes.</strong> The value is not the typing avoided, it is a table with no duplicates and no missing order, one you can actually rely on.</span>
+        </p>
+      </div>
+
+      <div class="threshold">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <span class="lbl"><span class="fr">Seuil d'amortissement</span><span class="en">Break-even threshold</span></span>
+          <p>
+            <span class="fr">Sur le jeu de démonstration, la commande moyenne s'élève à 13 428,69 EUR. Une seule commande saisie en double, ou une seule commande oubliée, coûte cet ordre de grandeur : un seul incident évité rentabilise l'automatisation neuf fois.</span>
+            <span class="en">On the demo dataset the average order is EUR 13,428.69. A single order entered twice, or a single order missed, costs that order of magnitude: one avoided incident pays for the automation nine times over.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="case-foot">
+        <div class="scope">
+          <div>
+            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <ul>
+              <li><span class="fr">Workflow n8n, à vous</span><span class="en">n8n workflow, yours to keep</span></li>
+              <li><span class="fr">Deux gabarits d'extraction</span><span class="en">Two extraction templates</span></li>
+              <li><span class="fr">Connexion à une boîte mail, doublons et révisions gérés</span><span class="en">One mailbox connected, duplicates and revisions handled</span></li>
+              <li><span class="fr">Fichier de quarantaine et rapport</span><span class="en">Quarantine file and report</span></li>
+              <li><span class="fr">README FR et EN, jeu de test, une série de corrections</span><span class="en">README FR and EN, test dataset, one round of fixes</span></li>
+            </ul>
+          </div>
+          <div class="out">
+            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <ul>
+              <li><span class="fr">Un troisième gabarit et au-delà</span><span class="en">A third template and beyond</span></li>
+              <li><span class="fr">L'extraction depuis des pièces jointes PDF</span><span class="en">Extraction from PDF attachments</span></li>
+              <li><span class="fr">Une seconde boîte mail</span><span class="en">A second mailbox</span></li>
+              <li><span class="fr">L'écriture directe dans un ERP</span><span class="en">Direct write into an ERP</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="price-card">
+          <span class="pl"><span class="fr">Forfait de lancement</span><span class="en">Launch price</span></span>
+          <span class="pv num"><span class="fr">1 400 EUR</span><span class="en">EUR 1,400</span></span>
+          <span class="pn">
+            <span class="fr">Réservé aux trois premiers clients, en contrepartie d'une référence écrite. <a href="#tarifs">Conditions</a></span>
+            <span class="en">For the first three clients only, in exchange for a written reference. <a href="#tarifs">Terms</a></span>
+          </span>
+          <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- CAS 3 ---------- -->
+    <article class="case reveal">
+      <div class="case-top">
+        <div>
+          <span class="case-num">03</span>
+          <h3><span class="fr">Contrôle quotidien d'anomalies</span><span class="en">Daily data health check</span></h3>
+          <p class="case-sub">
+            <span class="fr">Un export qui se fige, une valeur qui s'effondre : vous le savez le jour même, pas trois semaines après.</span>
+            <span class="en">A frozen export, a value that collapses: you know the same day, not three weeks later.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">n8n</span>
+            <span class="tag"><span class="fr">Statistiques robustes</span><span class="en">Robust statistics</span></span>
+            <span class="tag"><span class="fr">Anti-fatigue d'alerte</span><span class="en">Alert fatigue control</span></span>
+          </div>
+        </div>
+        <div class="case-art" aria-hidden="true">
+          <svg viewBox="0 0 340 170" fill="none">
+            <rect width="340" height="170" rx="12" fill="var(--bg-3)"/>
+            <path d="M28 140h288M28 140V22" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M28 62h288v42H28z" fill="var(--accent)" opacity=".12"/>
+            <path d="M28 83h288" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="5 4" opacity=".6"/>
+            <path d="M32 88l16-12 16 16 16-10 16 12 16-16 16 10 16-12 16 14 16-10"
+                  stroke="var(--ink-2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".75"/>
+            <path d="M192 90h44" stroke="var(--warn)" stroke-width="2.6" stroke-linecap="round"/>
+            <g>
+              <circle cx="214" cy="90" r="13" fill="none" stroke="var(--warn)" stroke-width="2" class="pulse"/>
+              <circle cx="214" cy="90" r="4.5" fill="var(--warn)"/>
+            </g>
+            <path d="M236 90l14-8 16 44" stroke="var(--ink-2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".75"/>
+            <circle cx="266" cy="126" r="5" fill="var(--warn)"/>
+            <rect x="228" y="26" width="88" height="24" rx="8" fill="var(--bg-2)" stroke="var(--warn)" stroke-width="1.4"/>
+            <path d="M248 44c-5 0-8-3-8-8 0-7-3-8-3-9h22c0 1-3 2-3 9 0 5-3 8-8 8Z" fill="var(--warn)" opacity=".8"/>
+            <rect x="262" y="35" width="44" height="6" rx="3" fill="var(--warn)" opacity=".45"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div class="blk">
+          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <p>
+            <span class="fr">Un export quotidien que personne ne lit. Un traitement de nuit bloqué qui réécrit la même valeur reste invisible pendant des jours, et les décisions continuent de s'appuyer dessus.</span>
+            <span class="en">A daily export nobody reads. A stuck overnight job rewriting the same value stays invisible for days, while decisions keep being made on it.</span>
+          </p>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <ul>
+            <li><span class="fr">Un contrôle quotidien fondé sur des statistiques robustes : médiane et écart absolu médian, plutôt que moyenne et écart-type.</span><span class="en">A daily check built on robust statistics: median and median absolute deviation rather than mean and standard deviation.</span></li>
+            <li><span class="fr">La saisonnalité hebdomadaire est retirée, donc un lundi n'est pas comparé à un samedi.</span><span class="en">Weekly seasonality is removed, so a Monday is never compared to a Saturday.</span></li>
+            <li><span class="fr">Un mécanisme anti-fatigue d'alerte regroupe les jours d'un même incident au lieu de notifier tous les matins.</span><span class="en">An alert fatigue mechanism groups the days of one incident instead of notifying every morning.</span></li>
+            <li><span class="fr">Détection des valeurs figées, un cas qu'un seuil classique ne voit jamais.</span><span class="en">Frozen value detection, a case a plain threshold never catches.</span></li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">Résultats mesurés</span><span class="en">Measured results</span></h4>
+          <ul>
+            <li><span class="fr">120 exécutions quotidiennes simulées sur 8 séries, soit 960 jours-série</span><span class="en">120 simulated daily runs over 8 series, that is 960 series-days</span></li>
+            <li class="hi"><span class="fr">10 anomalies injectées sur 10 détectées</span><span class="en">10 injected anomalies out of 10 detected</span></li>
+            <li><span class="fr">7 sur 10 signalées dès le premier jour, délai médian de détection : 0 jour</span><span class="en">7 out of 10 flagged on day one, median detection delay: 0 days</span></li>
+            <li class="hi"><span class="fr">4 faux positifs sur 960 jours-série, soit environ un tous les huit mois par série</span><span class="en">4 false positives over 960 series-days, about one every eight months per series</span></li>
+            <li><span class="fr">Aucun regard vers le futur : les verdicts recalculés en supprimant les données futures sont identiques</span><span class="en">No look ahead: verdicts recomputed with future data removed are identical</span></li>
+            <li><span class="fr">68 détections brutes compressées en 46 notifications</span><span class="en">68 raw detections compressed into 46 notifications</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-band">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>
+          <span class="fr"><strong>Ce que ça change.</strong> Le gain, ce sont les jours pendant lesquels personne ne voyait que l'export était figé, et pendant lesquels on décidait quand même. Un matin sans notification n'est pas un silence : c'est la preuve que les huit séries ont été vérifiées.</span>
+          <span class="en"><strong>What it changes.</strong> The value is the days during which nobody could see the export was frozen, while decisions were made anyway. A morning with no notification is not silence: it is proof that all eight series were checked.</span>
+        </p>
+      </div>
+
+      <div class="threshold">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <span class="lbl"><span class="fr">Seuil d'amortissement</span><span class="en">Break-even threshold</span></span>
+          <p>
+            <span class="fr">Sur la série chiffre d'affaires de la démonstration, une chute de 58 % pendant quatre jours représente 10 730 EUR par jour. Raccourcir un seul incident de 2 h 30 amortit l'automatisation, et une détection au premier jour plutôt qu'au quatrième évite 32 190 EUR d'exposition.</span>
+            <span class="en">On the demo revenue series, a 58% drop lasting four days represents EUR 10,730 a day. Shortening a single incident by 2.5 hours pays for the automation, and catching it on day one instead of day four avoids EUR 32,190 of exposure.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="case-foot">
+        <div class="scope">
+          <div>
+            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <ul>
+              <li><span class="fr">Workflow n8n, à vous</span><span class="en">n8n workflow, yours to keep</span></li>
+              <li><span class="fr">Jusqu'à 8 séries surveillées</span><span class="en">Up to 8 monitored series</span></li>
+              <li><span class="fr">Réglage des seuils sur votre historique, avec mesure du taux de faux positifs</span><span class="en">Thresholds tuned on your own history, with a measured false positive rate</span></li>
+              <li><span class="fr">Un canal d'alerte et un rapport quotidien</span><span class="en">One alert channel and a daily report</span></li>
+              <li><span class="fr">README FR et EN, jeu de test, une série de corrections</span><span class="en">README FR and EN, test dataset, one round of fixes</span></li>
+            </ul>
+          </div>
+          <div class="out">
+            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <ul>
+              <li><span class="fr">Au-delà de 8 séries</span><span class="en">More than 8 series</span></li>
+              <li><span class="fr">Une saisonnalité mensuelle ou annuelle</span><span class="en">Monthly or yearly seasonality</span></li>
+              <li><span class="fr">Un second canal d'alerte</span><span class="en">A second alert channel</span></li>
+              <li><span class="fr">Le diagnostic des causes</span><span class="en">Root cause diagnosis</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="price-card">
+          <span class="pl"><span class="fr">Forfait de lancement</span><span class="en">Launch price</span></span>
+          <span class="pv num"><span class="fr">1 100 EUR</span><span class="en">EUR 1,100</span></span>
+          <span class="pn">
+            <span class="fr">Réservé aux trois premiers clients, en contrepartie d'une référence écrite. <a href="#tarifs">Conditions</a></span>
+            <span class="en">For the first three clients only, in exchange for a written reference. <a href="#tarifs">Terms</a></span>
+          </span>
+          <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+    <!-- ---------- VOLET RPA ---------- -->
+    <div class="rpa reveal">
+      <div class="rpa-head">
+        <div>
+          <span class="case-num"><span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
+          <h3><span class="fr">Automatisation du poste de travail, RPA</span><span class="en">Desktop automation, RPA</span></h3>
+          <p class="case-sub">
+            <span class="fr">Certains logiciels métier n'ont ni API ni export propre : un ERP ancien, une application de saisie interne, un portail fournisseur qui n'expose rien. L'automatisation se fait alors sur le poste, avec Power Automate Desktop ou un robot équivalent : il ouvre l'application, saisit, contrôle, et journalise chaque action.</span>
+            <span class="en">Some business applications have no API and no clean export: a legacy ERP, an internal data entry tool, a supplier portal that exposes nothing. Automation then happens on the desktop, with Power Automate Desktop or an equivalent robot: it opens the application, types, checks, and logs every action.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">Power Automate Desktop</span>
+            <span class="tag"><span class="fr">Windows</span><span class="en">Windows</span></span>
+            <span class="tag"><span class="fr">Sans API</span><span class="en">No API needed</span></span>
+            <span class="tag"><span class="fr">Journalisé</span><span class="en">Fully logged</span></span>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <svg viewBox="0 0 220 170" fill="none">
+            <rect x="8" y="16" width="204" height="124" rx="10" fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.6"/>
+            <path d="M8 40h204" stroke="var(--line-2)" stroke-width="1.4"/>
+            <circle cx="24" cy="28" r="3.4" fill="var(--warn)"/><circle cx="36" cy="28" r="3.4" fill="var(--ink-3)" opacity=".5"/><circle cx="48" cy="28" r="3.4" fill="var(--ink-3)" opacity=".5"/>
+            <rect x="24" y="54" width="72" height="8" rx="4" fill="var(--ink-3)" opacity=".45"/>
+            <rect x="24" y="72" width="96" height="14" rx="4" fill="var(--bg-2)" stroke="var(--accent-2)" stroke-width="1.6"/>
+            <rect x="30" y="77" width="42" height="4" rx="2" fill="var(--accent-2)" opacity=".8"/>
+            <rect x="24" y="96" width="120" height="8" rx="4" fill="var(--ink-3)" opacity=".3"/>
+            <rect x="24" y="112" width="58" height="14" rx="5" fill="var(--accent)" opacity=".85"/>
+            <g class="pulse">
+              <circle cx="150" cy="79" r="16" fill="none" stroke="var(--accent-2)" stroke-width="1.6"/>
+            </g>
+            <path d="M150 71v16M142 79h16" stroke="var(--accent-2)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M96 150h28l-6-10h-16l-6 10Z" fill="var(--ink-3)" opacity=".4"/>
+            <rect x="76" y="150" width="68" height="6" rx="3" fill="var(--ink-3)" opacity=".4"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="rpa-cols">
+        <div>
+          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <ul>
+            <li><span class="fr">Saisie répétitive dans une application qui n'expose aucune interface</span><span class="en">Repetitive data entry into an application that exposes no interface</span></li>
+            <li><span class="fr">Récupération de fichiers sur un portail, puis classement et renommage</span><span class="en">Fetching files from a portal, then filing and renaming them</span></li>
+            <li><span class="fr">Report d'un écran vers un tableur, ou d'un logiciel vers un autre qui ne lui parle pas</span><span class="en">Moving data from a screen into a spreadsheet, or between two tools that do not talk</span></li>
+            <li><span class="fr">Enchaînement déclenché à heure fixe, sur un poste ou un serveur Windows</span><span class="en">Scheduled runs on a Windows workstation or server</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4><span class="fr">Les règles que je m'impose</span><span class="en">The rules I hold myself to</span></h4>
+          <ul>
+            <li><span class="fr">Le robot journalise chaque action, donc un contrôle a posteriori est toujours possible</span><span class="en">The robot logs every action, so after the fact review is always possible</span></li>
+            <li><span class="fr">Il s'arrête plutôt que de deviner : un cas non prévu part en revue humaine</span><span class="en">It stops rather than guesses: an unforeseen case goes to human review</span></li>
+            <li><span class="fr">Il est testé sur une liste de cas connus avant d'être lancé en production</span><span class="en">It is tested against a list of known cases before going live</span></li>
+            <li><span class="fr">Aucun identifiant en clair dans le robot</span><span class="en">No credentials stored in clear text inside the robot</span></li>
+          </ul>
+        </div>
+        <div class="rpa-limits">
+          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <ul>
+            <li><span class="fr">Un robot de poste dépend de l'interface : un changement d'écran peut le casser</span><span class="en">A desktop robot depends on the interface: a screen change can break it</span></li>
+            <li><span class="fr">Il occupe une session Windows pendant qu'il travaille</span><span class="en">It occupies a Windows session while it works</span></li>
+            <li><span class="fr">Quand une API ou un export existe, c'est toujours plus solide, et je vous le dirai</span><span class="en">When an API or an export exists, it is always sturdier, and I will say so</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rpa-foot">
+        <div class="honest">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
+          <p>
+            <span class="fr">Aucun chiffre n'est affiché sur ce volet. Les trois automatisations ci-dessus sont mesurées sur des jeux de données labellés, celle-ci ne l'est pas encore, et je préfère l'écrire plutôt que d'aligner des pourcentages invérifiables.</span>
+            <span class="en">No figures are shown for this offer. The three automations above are measured against labelled datasets, this one is not yet, and I would rather write that than line up numbers you cannot check.</span>
+          </p>
+        </div>
+        <p class="price-inline">
+          <span class="fr">Forfait, selon le nombre d'écrans</span><span class="en">Fixed price, depending on the number of screens</span>
+          <span class="todo">[PRIX RPA A DEFINIR]</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ---------- VOLET CONTRÔLE MULTI-SITES ---------- -->
+    <div class="rpa reveal">
+      <div class="rpa-head">
+        <div>
+          <span class="case-num"><span class="fr">Quand plusieurs sites saisissent dans le même outil</span><span class="en">When several sites enter data into the same tool</span></span>
+          <h3><span class="fr">Modération des données d'exploitation, multi-sites, à travers l'ERP</span><span class="en">Multi-site operational data moderation, through the ERP</span></h3>
+          <p class="case-sub">
+            <span class="fr">Plusieurs établissements, le même ERP, et des pratiques de saisie qui divergent : champs laissés vides, dossiers jamais clôturés, saisies hors délai, doublons d'un site à l'autre. Un robot de modération applique les mêmes règles à tous les sites, chaque nuit, et ne remonte à chaque site que ce qui le concerne.</span>
+            <span class="en">Several sites, one ERP, and data entry habits that drift apart: empty fields, records never closed, late entries, duplicates across sites. A moderation robot applies the same rules to every site, every night, and sends each site only what concerns it.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">ERP</span>
+            <span class="tag"><span class="fr">Multi-sites</span><span class="en">Multi-site</span></span>
+            <span class="tag"><span class="fr">Règles métier</span><span class="en">Business rules</span></span>
+            <span class="tag"><span class="fr">Reporting par site</span><span class="en">Per-site reporting</span></span>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <svg viewBox="0 0 220 170" fill="none">
+            <rect x="72" y="12" width="76" height="40" rx="9" fill="var(--bg-3)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M86 26h48M86 34h34M86 42h42" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M110 52v22M110 74H30v18M110 74h80v18M110 74v18" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <g fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.5">
+              <rect x="6" y="92" width="48" height="42" rx="8"/>
+              <rect x="86" y="92" width="48" height="42" rx="8"/>
+              <rect x="166" y="92" width="48" height="42" rx="8"/>
+            </g>
+            <g stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" opacity=".7">
+              <path d="M18 122v-14l12-8 12 8v14M98 122v-14l12-8 12 8v14M178 122v-14l12-8 12 8v14"/>
+            </g>
+            <circle cx="46" cy="98" r="6" fill="var(--good)"/>
+            <circle cx="126" cy="98" r="6" fill="var(--warn)"/>
+            <circle cx="206" cy="98" r="6" fill="var(--good)"/>
+            <rect x="60" y="146" width="100" height="8" rx="4" fill="var(--ink-3)" opacity=".3"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="rpa-cols">
+        <div>
+          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <ul>
+            <li><span class="fr">Les règles métier vérifiées automatiquement sur les saisies de chaque site, toutes les nuits</span><span class="en">Business rules checked automatically against each site's entries, every night</span></li>
+            <li><span class="fr">Les écarts groupés par site et par responsable, plutôt qu'une liste globale que personne ne s'approprie</span><span class="en">Gaps grouped by site and by owner, rather than one global list nobody takes on</span></li>
+            <li><span class="fr">La reprise des dossiers anciens par lots, sans bloquer le flux courant</span><span class="en">Backlog clean-up in batches, without blocking the current flow</span></li>
+            <li><span class="fr">Un suivi dans le temps : ce qui a été corrigé, ce qui reste, et depuis quand</span><span class="en">Tracking over time: what was fixed, what remains, and since when</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
+          <ul>
+            <li><span class="fr">Un accès en lecture à la base ou aux exports de l'ERP, rien de plus</span><span class="en">Read access to the database or to the ERP exports, nothing more</span></li>
+            <li><span class="fr">Des règles écrites et validées par les métiers, jamais déduites à leur place</span><span class="en">Rules written and approved by the business, never inferred on their behalf</span></li>
+            <li><span class="fr">Un correspondant par site : une alerte qui ne tombe chez personne ne sert à rien</span><span class="en">One contact per site: an alert that lands nowhere is useless</span></li>
+          </ul>
+        </div>
+        <div class="rpa-limits">
+          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <ul>
+            <li><span class="fr">Le robot signale un écart, il ne décide pas à la place du site</span><span class="en">The robot flags a gap, it does not decide in the site's place</span></li>
+            <li><span class="fr">Sans correspondant identifié, le dispositif s'éteint en quelques semaines</span><span class="en">With no named contact, the whole thing dies within weeks</span></li>
+            <li><span class="fr">Une règle mal écrite produit du bruit, et le bruit tue l'adhésion plus vite que l'erreur</span><span class="en">A badly written rule produces noise, and noise kills adoption faster than the error itself</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rpa-foot">
+        <div class="honest">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
+          <p>
+            <span class="fr">Ce volet vient d'un contexte industriel multi-sites. Les données et les chiffres appartiennent à leur propriétaire et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.</span>
+            <span class="en">This offer comes from a multi-site industrial context. The data and the figures belong to their owner and are not published here. What I can show, and let you replay, are the three measured automations above.</span>
+          </p>
+        </div>
+        <p class="price-inline">
+          <span class="fr">Forfait, selon le nombre de règles et de sites</span><span class="en">Fixed price, depending on rules and sites</span>
+          <span class="todo">[PRIX A DEFINIR]</span>
+        </p>
+      </div>
+    </div>
+
+<!-- ================= TARIFS ================= -->
+<section id="tarifs" aria-labelledby="tarifs-h" style="padding-top: 0">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span class="fr">Tarifs</span><span class="en">Pricing</span></p>
+      <h2 id="tarifs-h">
+        <span class="fr">Un prix arrêté avant de commencer</span>
+        <span class="en">A price agreed before anything starts</span>
+      </h2>
+      <p>
+        <span class="fr">Forfait pour un périmètre écrit. Pas de facturation à l'heure, pas de compteur qui tourne : ce que vous signez est ce que vous payez.</span>
+        <span class="en">A fixed price for a written scope. No hourly billing, no meter running: what you sign is what you pay.</span>
+      </p>
+    </div>
+
+    <div class="note-box">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
+      <div>
+        <p>
+          <span class="fr"><strong>Je ne promets aucun montant récupéré.</strong> Je n'ai aucun moyen de savoir ce que contiennent vos données avant de les avoir vues. Ce qui figure sur cette page, c'est ce que chaque automatisation a trouvé sur un jeu de données représentatif, et le seuil à partir duquel elle est rentabilisée chez vous.</span>
+          <span class="en"><strong>I promise no recovered amount.</strong> I have no way of knowing what your data contains before seeing it. What this page shows is what each automation found on a representative dataset, and the threshold above which it pays for itself at your company.</span>
+        </p>
+        <p>
+          <span class="fr"><strong>Les prix affichés sont des tarifs de lancement.</strong> Ils sont réservés aux trois premiers clients de chaque automatisation, en contrepartie d'une référence écrite et du droit de citer le cas de façon anonymisée. Ce n'est pas le tarif courant, et il ne sera pas maintenu au-delà.</span>
+          <span class="en"><strong>The prices shown are launch prices.</strong> They are reserved for the first three clients of each automation, in exchange for a written reference and the right to describe the case anonymously. This is not the standard rate, and it will not be kept beyond that point.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap reveal">
+      <table>
+        <caption><span class="fr">Options, facturées séparément</span><span class="en">Options, billed separately</span></caption>
+        <thead>
+          <tr>
+            <th scope="col"><span class="fr">Option</span><span class="en">Option</span></th>
+            <th scope="col" class="n">EUR</th>
+            <th scope="col" class="n">USD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="fr">Gabarit d'extraction supplémentaire</span><span class="en">Additional extraction template</span></td><td class="n">180</td><td class="n">200</td></tr>
+          <tr><td><span class="fr">Format de fichier source supplémentaire</span><span class="en">Additional source file format</span></td><td class="n">250</td><td class="n">275</td></tr>
+          <tr><td><span class="fr">Série supplémentaire surveillée, par lot de 4</span><span class="en">Additional monitored series, per batch of 4</span></td><td class="n">120</td><td class="n">135</td></tr>
+          <tr><td><span class="fr">Canal de diffusion supplémentaire (Slack, Teams, API)</span><span class="en">Additional delivery channel (Slack, Teams, API)</span></td><td class="n">300</td><td class="n">330</td></tr>
+          <tr><td><span class="fr">Traduction du rapport dans une troisième langue</span><span class="en">Report translated into a third language</span></td><td class="n">200</td><td class="n">220</td></tr>
+          <tr><td><span class="fr">Reprise d'historique et rejeu sur données passées</span><span class="en">History backfill and replay on past data</span></td><td class="n">350</td><td class="n">385</td></tr>
+          <tr><td><span class="fr">Maintenance et surveillance, par mois</span><span class="en">Maintenance and monitoring, per month</span></td><td class="n">90</td><td class="n">100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-note">
+      <span class="fr">Montants en euros. Conversion indicative 1 EUR = 1,10 USD, confirmée au devis. Régime de TVA : <span class="todo-inline">[MENTION TVA A DEFINIR]</span></span>
+      <span class="en">Amounts in euros. Indicative conversion 1 EUR = 1.10 USD, confirmed in the quote. VAT status: <span class="todo-inline">[MENTION TVA A DEFINIR]</span></span>
+    </p>
+
+    <div class="cond">
+      <div class="mcard">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.8" y="5.5" width="18.4" height="13" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 10h18.4" stroke="currentColor" stroke-width="1.8"/></svg>
+        <h4><span class="fr">Paiement</span><span class="en">Payment</span></h4>
+        <p><span class="fr">50 % à la commande, 50 % à la livraison acceptée. Le travail démarre à réception du premier versement.</span><span class="en">50% on order, 50% on accepted delivery. Work starts once the first payment is received.</span></p>
+      </div>
+      <div class="mcard">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.3l3.4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4><span class="fr">Délai</span><span class="en">Lead time</span></h4>
+        <p><span class="fr">10 jours ouvrés, comptés à partir de la réception de vos données d'exemple et non de la commande.</span><span class="en">10 working days, counted from receipt of your sample data, not from the order.</span></p>
+      </div>
+      <div class="mcard">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20.4 4.4v4.2h-4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4><span class="fr">Corrections</span><span class="en">Fixes</span></h4>
+        <p><span class="fr">Une série incluse, dans les 14 jours suivant la livraison. Au-delà, au tarif des options.</span><span class="en">One round included, within 14 days of delivery. Beyond that, at the option rate.</span></p>
+      </div>
+      <div class="mcard">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3.5h8.5L19 8v12.5H6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3.5V8h5M9 13h6M9 16.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h4><span class="fr">Ce que vous fournissez</span><span class="en">What you provide</span></h4>
+        <p><span class="fr">Les exports d'exemple, les accès nécessaires, un interlocuteur unique et une réponse sous 48 h. Sans cela, le délai est suspendu.</span><span class="en">Sample exports, the required access, a single point of contact and a reply within 48 hours. Without these, the clock stops.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MÉTHODE ET LIVRABLES ================= -->
+<section id="methode" style="background: var(--bg-2); border-block: 1px solid var(--line);" aria-labelledby="meth-h">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="sec-head" style="margin-bottom: 1.5rem">
+          <p class="kicker"><span class="fr">Méthode</span><span class="en">How I work</span></p>
+          <h2 id="meth-h">
+            <span class="fr">Un cadre simple, écrit, sans surprise</span>
+            <span class="en">A simple written frame, no surprises</span>
+          </h2>
+          <p>
+            <span class="fr">Vous savez ce que vous payez, ce que vous recevez et quand vous le recevez, avant de commencer.</span>
+            <span class="en">You know what you pay, what you get and when you get it, before anything starts.</span>
+          </p>
+        </div>
+
+        <div class="mcards">
+          <div class="mcard">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <h4><span class="fr">Forfait</span><span class="en">Fixed price</span></h4>
+            <p><span class="fr">Un prix arrêté pour un périmètre écrit. Pas de facturation à l'heure, pas de compteur qui tourne.</span><span class="en">One agreed price for a written scope. No hourly billing, no meter running.</span></p>
+          </div>
+          <div class="mcard">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <h4><span class="fr">Livrables datés</span><span class="en">Dated deliverables</span></h4>
+            <p><span class="fr">Chaque livrable a une date annoncée à la commande, et cette date figure au devis.</span><span class="en">Every deliverable has a date agreed up front, and that date is in the quote.</span></p>
+          </div>
+          <div class="mcard">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.6 12h16.8M12 3.6c4.5 5 4.5 11.8 0 16.8-4.5-5-4.5-11.8 0-16.8Z" stroke="currentColor" stroke-width="1.6"/></svg>
+            <h4><span class="fr">Tout à distance</span><span class="en">Fully remote</span></h4>
+            <p><span class="fr">Aucun rendez-vous physique, aucun déplacement. Le périmètre géographique n'a pas d'importance.</span><span class="en">No on site meetings, no travel. Location is irrelevant.</span></p>
+          </div>
+          <div class="mcard">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 14.5c0 1.7-1.4 3-3 3H8l-4.5 3.5v-13c0-1.7 1.4-3 3-3h11c1.6 0 3 1.3 3 3v6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            <h4><span class="fr">Communication écrite</span><span class="en">Written communication</span></h4>
+            <p><span class="fr">Les échanges se font par écrit. Les décisions restent tracées et relisables par les deux parties.</span><span class="en">Exchanges happen in writing. Decisions stay traceable and re-readable on both sides.</span></p>
+          </div>
+        </div>
+
+        <div class="about">
+          <p>
+            <span class="fr"><strong>17 ans en environnement industriel</strong>, dont le pilotage de la digitalisation d'un groupe multi-sites. Ce site présente des réalisations, pas un parcours.</span>
+            <span class="en"><strong>17 years in industrial environments</strong>, including leading the digitalisation of a multi-site group. This site presents work, not a resume.</span>
+          </p>
+        </div>
+      </div>
+
+      <div id="livraison">
+        <div class="sec-head" style="margin-bottom: 1.5rem">
+          <p class="kicker"><span class="fr">Livrables</span><span class="en">Deliverables</span></p>
+          <h2>
+            <span class="fr">Ce qui vous est remis</span>
+            <span class="en">What you receive</span>
+          </h2>
+        </div>
+        <div class="deliver">
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong><span class="fr">Le workflow, exportable</span><span class="en">The workflow, exportable</span></strong>
+                <span class="d"><span class="fr">Un fichier JSON que vous importez dans votre propre instance. Il vous appartient.</span><span class="en">A JSON file you import into your own instance. It belongs to you.</span></span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong><span class="fr">Un jeu de données d'exemple labellé</span><span class="en">A labelled sample dataset</span></strong>
+                <span class="d"><span class="fr">Le résultat attendu est connu à l'avance, donc l'exactitude se vérifie, elle ne se promet pas.</span><span class="en">The expected result is known in advance, so accuracy is checked rather than promised.</span></span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong><span class="fr">Un script de démonstration</span><span class="en">A demo script</span></strong>
+                <span class="d"><span class="fr">Une commande, et la démonstration rejoue l'ensemble du traitement sur votre poste.</span><span class="en">One command replays the whole run on your own machine.</span></span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong><span class="fr">Un README d'installation, en français et en anglais</span><span class="en">An install README, in French and English</span></strong>
+                <span class="d"><span class="fr">Installation, configuration, et ce qu'il faut vérifier avant la première exécution réelle.</span><span class="en">Install, configure, and what to check before the first real run.</span></span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong><span class="fr">Le rapport produit par la démonstration</span><span class="en">The report produced by the demo</span></strong>
+                <span class="d"><span class="fr">Un rapport HTML autonome, lisible par une personne qui n'est pas technique.</span><span class="en">A self-contained HTML report, readable by a non technical person.</span></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <h2 id="contact-h">
+        <span class="fr">Décrivez votre cas en quelques lignes</span>
+        <span class="en">Describe your case in a few lines</span>
+      </h2>
+      <p>
+        <span class="fr">Le format des fichiers, le volume mensuel, et ce qui vous coûte le plus de temps aujourd'hui. Une réponse écrite vous dira si c'est automatisable, et à quelles conditions.</span>
+        <span class="en">File formats, monthly volume, and what costs you the most time today. A written answer will tell you whether it can be automated, and on what terms.</span>
+      </p>
+      <div class="mailrow">
+        <a class="btn btn-1" id="mailBtn" href="mailto:novaflowops@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 6.5h17v11h-17z" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span class="fr">Écrire à NovaFlow</span><span class="en">Email NovaFlow</span>
+        </a>
+      </div>
+      <p class="mail-lit">
+        <span class="fr">Ou directement : </span><span class="en">Or directly: </span>
+        <a href="mailto:novaflowops@gmail.com">novaflowops@gmail.com</a>
+      </p>
+      <p class="mail-lit" style="margin-top:.4rem">
+        <span class="fr">Pas de formulaire, pas de traceur, pas de service tiers. Ce site n'enregistre rien.</span>
+        <span class="en">No form, no tracker, no third party service. This site records nothing.</span>
+      </p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <p>
+      <span class="fr">NovaFlow, automatisation de processus documentés. 2026.</span>
+      <span class="en">NovaFlow, documented process automation. 2026.</span>
+    </p>
+    <p><a href="https://novaflow-ops.com/" style="color:inherit;text-decoration:none">novaflow-ops.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  /* ---------- Textes qui ne peuvent pas vivre dans le HTML ---------- */
+  var META = {
+    fr: {
+      title: 'NovaFlow, automatisation de processus',
+      desc: "Automatisation de processus administratifs : rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque livraison inclut son jeu de données de test labellé et un script de démonstration reproductible.",
+      themeLabel: 'Basculer entre le thème clair et le thème sombre',
+      navLabel: 'Navigation principale',
+      langLabel: 'Langue du site',
+      mailSubject: 'NovaFlow, demande sur un processus a automatiser',
+      mailBody: "Bonjour,\n\nVoici mon cas :\n\n- Processus concerne :\n- Formats de fichiers ou source (CSV, boite mail, base, autre) :\n- Volume mensuel approximatif :\n- Ce qui prend le plus de temps aujourd'hui :\n- Echeance souhaitee :\n\nMerci."
+    },
+    en: {
+      title: 'NovaFlow, process automation',
+      desc: 'Back office process automation: invoice reconciliation, mailbox extraction, daily data health checks. Every delivery ships with a labelled test dataset and a reproducible demo script.',
+      themeLabel: 'Switch between light and dark theme',
+      navLabel: 'Main navigation',
+      langLabel: 'Site language',
+      mailSubject: 'NovaFlow, enquiry about a process to automate',
+      mailBody: 'Hello,\n\nHere is my case:\n\n- Process involved:\n- File formats or source (CSV, mailbox, database, other):\n- Approximate monthly volume:\n- What takes the most time today:\n- Target date:\n\nThank you.'
+    }
+  };
+
+  var descEl  = document.querySelector('meta[name="description"]');
+  var navEl   = document.querySelector('nav.nav');
+  var langGrp = document.getElementById('langGroup');
+  var btnFr   = document.getElementById('btnFr');
+  var btnEn   = document.getElementById('btnEn');
+  var btnTh   = document.getElementById('btnTheme');
+  var mailBtn = document.getElementById('mailBtn');
+
+  function applyLang(lang) {
+    var m = META[lang] || META.fr;
+    root.setAttribute('lang', lang);
+    document.title = m.title;
+    if (descEl) descEl.setAttribute('content', m.desc);
+    if (navEl) navEl.setAttribute('aria-label', m.navLabel);
+    if (langGrp) langGrp.setAttribute('aria-label', m.langLabel);
+    if (btnTh) {
+      btnTh.setAttribute('aria-label', m.themeLabel);
+      btnTh.setAttribute('title', m.themeLabel);
+    }
+    if (btnFr) btnFr.setAttribute('aria-pressed', String(lang === 'fr'));
+    if (btnEn) btnEn.setAttribute('aria-pressed', String(lang === 'en'));
+    if (mailBtn) {
+      mailBtn.setAttribute('href',
+        'mailto:novaflowops@gmail.com?subject=' + encodeURIComponent(m.mailSubject) +
+        '&body=' + encodeURIComponent(m.mailBody));
+    }
+  }
+
+  function currentTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (btnTh) btnTh.setAttribute('aria-pressed', String(theme === 'dark'));
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#080c16' : '#f7f9fc');
+  }
+
+  if (btnFr) btnFr.addEventListener('click', function () { store.set('novaflow-lang', 'fr'); applyLang('fr'); });
+  if (btnEn) btnEn.addEventListener('click', function () { store.set('novaflow-lang', 'en'); applyLang('en'); });
+  if (btnTh) btnTh.addEventListener('click', function () {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    store.set('novaflow-theme', next);
+    applyTheme(next);
+  });
+
+  applyLang(root.getAttribute('lang') === 'en' ? 'en' : 'fr');
+  applyTheme(currentTheme());
+
+  /* ---------- Apparition au défilement, coupée si l'utilisateur refuse les animations ---------- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    for (var i = 0; i < items.length; i++) items[i].classList.add('on');
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+    for (var j = 0; j < items.length; j++) io.observe(items[j]);
+  }
+})();
+</script>
+</body>
+</html>
