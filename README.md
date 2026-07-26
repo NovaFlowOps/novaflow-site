@@ -9,7 +9,7 @@ Depot : https://github.com/novaflowops/novaflow-site (public, requis par GitHub 
   aucun CDN, aucune police distante, aucune image distante.
 - Fonctionne aussi en double-cliquant le fichier, sans serveur.
 - Bilingue FR / EN, francais par defaut, selecteur dans l'en-tete.
-- Theme sombre par defaut, clair accessible par le bouton de bascule.
+- Theme clair et sombre, `prefers-color-scheme` respecte, bouton de bascule.
 - `prefers-reduced-motion` respecte, navigation clavier, contrastes verifies.
 - Environ 103 Ko. Aucun traceur, aucun cookie, aucun appel reseau.
 
@@ -47,11 +47,11 @@ Plus aucun marqueur visible sur le site. Restent deux decisions hors site :
 
 ## Theme
 
-Le sombre est le theme par defaut, pour tous les visiteurs, y compris ceux dont
-le systeme est en clair. Le bouton de bascule reste disponible et le choix est
-memorise dans le navigateur sous la cle `novaflow-theme`. Pour revenir a un
-comportement qui suit `prefers-color-scheme`, il faut retablir la media query
-retiree du bloc CSS de themes.
+Le site suit la preference systeme du visiteur. Le bouton de bascule prend le
+dessus et ce choix explicite est memorise sous la cle `novaflow-theme`. Tant
+qu'aucun choix n'est fait, aucun attribut `data-theme` n'est pose et le site
+suit le systeme en direct, y compris si le visiteur change de theme pendant sa
+visite.
 
 ## Mettre le site a jour
 

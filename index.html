@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NovaFlow, automatisation de processus</title>
 <meta name="description" content="Automatisation de processus administratifs : rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque livraison inclut son jeu de données de test labellé et un script de démonstration reproductible.">
-<meta name="color-scheme" content="dark light">
-<meta name="theme-color" content="#080c16">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f9fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#080c16" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://novaflow-ops.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://novaflow-ops.com/">
@@ -90,11 +91,11 @@
 </script>
 <script>
 /* Applique le thème et la langue avant le premier rendu, pour éviter tout clignotement.
-   Le sombre est le défaut : seul un choix explicite pour le clair est restauré. */
+   Sans choix explicite, aucun attribut n'est posé et le CSS suit le système. */
 (function () {
   try {
     var t = localStorage.getItem('novaflow-theme');
-    document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
     var l = localStorage.getItem('novaflow-lang');
     if (l === 'en' || l === 'fr') document.documentElement.setAttribute('lang', l);
   } catch (e) {}
@@ -104,29 +105,9 @@
 /* ------------------------------------------------------------------
    1. Thèmes
 ------------------------------------------------------------------ */
-/* Le thème sombre est le défaut. Le clair s'obtient par le bouton de bascule,
-   et le choix est mémorisé dans le navigateur. */
+/* Le thème suit la préférence système. Le bouton de bascule prend le dessus,
+   et ce choix explicite est mémorisé dans le navigateur. */
 :root {
-  --bg:        #080c16;
-  --bg-2:      #0f1524;
-  --bg-3:      #161d2f;
-  --ink:       #eaeff8;
-  --ink-2:     #b3bed1;
-  --ink-3:     #8a97ad;
-  --line:      #232c40;
-  --line-2:    #33405c;
-  --accent:    #67d3f5;
-  --accent-2:  #b39cff;
-  --accent-ink:#04121a;
-  --accent-soft:#10283a;
-  --good:      #4ddba0;
-  --warn:      #f0c274;
-  --warn-soft: #2c2313;
-  --grid:      rgba(255, 255, 255, .05);
-  --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
-  --radius:    16px;
-}
-:root[data-theme="light"] {
   --bg:        #f7f9fc;
   --bg-2:      #ffffff;
   --bg-3:      #eef2f8;
@@ -144,6 +125,48 @@
   --warn-soft: #fdf3e0;
   --grid:      rgba(16, 24, 40, .06);
   --shadow:    0 1px 2px rgba(16,24,40,.05), 0 12px 32px -18px rgba(16,24,40,.35);
+  --radius:    16px;
+}
+/* Valeurs sombres, appliquées soit par choix explicite, soit par le système. */
+:root[data-theme="dark"] {
+  --bg:        #080c16;
+  --bg-2:      #0f1524;
+  --bg-3:      #161d2f;
+  --ink:       #eaeff8;
+  --ink-2:     #b3bed1;
+  --ink-3:     #8a97ad;
+  --line:      #232c40;
+  --line-2:    #33405c;
+  --accent:    #67d3f5;
+  --accent-2:  #b39cff;
+  --accent-ink:#04121a;
+  --accent-soft:#10283a;
+  --good:      #4ddba0;
+  --warn:      #f0c274;
+  --warn-soft: #2c2313;
+  --grid:      rgba(255, 255, 255, .05);
+  --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #080c16;
+    --bg-2:      #0f1524;
+    --bg-3:      #161d2f;
+    --ink:       #eaeff8;
+    --ink-2:     #b3bed1;
+    --ink-3:     #8a97ad;
+    --line:      #232c40;
+    --line-2:    #33405c;
+    --accent:    #67d3f5;
+    --accent-2:  #b39cff;
+    --accent-ink:#04121a;
+    --accent-soft:#10283a;
+    --good:      #4ddba0;
+    --warn:      #f0c274;
+    --warn-soft: #2c2313;
+    --grid:      rgba(255, 255, 255, .05);
+    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 18px 44px -20px rgba(0,0,0,.9);
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -235,10 +258,17 @@ html[lang="en"] .en { display: inline; }
 }
 .icon-btn:hover { color: var(--ink); border-color: var(--accent); }
 .icon-btn svg { width: 17px; height: 17px; }
-.i-sun { display: block; }
-.i-moon { display: none; }
-:root[data-theme="light"] .i-sun { display: none; }
+/* L'icône montre la bascule disponible : lune en clair, soleil en sombre. */
+.i-moon { display: block; }
+.i-sun { display: none; }
+:root[data-theme="dark"] .i-moon { display: none; }
+:root[data-theme="dark"] .i-sun { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .i-moon { display: none; }
+  :root:not([data-theme="light"]) .i-sun { display: block; }
+}
 :root[data-theme="light"] .i-moon { display: block; }
+:root[data-theme="light"] .i-sun { display: none; }
 @media (max-width: 860px) { .nav { display: none; } .hdr-tools { margin-left: auto; } }
 
 /* ------------------------------------------------------------------
@@ -1164,8 +1194,6 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         </div>
       </div>
     </article>
-  </div>
-</section>
 
     <!-- ---------- 04, MODÉRATION MULTI-SITES ---------- -->
     <div class="rpa reveal">
@@ -1328,6 +1356,8 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         </p>
       </div>
     </div>
+  </div>
+</section>
 
 <!-- ================= TARIFS ================= -->
 <section id="tarifs" aria-labelledby="tarifs-h" style="padding-top: 0">
@@ -1610,17 +1640,28 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     }
   }
 
-  /* Le sombre est le thème par défaut : tout ce qui n'est pas un choix explicite
-     pour le clair est traité comme sombre. */
+  var prefersDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  /* Sans choix explicite, c'est la préférence système qui décide. */
   function currentTheme() {
-    return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return prefersDark && prefersDark.matches ? 'dark' : 'light';
   }
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     if (btnTh) btnTh.setAttribute('aria-pressed', String(theme === 'dark'));
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#080c16' : '#f7f9fc');
+  }
+
+  /* Tant que l'utilisateur n'a rien choisi, le site suit le système en direct. */
+  if (prefersDark && prefersDark.addEventListener) {
+    prefersDark.addEventListener('change', function () {
+      if (!store.get('novaflow-theme')) {
+        root.removeAttribute('data-theme');
+        if (btnTh) btnTh.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+      }
+    });
   }
 
   if (btnFr) btnFr.addEventListener('click', function () { store.set('novaflow-lang', 'fr'); applyLang('fr'); });
@@ -1632,7 +1673,8 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
   });
 
   applyLang(root.getAttribute('lang') === 'en' ? 'en' : 'fr');
-  applyTheme(currentTheme());
+  /* Pas d'attribut posé au chargement sans choix mémorisé : le CSS suit le système. */
+  if (btnTh) btnTh.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
 
   /* ---------- Apparition au défilement, coupée si l'utilisateur refuse les animations ---------- */
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
