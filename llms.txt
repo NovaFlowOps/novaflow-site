@@ -45,7 +45,7 @@ Mesure : 120 executions quotidiennes sur 8 series, soit 960 jours-serie,
 4 faux positifs sur 960 jours-serie, aucun regard vers le futur,
 68 detections brutes compressees en 46 notifications.
 
-## Deux offres sans chiffres publies
+## Trois offres sans chiffres publies
 
 ### 4. Moderation des donnees d'exploitation, multi-sites, via ERP
 Memes regles appliquees a tous les sites chaque nuit : coherence des stocks,
@@ -53,7 +53,16 @@ rotation et anciennete, uniformisation des pratiques, completude et cloture.
 Chaque site ne recoit que ce qui le concerne. Aucun chiffre n'est publie sur ce
 volet, les donnees appartiennent a leur proprietaire.
 
-### 5. Automatisation du poste de travail, RPA
+### 5. Reclamations transport, du signalement a la lettre envoyee
+A partir d'une seule ligne saisie dans un tableur (reference d'avoir,
+transporteur, site, description, montant), genere la lettre de reclamation
+chiffree et l'attestation de destruction a la charte du client, les convertit en
+PDF et les envoie a l'adresse de reclamation du bon transporteur. Les reponses
+reviennent au site concerne et non a la boite technique. Listes de transporteurs
+et de sites verrouillees a la saisie. Aucun chiffre n'est publie sur ce volet :
+les montants recuperes appartiennent a l'entreprise qui exploite le dispositif.
+
+### 6. Automatisation du poste de travail, RPA
 Pour les logiciels sans API ni export propre : Power Automate Desktop ou
 equivalent, chaque action journalisee, arret plutot que devinette, test sur une
 liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
@@ -63,7 +72,7 @@ liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
 Forfait pour un perimetre ecrit, pas de facturation horaire. Prix de lancement
 affiches pour les trois premiers clients de chaque automatisation, en
 contrepartie d'une reference ecrite : 1 200 EUR, 1 400 EUR et 1 100 EUR selon
-l'automatisation. Les blocs 4 et 5 sont sur devis. Paiement 50 % a la commande
+l'automatisation. Les blocs 4, 5 et 6 sont sur devis. Paiement 50 % a la commande
 et 50 % a la livraison acceptee. Delai de 10 jours ouvres a compter de la
 reception des donnees d'exemple. Une serie de corrections incluse sous 14 jours.
 Tout a distance, aucun rendez-vous physique, communication ecrite.

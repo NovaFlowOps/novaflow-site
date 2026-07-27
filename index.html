@@ -80,6 +80,12 @@
           },
           {
             "@type": "Service",
+            "name": "Réclamations transport automatisées",
+            "serviceType": "Automatisation de réclamations pour casse transport",
+            "description": "À partir d'une ligne saisie dans un tableur, génère la lettre de réclamation chiffrée et l'attestation de destruction à la charte du client, les convertit en PDF et les envoie à l'adresse de réclamation du transporteur concerné. Les réponses reviennent au site concerné. Aucun chiffre n'est publié sur ce volet."
+          },
+          {
+            "@type": "Service",
             "name": "Automatisation du poste de travail, RPA",
             "serviceType": "RPA sur poste Windows",
             "description": "Pour les logiciels sans API ni export propre. Power Automate Desktop ou équivalent, chaque action journalisée, arrêt plutôt que devinette, test sur une liste de cas connus, aucun identifiant en clair. Aucun chiffre n'est publié sur ce volet."
@@ -1278,11 +1284,99 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       </div>
     </div>
 
-    <!-- ---------- 05, RPA ---------- -->
+    <!-- ---------- 05, RÉCLAMATIONS TRANSPORT ---------- -->
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">05 <span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
+          <span class="case-num">05 <span class="fr">Quand un litige se gagne ou se perd sur des documents</span><span class="en">When a claim is won or lost on paperwork</span></span>
+          <h3><span class="fr">Réclamations transport, du signalement à la lettre envoyée</span><span class="en">Transport damage claims, from report to sent letter</span></h3>
+          <p class="case-sub">
+            <span class="fr">Une livraison arrive cassée. Il faut ouvrir un dossier, retrouver le bon interlocuteur chez le transporteur, produire une lettre de réclamation chiffrée et une attestation de destruction, puis suivre. En pratique, une partie des dossiers n'est jamais montée, et le préjudice reste chez vous. Ici, une ligne saisie dans un tableur suffit : les documents sont générés et la réclamation part au bon destinataire.</span>
+            <span class="en">A delivery arrives damaged. Someone has to open a file, find the right contact at the carrier, produce a costed claim letter and a destruction certificate, then follow up. In practice some files are never raised, and the loss stays with you. Here one spreadsheet row is enough: the documents are generated and the claim reaches the right recipient.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">n8n</span>
+            <span class="tag"><span class="fr">Documents PDF</span><span class="en">PDF documents</span></span>
+            <span class="tag"><span class="fr">À votre charte</span><span class="en">Your branding</span></span>
+            <span class="tag"><span class="fr">Multi-sites</span><span class="en">Multi-site</span></span>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <svg viewBox="0 0 220 170" fill="none">
+            <rect x="8" y="18" width="74" height="52" rx="7" fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.5"/>
+            <path d="M8 32h74M30 18v52M56 18v52" stroke="var(--line-2)" stroke-width="1.2"/>
+            <rect x="13" y="38" width="12" height="5" rx="2.5" fill="var(--ink-3)" opacity=".5"/>
+            <rect x="35" y="38" width="16" height="5" rx="2.5" fill="var(--ink-3)" opacity=".5"/>
+            <rect x="61" y="38" width="16" height="5" rx="2.5" fill="var(--warn)" opacity=".85"/>
+            <path d="M82 44h22" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <g>
+              <rect x="106" y="10" width="58" height="72" rx="6" fill="var(--bg-2)" stroke="var(--accent)" stroke-width="1.6"/>
+              <rect x="106" y="10" width="58" height="6" rx="3" fill="var(--warn)" opacity=".9"/>
+              <path d="M116 30h30M116 40h38M116 50h24" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
+              <rect x="116" y="60" width="26" height="8" rx="3" fill="var(--warn)" opacity=".8"/>
+            </g>
+            <path d="M135 82v14" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <g>
+              <rect x="96" y="96" width="80" height="52" rx="7" fill="var(--bg-2)" stroke="var(--accent-2)" stroke-width="1.6"/>
+              <path d="m96 100 40 27 40-27" stroke="var(--accent-2)" stroke-width="1.6" stroke-linejoin="round"/>
+              <circle cx="176" cy="100" r="9" fill="var(--good)"/>
+              <path d="m172 100 3 3 5.5-6" stroke="var(--bg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <rect x="24" y="96" width="52" height="38" rx="6" fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.4"/>
+            <path d="M32 115h36M50 104v22" stroke="var(--ink-3)" stroke-width="1.4" stroke-linecap="round" opacity=".5"/>
+            <path d="M76 115h20" stroke="var(--line-2)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="rpa-cols">
+        <div>
+          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <ul>
+            <li><span class="fr">Une ligne saisie suffit : référence de l'avoir, transporteur, site, description et montant</span><span class="en">One row is enough: credit note reference, carrier, site, description and amount</span></li>
+            <li><span class="fr">Lettre de réclamation chiffrée et attestation de destruction générées à votre charte, converties en PDF</span><span class="en">Costed claim letter and destruction certificate generated in your own branding, converted to PDF</span></li>
+            <li><span class="fr">Envoi automatique à l'adresse de réclamation du bon transporteur, pièces jointes comprises</span><span class="en">Automatic sending to the right carrier's claims address, attachments included</span></li>
+            <li><span class="fr">Les réponses reviennent au site concerné, pas à la boîte technique qui a envoyé</span><span class="en">Replies go back to the site involved, not to the technical mailbox that sent it</span></li>
+            <li><span class="fr">Listes de transporteurs et de sites verrouillées à la saisie : pas de faute de frappe qui envoie une réclamation au mauvais destinataire</span><span class="en">Carrier and site lists locked at entry: no typo sends a claim to the wrong recipient</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
+          <ul>
+            <li><span class="fr">Un référentiel de vos transporteurs, avec l'adresse de réclamation de chacun</span><span class="en">A list of your carriers, each with its claims address</span></li>
+            <li><span class="fr">Vos modèles de lettre et d'attestation, ou leur mise en forme à votre charte</span><span class="en">Your letter and certificate templates, or their layout in your branding</span></li>
+            <li><span class="fr">Une boîte d'envoi dédiée au dispositif, distincte des boîtes personnelles</span><span class="en">A dedicated sending mailbox, separate from personal ones</span></li>
+          </ul>
+        </div>
+        <div class="rpa-limits">
+          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <ul>
+            <li><span class="fr">L'automatisation monte le dossier, elle ne négocie pas l'indemnisation</span><span class="en">The automation builds the file, it does not negotiate the settlement</span></li>
+            <li><span class="fr">Le texte de la réclamation reste votre décision : un modèle mal formulé produit un dossier faible</span><span class="en">The wording of the claim stays your decision: a weak template produces a weak file</span></li>
+            <li><span class="fr">Si votre ERP n'expose pas la pièce justificative, il faut la joindre à la main, ou passer par un robot de poste, volet 06</span><span class="en">If your ERP exposes no supporting document, it has to be attached by hand, or through a desktop robot, block 06</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rpa-foot">
+        <div class="honest">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
+          <p>
+            <span class="fr">Aucun chiffre n'est affiché sur ce volet. Les montants récupérés grâce à ce dispositif appartiennent à l'entreprise qui l'exploite et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.</span>
+            <span class="en">No figures are shown for this offer. Amounts recovered through it belong to the company running it and are not published here. What I can show, and let you replay, are the three measured automations above.</span>
+          </p>
+        </div>
+        <p class="price-inline">
+          <span class="fr">Sur devis, selon le nombre de transporteurs et de modèles</span><span class="en">On quote, depending on carriers and templates</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ---------- 06, RPA ---------- -->
+    <div class="rpa reveal">
+      <div class="rpa-head">
+        <div>
+          <span class="case-num">06 <span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
           <h3><span class="fr">Automatisation du poste de travail, RPA</span><span class="en">Desktop automation, RPA</span></h3>
           <p class="case-sub">
             <span class="fr">Certains logiciels métier n'ont ni API ni export propre : un ERP ancien, une application de saisie interne, un portail fournisseur qui n'expose rien. L'automatisation se fait alors sur le poste, avec Power Automate Desktop ou un robot équivalent : il ouvre l'application, saisit, contrôle, et journalise chaque action.</span>
