@@ -54,13 +54,12 @@ Chaque site ne recoit que ce qui le concerne. Aucun chiffre n'est publie sur ce
 volet, les donnees appartiennent a leur proprietaire.
 
 ### 5. Reclamations transport, du signalement a la lettre envoyee
-A partir d'une seule ligne saisie dans un tableur (reference d'avoir,
-transporteur, site, description, montant), genere la lettre de reclamation
-chiffree et l'attestation de destruction a la charte du client, les convertit en
-PDF et les envoie a l'adresse de reclamation du bon transporteur. Les reponses
-reviennent au site concerne et non a la boite technique. Listes de transporteurs
-et de sites verrouillees a la saisie. Aucun chiffre n'est publie sur ce volet :
-les montants recuperes appartiennent a l'entreprise qui exploite le dispositif.
+A partir d'une seule saisie (reference du dossier, transporteur, description,
+montant), genere les documents de reclamation chiffres a la charte du client,
+les convertit en PDF et les envoie au bon destinataire chez le transporteur. Les
+reponses arrivent chez la personne qui suit le dossier. Aucune saisie libre sur
+les destinataires. Aucun chiffre n'est publie sur ce volet : les montants
+recuperes appartiennent a l'entreprise qui exploite le dispositif.
 
 ### 6. Automatisation du poste de travail, RPA
 Pour les logiciels sans API ni export propre : Power Automate Desktop ou

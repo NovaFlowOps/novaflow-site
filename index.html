@@ -82,7 +82,7 @@
             "@type": "Service",
             "name": "Réclamations transport automatisées",
             "serviceType": "Automatisation de réclamations pour casse transport",
-            "description": "À partir d'une ligne saisie dans un tableur, génère la lettre de réclamation chiffrée et l'attestation de destruction à la charte du client, les convertit en PDF et les envoie à l'adresse de réclamation du transporteur concerné. Les réponses reviennent au site concerné. Aucun chiffre n'est publié sur ce volet."
+            "description": "À partir d'une seule saisie, génère les documents de réclamation chiffrés à la charte du client, les convertit en PDF et les envoie au bon destinataire chez le transporteur concerné. Les réponses arrivent chez la personne qui suit le dossier. Aucun chiffre n'est publié sur ce volet."
           },
           {
             "@type": "Service",
@@ -1291,8 +1291,8 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
           <span class="case-num">05 <span class="fr">Quand un litige se gagne ou se perd sur des documents</span><span class="en">When a claim is won or lost on paperwork</span></span>
           <h3><span class="fr">Réclamations transport, du signalement à la lettre envoyée</span><span class="en">Transport damage claims, from report to sent letter</span></h3>
           <p class="case-sub">
-            <span class="fr">Une livraison arrive cassée. Il faut ouvrir un dossier, retrouver le bon interlocuteur chez le transporteur, produire une lettre de réclamation chiffrée et une attestation de destruction, puis suivre. En pratique, une partie des dossiers n'est jamais montée, et le préjudice reste chez vous. Ici, une ligne saisie dans un tableur suffit : les documents sont générés et la réclamation part au bon destinataire.</span>
-            <span class="en">A delivery arrives damaged. Someone has to open a file, find the right contact at the carrier, produce a costed claim letter and a destruction certificate, then follow up. In practice some files are never raised, and the loss stays with you. Here one spreadsheet row is enough: the documents are generated and the claim reaches the right recipient.</span>
+            <span class="fr">Une livraison arrive cassée. Il faut ouvrir un dossier, retrouver le bon interlocuteur chez le transporteur, produire les pièces justificatives et suivre. En pratique, une partie des dossiers n'est jamais montée, et le préjudice reste chez vous. Ici, une seule saisie suffit : les documents sont générés et la réclamation part au bon destinataire.</span>
+            <span class="en">A delivery arrives damaged. Someone has to open a file, find the right contact at the carrier, produce the supporting paperwork and follow up. In practice some files are never raised, and the loss stays with you. Here a single entry is enough: the documents are generated and the claim reaches the right recipient.</span>
           </p>
           <div class="tags">
             <span class="tag">n8n</span>
@@ -1333,18 +1333,18 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         <div>
           <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
           <ul>
-            <li><span class="fr">Une ligne saisie suffit : référence de l'avoir, transporteur, site, description et montant</span><span class="en">One row is enough: credit note reference, carrier, site, description and amount</span></li>
-            <li><span class="fr">Lettre de réclamation chiffrée et attestation de destruction générées à votre charte, converties en PDF</span><span class="en">Costed claim letter and destruction certificate generated in your own branding, converted to PDF</span></li>
-            <li><span class="fr">Envoi automatique à l'adresse de réclamation du bon transporteur, pièces jointes comprises</span><span class="en">Automatic sending to the right carrier's claims address, attachments included</span></li>
-            <li><span class="fr">Les réponses reviennent au site concerné, pas à la boîte technique qui a envoyé</span><span class="en">Replies go back to the site involved, not to the technical mailbox that sent it</span></li>
-            <li><span class="fr">Listes de transporteurs et de sites verrouillées à la saisie : pas de faute de frappe qui envoie une réclamation au mauvais destinataire</span><span class="en">Carrier and site lists locked at entry: no typo sends a claim to the wrong recipient</span></li>
+            <li><span class="fr">Une seule saisie suffit : la référence du dossier, le transporteur, la description et le montant</span><span class="en">A single entry is enough: file reference, carrier, description and amount</span></li>
+            <li><span class="fr">Les documents de réclamation sont générés à votre charte, chiffrés, et convertis en PDF</span><span class="en">The claim documents are generated in your own branding, costed, and converted to PDF</span></li>
+            <li><span class="fr">Envoi automatique au bon destinataire chez le transporteur, pièces jointes comprises</span><span class="en">Automatic sending to the right contact at the carrier, attachments included</span></li>
+            <li><span class="fr">Les réponses arrivent directement chez la personne qui suit le dossier</span><span class="en">Replies land straight with the person handling the file</span></li>
+            <li><span class="fr">Aucune saisie libre sur les destinataires : une réclamation ne peut pas partir au mauvais transporteur</span><span class="en">No free text on recipients: a claim cannot go to the wrong carrier</span></li>
           </ul>
         </div>
         <div>
           <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
           <ul>
             <li><span class="fr">Un référentiel de vos transporteurs, avec l'adresse de réclamation de chacun</span><span class="en">A list of your carriers, each with its claims address</span></li>
-            <li><span class="fr">Vos modèles de lettre et d'attestation, ou leur mise en forme à votre charte</span><span class="en">Your letter and certificate templates, or their layout in your branding</span></li>
+            <li><span class="fr">Vos modèles de documents, ou leur mise en forme à votre charte</span><span class="en">Your document templates, or their layout in your branding</span></li>
             <li><span class="fr">Une boîte d'envoi dédiée au dispositif, distincte des boîtes personnelles</span><span class="en">A dedicated sending mailbox, separate from personal ones</span></li>
           </ul>
         </div>
