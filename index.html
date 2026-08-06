@@ -80,6 +80,12 @@
           },
           {
             "@type": "Service",
+            "name": "Plateforme de réclamations client",
+            "serviceType": "Application métier de traitement des réclamations",
+            "description": "Application complète en production : formulaire client public avec dépôt de pièces, lecture des documents par IA, moteur de décision déterministe à 12 règles écrit comme une fonction pure et couvert par 50 tests, 11 statuts de dossier, back-office avec relance automatique à 15 jours, purge RGPD et journalisation. Aucune décision automatique irréversible : un refus est programmé et reste annulable par un agent. Environ 15 300 lignes de TypeScript, 68 tests, Next.js 15, PostgreSQL, n8n."
+          },
+          {
+            "@type": "Service",
             "name": "Réclamations transport automatisées",
             "serviceType": "Automatisation de réclamations pour casse transport",
             "description": "À partir d'une seule saisie, génère les documents de réclamation chiffrés à la charte du client, les convertit en PDF et les envoie au bon destinataire chez le transporteur concerné. Les réponses arrivent chez la personne qui suit le dossier. Aucun chiffre n'est publié sur ce volet."
@@ -1202,11 +1208,137 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       </div>
     </article>
 
-    <!-- ---------- 04, MODÉRATION MULTI-SITES ---------- -->
+    <!-- ---------- 04, PLATEFORME DE RÉCLAMATIONS ---------- -->
+    <article class="case reveal">
+      <div class="case-top">
+        <div>
+          <span class="case-num">04</span>
+          <h3><span class="fr">Plateforme de réclamations client, du formulaire au transporteur</span><span class="en">Customer claims platform, from the form to the carrier</span></h3>
+          <p class="case-sub">
+            <span class="fr">Une application complète, en production : le client dépose son dossier, l'IA lit les pièces, un moteur de décision tranche ce qui est décidable, et un agent garde la main sur tout ce qui engage l'entreprise.</span>
+            <span class="en">A complete application, in production: the customer files a claim, AI reads the documents, a decision engine settles what can be settled, and a human keeps control of anything that commits the company.</span>
+          </p>
+          <div class="tags">
+            <span class="tag">Next.js 15</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag"><span class="fr">IA</span><span class="en">AI</span></span>
+            <span class="tag">n8n</span>
+          </div>
+        </div>
+        <div class="case-art" aria-hidden="true">
+          <svg viewBox="0 0 340 170" fill="none">
+            <rect width="340" height="170" rx="12" fill="var(--bg-3)"/>
+            <rect x="18" y="30" width="62" height="76" rx="7" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+            <path d="M30 46h38M30 58h30M30 70h38M30 82h24" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" opacity=".55"/>
+            <rect x="30" y="92" width="26" height="7" rx="3.5" fill="var(--accent)" opacity=".8"/>
+            <path d="M80 68h26" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="106" y="34" width="60" height="68" rx="8" fill="var(--bg-2)" stroke="var(--accent-2)" stroke-width="1.6"/>
+            <path d="M118 52h36M118 64h28M118 76h32" stroke="var(--accent-2)" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+            <circle class="pulse" cx="136" cy="88" r="5" fill="var(--accent-2)"/>
+            <path d="M166 68h24" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M190 68 214 44l24 24-24 24z" fill="var(--bg-2)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M206 68h16M214 60v16" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M238 56h18c6 0 8-4 8-9v-9M238 80h18c6 0 8 4 8 9v9" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="264" y="22" width="58" height="34" rx="7" fill="var(--bg-2)" stroke="var(--good)" stroke-width="1.5"/>
+            <path d="m276 39 5 5 10-11" stroke="var(--good)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="296" y="36" width="16" height="5" rx="2.5" fill="var(--good)" opacity=".5"/>
+            <rect x="264" y="88" width="58" height="34" rx="7" fill="var(--bg-2)" stroke="var(--warn)" stroke-width="1.5"/>
+            <circle cx="280" cy="105" r="7" fill="none" stroke="var(--warn)" stroke-width="1.8"/>
+            <path d="M280 101v5l3 2" stroke="var(--warn)" stroke-width="1.6" stroke-linecap="round"/>
+            <rect x="296" y="102" width="16" height="5" rx="2.5" fill="var(--warn)" opacity=".5"/>
+            <rect x="18" y="128" width="304" height="24" rx="7" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.3"/>
+            <path d="M32 140h20M62 140h34M106 140h28M144 140h40M194 140h26M230 140h34M274 140h34" stroke="var(--ink-3)" stroke-width="3" stroke-linecap="round" opacity=".28"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div class="blk">
+          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <p>
+            <span class="fr">Chaque réclamation supposait de lire une facture, vérifier un bordereau de livraison signé, établir si une réserve avait été émise, décider, puis rédiger à la main la réclamation au transporteur. Le formalisme est contraignant et les délais sont courts : trois jours ouvrables pour notifier, huit jours pour la réclamation elle-même en transport routier. Un dossier oublié est un dossier perdu.</span>
+            <span class="en">Every claim meant reading an invoice, checking a signed delivery note, establishing whether a reservation had been raised, deciding, then writing the carrier claim by hand. The formal requirements are strict and the deadlines short: three working days to notify, eight days for the claim itself in road transport. A forgotten file is a lost file.</span>
+          </p>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <ul>
+            <li><span class="fr">Un formulaire client public, dépôt des pièces, lecture automatique de la facture et du bordereau par IA</span><span class="en">A public customer form, document upload, automatic AI reading of the invoice and delivery note</span></li>
+            <li><span class="fr">Un moteur de décision déterministe à 12 règles, écrit comme une fonction pure : ni base, ni réseau, donc testable seul</span><span class="en">A deterministic 12-rule decision engine, written as a pure function: no database, no network, so testable on its own</span></li>
+            <li><span class="fr">Aucune décision automatique irréversible : un refus n'est pas envoyé, il est programmé, et reste annulable par un agent pendant plusieurs heures</span><span class="en">No irreversible automatic decision: a rejection is not sent, it is scheduled, and stays cancellable by an agent for hours</span></li>
+            <li><span class="fr">Les documents déposés sont traités comme non fiables : un document qui contient des consignes adressées à l'IA bascule le dossier en contrôle humain</span><span class="en">Uploaded documents are treated as untrusted: a document containing instructions aimed at the AI sends the file to human review</span></li>
+            <li><span class="fr">Un back-office complet : liste filtrable, chronologie, relance automatique à 15 jours, onglet d'aide documentant chaque règle</span><span class="en">A full back office: filterable list, timeline, automatic 15-day follow-up, help tab documenting every rule</span></li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h4><span class="fr">Ce que ça donne</span><span class="en">What it amounts to</span></h4>
+          <ul>
+            <li><span class="fr">12 règles de décision, 11 statuts de dossier, un vocabulaire distinct côté client et côté agent</span><span class="en">12 decision rules, 11 file statuses, separate wording for customers and for agents</span></li>
+            <li class="hi"><span class="fr">Le moteur de décision est couvert par 50 tests, sur 68 tests au total</span><span class="en">The decision engine is covered by 50 tests, out of 68 in total</span></li>
+            <li><span class="fr">Environ 15 300 lignes de TypeScript, 103 fichiers, livrées en une semaine</span><span class="en">About 15,300 lines of TypeScript across 103 files, delivered in one week</span></li>
+            <li><span class="fr">En production, avec correction des trois points bloquants d'un audit de sécurité : injection de prompt, limitation de débit, durcissement du rappel serveur</span><span class="en">In production, with the three blocking findings of a security audit fixed: prompt injection, rate limiting, callback hardening</span></li>
+            <li><span class="fr">Purge RGPD, journalisation des événements, pièces jointes servies par URL signée à durée limitée</span><span class="en">GDPR purge, event logging, attachments served through time-limited signed URLs</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-band">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>
+          <span class="fr"><strong>Ce que ça change.</strong> En vérifiant les adresses de réclamation configurées, aucune des trois n'était valide, et deux transporteurs sur trois n'acceptaient de toute façon aucune réclamation par mail. Un envoi à une adresse inexistante ne lève aucune erreur : le dossier serait passé en « transmis », le client aurait reçu son accusé, et personne n'aurait rien su avant l'expiration du délai. Le système refuse désormais d'envoyer sans adresse vérifiée et alerte un agent. Un dossier qui attend un humain se voit, une lettre partie dans le vide, non.</span>
+          <span class="en"><strong>What it changes.</strong> When the configured claims addresses were checked, none of the three was valid, and two carriers out of three accepted no email claims at all. Sending to a non-existent address raises no error: the file would have moved to "sent", the customer would have had their acknowledgement, and nobody would have known until the deadline expired. The system now refuses to send without a verified address and alerts an agent. A file waiting on a human is visible, a letter sent into the void is not.</span>
+        </p>
+      </div>
+
+      <div class="threshold">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <span class="lbl"><span class="fr">La leçon que je facture le plus cher</span><span class="en">The lesson I charge the most for</span></span>
+          <p>
+            <span class="fr">Sur un bordereau portant une mention manuscrite, l'IA a répondu « aucune réserve » avec 95 % de confiance. Elle aurait refusé une réclamation fondée. Le prompt a été durci pour répondre « illisible » plutôt que de trancher, et la leçon est écrite noir sur blanc dans l'aide destinée aux agents : une confiance élevée n'autorise personne à ne pas ouvrir le document.</span>
+            <span class="en">On a delivery note carrying a handwritten remark, the AI answered "no reservation" with 95% confidence. It would have rejected a valid claim. The prompt was hardened to answer "unreadable" rather than decide, and the lesson is written plainly in the agent help: high confidence entitles nobody to skip opening the document.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="case-foot">
+        <div class="scope">
+          <div>
+            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <ul>
+              <li><span class="fr">Formulaire client public et dépôt de pièces</span><span class="en">Public customer form and document upload</span></li>
+              <li><span class="fr">Lecture IA des documents et moteur de décision testé</span><span class="en">AI document reading and a tested decision engine</span></li>
+              <li><span class="fr">Back-office, emails transactionnels, relances</span><span class="en">Back office, transactional emails, follow-ups</span></li>
+              <li><span class="fr">Pages légales, purge RGPD, journalisation</span><span class="en">Legal pages, GDPR purge, event logging</span></li>
+            </ul>
+          </div>
+          <div class="out">
+            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <ul>
+              <li><span class="fr">L'hébergement et les abonnements tiers</span><span class="en">Hosting and third party subscriptions</span></li>
+              <li><span class="fr">La reprise de dossiers historiques</span><span class="en">Migration of historical files</span></li>
+              <li><span class="fr">Le paramétrage juridique des courriers, qui reste votre décision</span><span class="en">The legal wording of letters, which stays your decision</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="price-card">
+          <span class="pl"><span class="fr">Projet complet</span><span class="en">Full project</span></span>
+          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
+          <span class="pn">
+            <span class="fr">Le périmètre est large et se cadre par écrit avant toute estimation.</span>
+            <span class="en">The scope is broad and gets framed in writing before any estimate.</span>
+          </span>
+          <a class="btn btn-1" href="#contact"><span class="fr">En parler</span><span class="en">Discuss it</span></a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- 05, MODÉRATION MULTI-SITES ---------- -->
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">04 <span class="fr">Quand plusieurs sites saisissent dans le même outil</span><span class="en">When several sites enter data into the same tool</span></span>
+          <span class="case-num">05 <span class="fr">Quand plusieurs sites saisissent dans le même outil</span><span class="en">When several sites enter data into the same tool</span></span>
           <h3><span class="fr">Modération des données d'exploitation, multi-sites, à travers l'ERP</span><span class="en">Multi-site operational data moderation, through the ERP</span></h3>
           <p class="case-sub">
             <span class="fr">Plusieurs établissements, le même ERP, et des pratiques qui divergent : des stocks qui ne collent plus au terrain, des articles qui dorment sans que personne ne le voie, des dossiers jamais clôturés, et chaque site qui compte à sa façon. Un robot de modération applique les mêmes règles partout, chaque nuit, et ne remonte à chaque site que ce qui le concerne.</span>
@@ -1284,15 +1416,15 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       </div>
     </div>
 
-    <!-- ---------- 05, RÉCLAMATIONS TRANSPORT ---------- -->
+    <!-- ---------- 06, RÉCLAMATIONS TRANSPORT, VERSION LÉGÈRE ---------- -->
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">05 <span class="fr">Quand un litige se gagne ou se perd sur des documents</span><span class="en">When a claim is won or lost on paperwork</span></span>
+          <span class="case-num">06 <span class="fr">La version légère du volet 04</span><span class="en">The lightweight version of block 04</span></span>
           <h3><span class="fr">Réclamations transport, du signalement à la lettre envoyée</span><span class="en">Transport damage claims, from report to sent letter</span></h3>
           <p class="case-sub">
-            <span class="fr">Une livraison arrive cassée. Il faut ouvrir un dossier, retrouver le bon interlocuteur chez le transporteur, produire les pièces justificatives et suivre. En pratique, une partie des dossiers n'est jamais montée, et le préjudice reste chez vous. Ici, une seule saisie suffit : les documents sont générés et la réclamation part au bon destinataire.</span>
-            <span class="en">A delivery arrives damaged. Someone has to open a file, find the right contact at the carrier, produce the supporting paperwork and follow up. In practice some files are never raised, and the loss stays with you. Here a single entry is enough: the documents are generated and the claim reaches the right recipient.</span>
+            <span class="fr">Quand un portail client complet n'est pas justifié, le même besoin se traite en beaucoup plus simple. Une livraison arrive cassée, une seule saisie suffit : les documents de réclamation sont générés et partent au bon destinataire. Pas de formulaire public, pas de back-office, pas d'IA, et donc un budget sans commune mesure avec le volet 04.</span>
+            <span class="en">When a full customer portal is not justified, the same need can be met far more simply. A delivery arrives damaged, a single entry is enough: the claim documents are generated and sent to the right recipient. No public form, no back office, no AI, and therefore a budget nowhere near block 04.</span>
           </p>
           <div class="tags">
             <span class="tag">n8n</span>
@@ -1353,7 +1485,7 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
           <ul>
             <li><span class="fr">L'automatisation monte le dossier, elle ne négocie pas l'indemnisation</span><span class="en">The automation builds the file, it does not negotiate the settlement</span></li>
             <li><span class="fr">Le texte de la réclamation reste votre décision : un modèle mal formulé produit un dossier faible</span><span class="en">The wording of the claim stays your decision: a weak template produces a weak file</span></li>
-            <li><span class="fr">Si votre ERP n'expose pas la pièce justificative, il faut la joindre à la main, ou passer par un robot de poste, volet 06</span><span class="en">If your ERP exposes no supporting document, it has to be attached by hand, or through a desktop robot, block 06</span></li>
+            <li><span class="fr">Si votre ERP n'expose pas la pièce justificative, il faut la joindre à la main, ou passer par un robot de poste, volet 07</span><span class="en">If your ERP exposes no supporting document, it has to be attached by hand, or through a desktop robot, block 07</span></li>
           </ul>
         </div>
       </div>
@@ -1372,11 +1504,11 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       </div>
     </div>
 
-    <!-- ---------- 06, RPA ---------- -->
+    <!-- ---------- 07, RPA ---------- -->
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">06 <span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
+          <span class="case-num">07 <span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
           <h3><span class="fr">Automatisation du poste de travail, RPA</span><span class="en">Desktop automation, RPA</span></h3>
           <p class="case-sub">
             <span class="fr">Certains logiciels métier n'ont ni API ni export propre : un ERP ancien, une application de saisie interne, un portail fournisseur qui n'expose rien. L'automatisation se fait alors sur le poste, avec Power Automate Desktop ou un robot équivalent : il ouvre l'application, saisit, contrôle, et journalise chaque action.</span>

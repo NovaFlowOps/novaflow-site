@@ -45,15 +45,36 @@ Mesure : 120 executions quotidiennes sur 8 series, soit 960 jours-serie,
 4 faux positifs sur 960 jours-serie, aucun regard vers le futur,
 68 detections brutes compressees en 46 notifications.
 
+## Une plateforme complete, livree et en production
+
+### 4. Plateforme de reclamations client, du formulaire au transporteur
+Application complete : formulaire client public avec depot de pieces, lecture
+des documents par IA, moteur de decision deterministe a 12 regles ecrit comme
+une fonction pure, 11 statuts de dossier, back-office avec chronologie et
+relance automatique a 15 jours, emails transactionnels, pages legales, purge
+RGPD et journalisation.
+Principes d'ingenierie : aucune decision automatique irreversible, un refus est
+programme et reste annulable par un agent pendant plusieurs heures ; les
+documents deposes sont traites comme non fiables et un document contenant des
+consignes adressees a l'IA bascule le dossier en controle humain ; une confiance
+elevee du modele n'est pas un signal de surete, le prompt repond "illisible"
+plutot que de trancher ; l'absence d'adresse de reclamation verifiee empeche
+l'envoi au lieu de le simuler.
+Volumetrie : environ 15 300 lignes de TypeScript sur 103 fichiers, 68 tests dont
+50 sur le seul moteur de decision, livre en une semaine. Next.js 15, TypeScript,
+PostgreSQL, n8n, deploiement continu. Les trois points bloquants d'un audit de
+securite ont ete corriges : injection de prompt, limitation de debit,
+durcissement du rappel serveur.
+
 ## Trois offres sans chiffres publies
 
-### 4. Moderation des donnees d'exploitation, multi-sites, via ERP
+### 5. Moderation des donnees d'exploitation, multi-sites, via ERP
 Memes regles appliquees a tous les sites chaque nuit : coherence des stocks,
 rotation et anciennete, uniformisation des pratiques, completude et cloture.
 Chaque site ne recoit que ce qui le concerne. Aucun chiffre n'est publie sur ce
 volet, les donnees appartiennent a leur proprietaire.
 
-### 5. Reclamations transport, du signalement a la lettre envoyee
+### 6. Reclamations transport, version legere du volet 4
 A partir d'une seule saisie (reference du dossier, transporteur, description,
 montant), genere les documents de reclamation chiffres a la charte du client,
 les convertit en PDF et les envoie au bon destinataire chez le transporteur. Les
@@ -61,7 +82,7 @@ reponses arrivent chez la personne qui suit le dossier. Aucune saisie libre sur
 les destinataires. Aucun chiffre n'est publie sur ce volet : les montants
 recuperes appartiennent a l'entreprise qui exploite le dispositif.
 
-### 6. Automatisation du poste de travail, RPA
+### 7. Automatisation du poste de travail, RPA
 Pour les logiciels sans API ni export propre : Power Automate Desktop ou
 equivalent, chaque action journalisee, arret plutot que devinette, test sur une
 liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
@@ -71,7 +92,7 @@ liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
 Forfait pour un perimetre ecrit, pas de facturation horaire. Prix de lancement
 affiches pour les trois premiers clients de chaque automatisation, en
 contrepartie d'une reference ecrite : 1 200 EUR, 1 400 EUR et 1 100 EUR selon
-l'automatisation. Les blocs 4, 5 et 6 sont sur devis. Paiement 50 % a la commande
+l'automatisation. Les blocs 4, 5, 6 et 7 sont sur devis. Paiement 50 % a la commande
 et 50 % a la livraison acceptee. Delai de 10 jours ouvres a compter de la
 reception des donnees d'exemple. Une serie de corrections incluse sous 14 jours.
 Tout a distance, aucun rendez-vous physique, communication ecrite.
