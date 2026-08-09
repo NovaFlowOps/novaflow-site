@@ -86,9 +86,9 @@
           },
           {
             "@type": "Service",
-            "name": "Réclamations transport automatisées",
-            "serviceType": "Automatisation de réclamations pour casse transport",
-            "description": "À partir d'une seule saisie, génère les documents de réclamation chiffrés à la charte du client, les convertit en PDF et les envoie au bon destinataire chez le transporteur concerné. Les réponses arrivent chez la personne qui suit le dossier. Aucun chiffre n'est publié sur ce volet."
+            "name": "Copilote de messagerie",
+            "serviceType": "Tri, réponse et synthèse de boîte mail",
+            "description": "Lit les messages de plusieurs boîtes, les classe en quatre niveaux d'urgence, produit pour chacun un résumé et l'action concrète à mener dans un tableau de suivi, et rédige une réponse dans le style du client quand elle est utile. Mémoire par fil de discussion pour ne jamais se répéter. Garde-fou anti-boucle sur les messages automatiques, les non-remises et les listes de diffusion. Permet un relevé unique au retour de congés. Aucun chiffre n'est publié sur ce volet."
           },
           {
             "@type": "Service",
@@ -914,10 +914,10 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">Seuil d'amortissement</span><span class="en">Break-even threshold</span></span>
+          <span class="lbl"><span class="fr">L'ordre de grandeur</span><span class="en">The order of magnitude</span></span>
           <p>
-            <span class="fr">L'automatisation est rentabilisée dès qu'elle détecte un seul double paiement supérieur à 1 200 EUR, ou qu'elle fait récupérer une seule facture impayée de ce montant. Sur le jeu de démonstration, elle en a trouvé deux, pour 17 994,91 EUR.</span>
-            <span class="en">The automation pays for itself the moment it catches a single duplicate payment above EUR 1,200, or recovers a single unpaid invoice of that size. On the demo dataset it found two, worth EUR 17,994.91.</span>
+            <span class="fr">Sur un seul mois de 60 factures, le jeu de démonstration a livré deux doubles paiements pour 17 994,91 EUR. Un seul de ces dossiers suffit généralement à couvrir la mise en place. Le seuil exact se pose au devis, une fois votre volume connu.</span>
+            <span class="en">On a single month of 60 invoices, the demo dataset surfaced two duplicate payments worth EUR 17,994.91. One such case is usually enough to cover the setup. The exact threshold is set in the quote, once your volume is known.</span>
           </p>
         </div>
       </div>
@@ -945,11 +945,11 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Forfait de lancement</span><span class="en">Launch price</span></span>
-          <span class="pv num"><span class="fr">1 200 EUR</span><span class="en">EUR 1,200</span></span>
+          <span class="pl"><span class="fr">Forfait</span><span class="en">Fixed price</span></span>
+          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
           <span class="pn">
-            <span class="fr">Réservé aux trois premiers clients, en contrepartie d'une référence écrite. <a href="#tarifs">Conditions</a></span>
-            <span class="en">For the first three clients only, in exchange for a written reference. <a href="#tarifs">Terms</a></span>
+            <span class="fr">Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a></span>
+            <span class="en">Price agreed after written scoping, for a defined scope. <a href="#tarifs">Terms</a></span>
           </span>
           <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
         </div>
@@ -1045,10 +1045,10 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">Seuil d'amortissement</span><span class="en">Break-even threshold</span></span>
+          <span class="lbl"><span class="fr">L'ordre de grandeur</span><span class="en">The order of magnitude</span></span>
           <p>
-            <span class="fr">Sur le jeu de démonstration, la commande moyenne s'élève à 13 428,69 EUR. Une seule commande saisie en double, ou une seule commande oubliée, coûte cet ordre de grandeur : un seul incident évité rentabilise l'automatisation neuf fois.</span>
-            <span class="en">On the demo dataset the average order is EUR 13,428.69. A single order entered twice, or a single order missed, costs that order of magnitude: one avoided incident pays for the automation nine times over.</span>
+            <span class="fr">Sur le jeu de démonstration, la commande moyenne s'élève à 13 428,69 EUR. Une seule commande saisie en double, ou une seule commande oubliée, coûte cet ordre de grandeur. C'est à comparer au coût d'une mise en place, pas au temps de saisie économisé.</span>
+            <span class="en">On the demo dataset the average order is EUR 13,428.69. A single order entered twice, or a single order missed, costs that order of magnitude. Compare that with the cost of a setup, not with the typing time saved.</span>
           </p>
         </div>
       </div>
@@ -1076,11 +1076,11 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Forfait de lancement</span><span class="en">Launch price</span></span>
-          <span class="pv num"><span class="fr">1 400 EUR</span><span class="en">EUR 1,400</span></span>
+          <span class="pl"><span class="fr">Forfait</span><span class="en">Fixed price</span></span>
+          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
           <span class="pn">
-            <span class="fr">Réservé aux trois premiers clients, en contrepartie d'une référence écrite. <a href="#tarifs">Conditions</a></span>
-            <span class="en">For the first three clients only, in exchange for a written reference. <a href="#tarifs">Terms</a></span>
+            <span class="fr">Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a></span>
+            <span class="en">Price agreed after written scoping, for a defined scope. <a href="#tarifs">Terms</a></span>
           </span>
           <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
         </div>
@@ -1166,10 +1166,10 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">Seuil d'amortissement</span><span class="en">Break-even threshold</span></span>
+          <span class="lbl"><span class="fr">L'ordre de grandeur</span><span class="en">The order of magnitude</span></span>
           <p>
-            <span class="fr">Sur la série chiffre d'affaires de la démonstration, une chute de 58 % pendant quatre jours représente 10 730 EUR par jour. Raccourcir un seul incident de 2 h 30 amortit l'automatisation, et une détection au premier jour plutôt qu'au quatrième évite 32 190 EUR d'exposition.</span>
-            <span class="en">On the demo revenue series, a 58% drop lasting four days represents EUR 10,730 a day. Shortening a single incident by 2.5 hours pays for the automation, and catching it on day one instead of day four avoids EUR 32,190 of exposure.</span>
+            <span class="fr">Sur la série chiffre d'affaires de la démonstration, une chute de 58 % pendant quatre jours représente 10 730 EUR par jour. Une détection au premier jour plutôt qu'au quatrième évite 32 190 EUR d'exposition. La valeur d'un tel contrôle se mesure en durée d'incident supprimée.</span>
+            <span class="en">On the demo revenue series, a 58% drop lasting four days represents EUR 10,730 a day. Catching it on day one instead of day four avoids EUR 32,190 of exposure. The value of such a check is measured in incident duration removed.</span>
           </p>
         </div>
       </div>
@@ -1197,11 +1197,11 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Forfait de lancement</span><span class="en">Launch price</span></span>
-          <span class="pv num"><span class="fr">1 100 EUR</span><span class="en">EUR 1,100</span></span>
+          <span class="pl"><span class="fr">Forfait</span><span class="en">Fixed price</span></span>
+          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
           <span class="pn">
-            <span class="fr">Réservé aux trois premiers clients, en contrepartie d'une référence écrite. <a href="#tarifs">Conditions</a></span>
-            <span class="en">For the first three clients only, in exchange for a written reference. <a href="#tarifs">Terms</a></span>
+            <span class="fr">Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a></span>
+            <span class="en">Price agreed after written scoping, for a defined scope. <a href="#tarifs">Terms</a></span>
           </span>
           <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
         </div>
@@ -1416,47 +1416,54 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       </div>
     </div>
 
-    <!-- ---------- 06, RÉCLAMATIONS TRANSPORT, VERSION LÉGÈRE ---------- -->
+    <!-- ---------- 06, COPILOTE DE MESSAGERIE ---------- -->
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">06 <span class="fr">La version légère du volet 04</span><span class="en">The lightweight version of block 04</span></span>
-          <h3><span class="fr">Réclamations transport, du signalement à la lettre envoyée</span><span class="en">Transport damage claims, from report to sent letter</span></h3>
+          <span class="case-num">06 <span class="fr">Quand la boîte mail déborde, et surtout quand vous n'êtes pas là</span><span class="en">When the inbox overflows, and above all when you are away</span></span>
+          <h3><span class="fr">Copilote de messagerie, tri, réponse et relevé de retour de congés</span><span class="en">Inbox copilot: triage, replies, and a back-from-leave briefing</span></h3>
           <p class="case-sub">
-            <span class="fr">Quand un portail client complet n'est pas justifié, le même besoin se traite en beaucoup plus simple. Une livraison arrive cassée, une seule saisie suffit : les documents de réclamation sont générés et partent au bon destinataire. Pas de formulaire public, pas de back-office, pas d'IA, et donc un budget sans commune mesure avec le volet 04.</span>
-            <span class="en">When a full customer portal is not justified, the same need can be met far more simply. A delivery arrives damaged, a single entry is enough: the claim documents are generated and sent to the right recipient. No public form, no back office, no AI, and therefore a budget nowhere near block 04.</span>
+            <span class="fr">Chaque mail reçu est lu, classé par niveau d'urgence, résumé, et assorti de l'action concrète à mener. Une réponse part quand elle est utile, écrite dans votre style. Tout atterrit dans un tableau de suivi. Vous l'activez avant de partir : au retour, vous ne lisez pas trois cents messages, vous lisez ce qui s'est passé et ce qui attend une décision.</span>
+            <span class="en">Every incoming email is read, ranked by urgency, summarised, and paired with the concrete action to take. A reply goes out when it is useful, written in your own style. Everything lands in a tracking table. Switch it on before you leave: when you come back you do not read three hundred messages, you read what happened and what needs a decision.</span>
           </p>
           <div class="tags">
             <span class="tag">n8n</span>
-            <span class="tag"><span class="fr">Documents PDF</span><span class="en">PDF documents</span></span>
-            <span class="tag"><span class="fr">À votre charte</span><span class="en">Your branding</span></span>
-            <span class="tag"><span class="fr">Multi-sites</span><span class="en">Multi-site</span></span>
+            <span class="tag"><span class="fr">IA</span><span class="en">AI</span></span>
+            <span class="tag">Gmail + IMAP</span>
+            <span class="tag"><span class="fr">Mémoire de fil</span><span class="en">Thread memory</span></span>
           </div>
         </div>
         <div aria-hidden="true">
           <svg viewBox="0 0 220 170" fill="none">
-            <rect x="8" y="18" width="74" height="52" rx="7" fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.5"/>
-            <path d="M8 32h74M30 18v52M56 18v52" stroke="var(--line-2)" stroke-width="1.2"/>
-            <rect x="13" y="38" width="12" height="5" rx="2.5" fill="var(--ink-3)" opacity=".5"/>
-            <rect x="35" y="38" width="16" height="5" rx="2.5" fill="var(--ink-3)" opacity=".5"/>
-            <rect x="61" y="38" width="16" height="5" rx="2.5" fill="var(--warn)" opacity=".85"/>
-            <path d="M82 44h22" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
-            <g>
-              <rect x="106" y="10" width="58" height="72" rx="6" fill="var(--bg-2)" stroke="var(--accent)" stroke-width="1.6"/>
-              <rect x="106" y="10" width="58" height="6" rx="3" fill="var(--warn)" opacity=".9"/>
-              <path d="M116 30h30M116 40h38M116 50h24" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
-              <rect x="116" y="60" width="26" height="8" rx="3" fill="var(--warn)" opacity=".8"/>
+            <g stroke="var(--line-2)" stroke-width="1.5" fill="var(--bg-2)">
+              <rect x="8" y="26" width="54" height="30" rx="5"/>
+              <rect x="8" y="62" width="54" height="30" rx="5"/>
+              <rect x="8" y="98" width="54" height="30" rx="5"/>
             </g>
-            <path d="M135 82v14" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
-            <g>
-              <rect x="96" y="96" width="80" height="52" rx="7" fill="var(--bg-2)" stroke="var(--accent-2)" stroke-width="1.6"/>
-              <path d="m96 100 40 27 40-27" stroke="var(--accent-2)" stroke-width="1.6" stroke-linejoin="round"/>
-              <circle cx="176" cy="100" r="9" fill="var(--good)"/>
-              <path d="m172 100 3 3 5.5-6" stroke="var(--bg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <g stroke="var(--ink-3)" stroke-width="1.3" fill="none" stroke-linejoin="round" opacity=".8">
+              <path d="m8 29 27 17 27-17M8 65l27 17 27-17M8 101l27 17 27-17"/>
             </g>
-            <rect x="24" y="96" width="52" height="38" rx="6" fill="var(--bg-3)" stroke="var(--line-2)" stroke-width="1.4"/>
-            <path d="M32 115h36M50 104v22" stroke="var(--ink-3)" stroke-width="1.4" stroke-linecap="round" opacity=".5"/>
-            <path d="M76 115h20" stroke="var(--line-2)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 3"/>
+            <path d="M62 41h18c6 0 8 4 8 10v22M62 77h26M62 113h18c6 0 8-4 8-10V81" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="88" y="52" width="52" height="50" rx="10" fill="var(--bg-3)" stroke="var(--accent-2)" stroke-width="1.6"/>
+            <path d="M100 70h28M100 79h20M100 88h24" stroke="var(--accent-2)" stroke-width="1.6" stroke-linecap="round" opacity=".65"/>
+            <circle class="pulse" cx="114" cy="60" r="4" fill="var(--accent-2)"/>
+            <path d="M140 77h16" stroke="var(--line-2)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="156" y="20" width="56" height="122" rx="8" fill="var(--bg-2)" stroke="var(--line-2)" stroke-width="1.5"/>
+            <path d="M156 38h56" stroke="var(--line-2)" stroke-width="1.3"/>
+            <g>
+              <rect x="164" y="46" width="8" height="8" rx="2" fill="var(--warn)"/>
+              <rect x="178" y="48" width="26" height="4" rx="2" fill="var(--ink-3)" opacity=".45"/>
+              <rect x="164" y="64" width="8" height="8" rx="2" fill="var(--accent)"/>
+              <rect x="178" y="66" width="22" height="4" rx="2" fill="var(--ink-3)" opacity=".45"/>
+              <rect x="164" y="82" width="8" height="8" rx="2" fill="var(--good)"/>
+              <rect x="178" y="84" width="26" height="4" rx="2" fill="var(--ink-3)" opacity=".45"/>
+              <rect x="164" y="100" width="8" height="8" rx="2" fill="var(--ink-3)" opacity=".5"/>
+              <rect x="178" y="102" width="18" height="4" rx="2" fill="var(--ink-3)" opacity=".35"/>
+              <rect x="164" y="118" width="8" height="8" rx="2" fill="var(--warn)"/>
+              <rect x="178" y="120" width="24" height="4" rx="2" fill="var(--ink-3)" opacity=".45"/>
+            </g>
+            <circle cx="196" cy="152" r="9" fill="none" stroke="var(--warn)" stroke-width="1.6"/>
+            <path d="M196 145v-4M196 163v-4M189 152h-4M207 152h-4" stroke="var(--warn)" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </div>
       </div>
@@ -1465,27 +1472,27 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         <div>
           <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
           <ul>
-            <li><span class="fr">Une seule saisie suffit : la référence du dossier, le transporteur, la description et le montant</span><span class="en">A single entry is enough: file reference, carrier, description and amount</span></li>
-            <li><span class="fr">Les documents de réclamation sont générés à votre charte, chiffrés, et convertis en PDF</span><span class="en">The claim documents are generated in your own branding, costed, and converted to PDF</span></li>
-            <li><span class="fr">Envoi automatique au bon destinataire chez le transporteur, pièces jointes comprises</span><span class="en">Automatic sending to the right contact at the carrier, attachments included</span></li>
-            <li><span class="fr">Les réponses arrivent directement chez la personne qui suit le dossier</span><span class="en">Replies land straight with the person handling the file</span></li>
-            <li><span class="fr">Aucune saisie libre sur les destinataires : une réclamation ne peut pas partir au mauvais transporteur</span><span class="en">No free text on recipients: a claim cannot go to the wrong carrier</span></li>
+            <li><span class="fr">Chaque mail classé en quatre niveaux d'urgence, avec un résumé et l'action concrète à mener, jamais un vague « à surveiller »</span><span class="en">Every email ranked across four urgency levels, with a summary and the concrete action to take, never a vague "keep an eye on it"</span></li>
+            <li><span class="fr">Une réponse rédigée dans votre style quand elle est utile, et rien du tout quand elle ne l'est pas</span><span class="en">A reply written in your own style when it is useful, and nothing at all when it is not</span></li>
+            <li><span class="fr">Une mémoire par fil de discussion : le copilote sait ce qu'il a déjà écrit, ne se répète pas et ne redemande pas ce qu'il a déjà obtenu</span><span class="en">Memory per conversation: the copilot knows what it already wrote, does not repeat itself and does not ask twice for the same thing</span></li>
+            <li><span class="fr">Deux boîtes traitées par la même chaîne, une messagerie moderne et une boîte IMAP classique</span><span class="en">Two mailboxes handled by one pipeline, a modern mail service and a plain IMAP box</span></li>
+            <li><span class="fr">Au retour de congés, un relevé unique : ce qui s'est passé, ce qui a été traité, ce qui attend votre décision</span><span class="en">Back from leave, a single briefing: what happened, what was handled, what is waiting on your decision</span></li>
           </ul>
         </div>
         <div>
           <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
           <ul>
-            <li><span class="fr">Un référentiel de vos transporteurs, avec l'adresse de réclamation de chacun</span><span class="en">A list of your carriers, each with its claims address</span></li>
-            <li><span class="fr">Vos modèles de documents, ou leur mise en forme à votre charte</span><span class="en">Your document templates, or their layout in your branding</span></li>
-            <li><span class="fr">Une boîte d'envoi dédiée au dispositif, distincte des boîtes personnelles</span><span class="en">A dedicated sending mailbox, separate from personal ones</span></li>
+            <li><span class="fr">Un accès à la boîte, et une adresse d'envoi dédiée au dispositif</span><span class="en">Access to the mailbox, and a sending address dedicated to the system</span></li>
+            <li><span class="fr">Vos règles écrites : qui mérite une réponse, qui n'en reçoit jamais</span><span class="en">Your rules in writing: who deserves a reply, who never gets one</span></li>
+            <li><span class="fr">Une période d'observation en brouillon avant d'autoriser le moindre envoi automatique</span><span class="en">A draft-only observation period before any automatic sending is allowed</span></li>
           </ul>
         </div>
         <div class="rpa-limits">
           <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
           <ul>
-            <li><span class="fr">L'automatisation monte le dossier, elle ne négocie pas l'indemnisation</span><span class="en">The automation builds the file, it does not negotiate the settlement</span></li>
-            <li><span class="fr">Le texte de la réclamation reste votre décision : un modèle mal formulé produit un dossier faible</span><span class="en">The wording of the claim stays your decision: a weak template produces a weak file</span></li>
-            <li><span class="fr">Si votre ERP n'expose pas la pièce justificative, il faut la joindre à la main, ou passer par un robot de poste, volet 07</span><span class="en">If your ERP exposes no supporting document, it has to be attached by hand, or through a desktop robot, block 07</span></li>
+            <li><span class="fr">Une réponse automatique engage votre parole : on démarre toujours en brouillon, et vous décidez ensuite de ce qui part seul</span><span class="en">An automatic reply speaks in your name: we always start in draft, and you then decide what goes out on its own</span></li>
+            <li><span class="fr">Le copilote reste prudent plutôt que d'inventer : il ne prend jamais un engagement que vous n'avez pas validé</span><span class="en">The copilot stays cautious rather than inventing: it never commits to anything you have not approved</span></li>
+            <li><span class="fr">Il trie, il résume, il propose. Il ne décide pas à votre place de ce qui compte dans votre métier</span><span class="en">It sorts, summarises and suggests. It does not decide for you what matters in your business</span></li>
           </ul>
         </div>
       </div>
@@ -1494,12 +1501,12 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         <div class="honest">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
           <p>
-            <span class="fr">Aucun chiffre n'est affiché sur ce volet. Les montants récupérés grâce à ce dispositif appartiennent à l'entreprise qui l'exploite et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.</span>
-            <span class="en">No figures are shown for this offer. Amounts recovered through it belong to the company running it and are not published here. What I can show, and let you replay, are the three measured automations above.</span>
+            <span class="fr"><strong>Le vrai risque n'est pas la qualité des réponses, c'est la boucle.</strong> Deux robots qui se répondent, c'est un échange sans fin et une facture qui grimpe toute la nuit. Le dispositif s'arrête net sur les messages automatiques, les accusés d'absence, les non-remises et vos propres adresses. Les listes de diffusion, elles, sont analysées et résumées, mais ne reçoivent jamais de réponse : elle partirait à toute la liste.</span>
+            <span class="en"><strong>The real risk is not reply quality, it is the loop.</strong> Two robots answering each other means an endless exchange and a bill that climbs all night. The system stops dead on automated messages, out-of-office notices, bounces and your own addresses. Mailing lists are analysed and summarised, but never answered: the reply would go to the entire list.</span>
           </p>
         </div>
         <p class="price-inline">
-          <span class="fr">Sur devis, selon le nombre de transporteurs et de modèles</span><span class="en">On quote, depending on carriers and templates</span>
+          <span class="fr">Sur devis, selon le volume et le nombre de boîtes</span><span class="en">On quote, depending on volume and number of mailboxes</span>
         </p>
       </div>
     </div>
@@ -1605,40 +1612,39 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
       <div>
         <p>
-          <span class="fr"><strong>Je ne promets aucun montant récupéré.</strong> Je n'ai aucun moyen de savoir ce que contiennent vos données avant de les avoir vues. Ce qui figure sur cette page, c'est ce que chaque automatisation a trouvé sur un jeu de données représentatif, et le seuil à partir duquel elle est rentabilisée chez vous.</span>
-          <span class="en"><strong>I promise no recovered amount.</strong> I have no way of knowing what your data contains before seeing it. What this page shows is what each automation found on a representative dataset, and the threshold above which it pays for itself at your company.</span>
+          <span class="fr"><strong>Je ne promets aucun montant récupéré.</strong> Je n'ai aucun moyen de savoir ce que contiennent vos données avant de les avoir vues. Ce qui figure sur cette page, c'est ce que chaque automatisation a trouvé sur un jeu de données représentatif.</span>
+          <span class="en"><strong>I promise no recovered amount.</strong> I have no way of knowing what your data contains before seeing it. What this page shows is what each automation found on a representative dataset.</span>
         </p>
         <p>
-          <span class="fr"><strong>Les prix affichés sont des tarifs de lancement.</strong> Ils sont réservés aux trois premiers clients de chaque automatisation, en contrepartie d'une référence écrite et du droit de citer le cas de façon anonymisée. Ce n'est pas le tarif courant, et il ne sera pas maintenu au-delà.</span>
-          <span class="en"><strong>The prices shown are launch prices.</strong> They are reserved for the first three clients of each automation, in exchange for a written reference and the right to describe the case anonymously. This is not the standard rate, and it will not be kept beyond that point.</span>
+          <span class="fr"><strong>Chaque prix est établi sur devis</strong>, après un cadrage écrit du périmètre. Aucun tarif n'est affiché ici, parce qu'un tarif publié sans connaître vos formats, vos volumes et vos contraintes ne veut rien dire, et se révèle toujours faux dans un sens ou dans l'autre.</span>
+          <span class="en"><strong>Every price is set by quote</strong>, after the scope has been framed in writing. No rate is shown here, because a rate published without knowing your formats, volumes and constraints means nothing, and always turns out wrong one way or the other.</span>
         </p>
       </div>
     </div>
 
     <div class="tbl-wrap reveal">
       <table>
-        <caption><span class="fr">Options, facturées séparément</span><span class="en">Options, billed separately</span></caption>
+        <caption><span class="fr">Options, chiffrées séparément au devis</span><span class="en">Options, quoted separately</span></caption>
         <thead>
           <tr>
             <th scope="col"><span class="fr">Option</span><span class="en">Option</span></th>
-            <th scope="col" class="n">EUR</th>
-            <th scope="col" class="n">USD</th>
+            <th scope="col"><span class="fr">Quand elle se justifie</span><span class="en">When it applies</span></th>
           </tr>
         </thead>
         <tbody>
-          <tr><td><span class="fr">Gabarit d'extraction supplémentaire</span><span class="en">Additional extraction template</span></td><td class="n">180</td><td class="n">200</td></tr>
-          <tr><td><span class="fr">Format de fichier source supplémentaire</span><span class="en">Additional source file format</span></td><td class="n">250</td><td class="n">275</td></tr>
-          <tr><td><span class="fr">Série supplémentaire surveillée, par lot de 4</span><span class="en">Additional monitored series, per batch of 4</span></td><td class="n">120</td><td class="n">135</td></tr>
-          <tr><td><span class="fr">Canal de diffusion supplémentaire (Slack, Teams, API)</span><span class="en">Additional delivery channel (Slack, Teams, API)</span></td><td class="n">300</td><td class="n">330</td></tr>
-          <tr><td><span class="fr">Traduction du rapport dans une troisième langue</span><span class="en">Report translated into a third language</span></td><td class="n">200</td><td class="n">220</td></tr>
-          <tr><td><span class="fr">Reprise d'historique et rejeu sur données passées</span><span class="en">History backfill and replay on past data</span></td><td class="n">350</td><td class="n">385</td></tr>
-          <tr><td><span class="fr">Maintenance et surveillance, par mois</span><span class="en">Maintenance and monitoring, per month</span></td><td class="n">90</td><td class="n">100</td></tr>
+          <tr><td><span class="fr">Gabarit d'extraction supplémentaire</span><span class="en">Additional extraction template</span></td><td><span class="fr">Au-delà des deux gabarits inclus, un fournisseur de plus à traiter</span><span class="en">Beyond the two templates included, one more supplier to handle</span></td></tr>
+          <tr><td><span class="fr">Format de fichier source supplémentaire</span><span class="en">Additional source file format</span></td><td><span class="fr">Un troisième export, une autre banque, une autre devise</span><span class="en">A third export, another bank, another currency</span></td></tr>
+          <tr><td><span class="fr">Séries supplémentaires surveillées</span><span class="en">Additional monitored series</span></td><td><span class="fr">Au-delà des 8 séries incluses dans le contrôle quotidien</span><span class="en">Beyond the 8 series included in the daily check</span></td></tr>
+          <tr><td><span class="fr">Canal de diffusion supplémentaire</span><span class="en">Additional delivery channel</span></td><td><span class="fr">Slack, Teams ou une API en plus du canal inclus</span><span class="en">Slack, Teams or an API on top of the channel included</span></td></tr>
+          <tr><td><span class="fr">Traduction des documents produits</span><span class="en">Translation of the produced documents</span></td><td><span class="fr">Une troisième langue au-delà du français et de l'anglais</span><span class="en">A third language beyond French and English</span></td></tr>
+          <tr><td><span class="fr">Reprise d'historique et rejeu</span><span class="en">History backfill and replay</span></td><td><span class="fr">Faire tourner le dispositif sur vos données passées</span><span class="en">Running the system over your past data</span></td></tr>
+          <tr><td><span class="fr">Maintenance et surveillance</span><span class="en">Maintenance and monitoring</span></td><td><span class="fr">Un forfait mensuel, si vous voulez que je garde un œil dessus</span><span class="en">A monthly retainer, if you want me keeping an eye on it</span></td></tr>
         </tbody>
       </table>
     </div>
     <p class="tbl-note">
-      <span class="fr">Montants en euros. Conversion indicative 1 EUR = 1,10 USD, confirmée au devis. Le régime de TVA applicable est précisé sur le devis.</span>
-      <span class="en">Amounts in euros. Indicative conversion 1 EUR = 1.10 USD, confirmed in the quote. The applicable VAT status is stated on the quote.</span>
+      <span class="fr">Chaque option est chiffrée dans le devis, avec le forfait principal. Le régime de TVA applicable y est précisé.</span>
+      <span class="en">Each option is priced in the quote, alongside the main fee. The applicable VAT status is stated there.</span>
     </p>
 
     <div class="cond">

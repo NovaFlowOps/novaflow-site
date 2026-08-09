@@ -74,13 +74,22 @@ rotation et anciennete, uniformisation des pratiques, completude et cloture.
 Chaque site ne recoit que ce qui le concerne. Aucun chiffre n'est publie sur ce
 volet, les donnees appartiennent a leur proprietaire.
 
-### 6. Reclamations transport, version legere du volet 4
-A partir d'une seule saisie (reference du dossier, transporteur, description,
-montant), genere les documents de reclamation chiffres a la charte du client,
-les convertit en PDF et les envoie au bon destinataire chez le transporteur. Les
-reponses arrivent chez la personne qui suit le dossier. Aucune saisie libre sur
-les destinataires. Aucun chiffre n'est publie sur ce volet : les montants
-recuperes appartiennent a l'entreprise qui exploite le dispositif.
+### 6. Copilote de messagerie, tri, reponse et relevé de retour de conges
+Lit les messages de plusieurs boites, une messagerie moderne et une boite IMAP
+classique, les classe en quatre niveaux d'urgence, et produit pour chacun un
+resume et l'action concrete a mener dans un tableau de suivi. Une reponse est
+redigee dans le style du client quand elle est utile, et rien du tout quand elle
+ne l'est pas. Memoire par fil de discussion : le dispositif sait ce qu'il a deja
+ecrit et ne se repete pas. Active avant un depart en conges, il permet de
+retrouver au retour un releve unique de ce qui s'est passe, de ce qui a ete
+traite et de ce qui attend une decision.
+Le vrai risque traite ici n'est pas la qualite des reponses mais la boucle :
+deux robots qui se repondent produisent un echange sans fin. Le dispositif
+s'arrete sur les messages automatiques, les accuses d'absence, les non-remises
+et les propres adresses du client. Les listes de diffusion sont analysees et
+resumees mais ne recoivent jamais de reponse. Le demarrage se fait toujours en
+mode brouillon avant d'autoriser le moindre envoi automatique.
+Aucun chiffre n'est publie sur ce volet.
 
 ### 7. Automatisation du poste de travail, RPA
 Pour les logiciels sans API ni export propre : Power Automate Desktop ou
@@ -89,10 +98,10 @@ liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
 
 ## Conditions
 
-Forfait pour un perimetre ecrit, pas de facturation horaire. Prix de lancement
-affiches pour les trois premiers clients de chaque automatisation, en
-contrepartie d'une reference ecrite : 1 200 EUR, 1 400 EUR et 1 100 EUR selon
-l'automatisation. Les blocs 4, 5, 6 et 7 sont sur devis. Paiement 50 % a la commande
+Forfait pour un perimetre ecrit, pas de facturation horaire. Aucun tarif n'est
+publie : chaque prix est etabli sur devis apres un cadrage ecrit, parce qu'un
+tarif affiche sans connaitre les formats, les volumes et les contraintes du
+client se revele toujours faux. Paiement 50 % a la commande
 et 50 % a la livraison acceptee. Delai de 10 jours ouvres a compter de la
 reception des donnees d'exemple. Une serie de corrections incluse sous 14 jours.
 Tout a distance, aucun rendez-vous physique, communication ecrite.
