@@ -222,7 +222,6 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 }
 .stat .v em { font-style: normal; color: var(--accent); }
 .stat .k { display: block; margin-top: .5rem; font-size: .9rem; color: var(--ink-2); line-height: 1.45; }
-.stat-note { margin: 1rem 0 0; font-size: .85rem; color: var(--ink-3); }
 
 /* ------------------------------------------------------------------
    7. Titres de section
