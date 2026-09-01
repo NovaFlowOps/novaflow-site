@@ -526,3 +526,27 @@ code {
 .foot-nav { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
 .foot-nav a { font-size: .87rem; color: var(--ink-3); text-decoration: none; }
 .foot-nav a:hover { color: var(--accent); text-decoration: underline; }
+.tag-live {
+  background: color-mix(in srgb, var(--good) 18%, transparent);
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+  color: var(--good);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: .5rem;
+  vertical-align: middle;
+}
+
+/* Contact : adresse sélectionnable, pas seulement un lien mailto. */
+.mail-direct {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: .6rem .9rem; margin-top: 1.4rem;
+}
+.mail-lbl { font-size: .87rem; color: var(--ink-3); }
+.mail-addr {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: .97rem; color: var(--ink); word-break: break-all;
+  background: var(--bg-3); border: 1px solid var(--line);
+  border-radius: 9px; padding: .42rem .7rem; user-select: all;
+}
+.btn-copy { padding: .45rem .85rem; font-size: .87rem; }
+.btn-copy.ok { border-color: var(--good); color: var(--good); }
