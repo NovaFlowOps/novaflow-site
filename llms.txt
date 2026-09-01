@@ -6,8 +6,8 @@
 > reproductible : les chiffres publies sont mesures, pas estimes.
 
 Site : https://novaflow-ops.com
-Contact : novaflowops@gmail.com
-Langues : francais, anglais ecrit
+Contact : contact@novaflow-ops.com
+Langue : francais
 Outils : n8n, Node.js, Power Automate Desktop, controles sur base ou exports ERP
 
 ## Ce qui distingue cette offre

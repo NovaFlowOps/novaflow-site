@@ -23,7 +23,7 @@
       "@id": "https://novaflow-ops.com/#site",
       "url": "https://novaflow-ops.com/",
       "name": "NovaFlow",
-      "inLanguage": ["fr", "en"],
+      "inLanguage": "fr",
       "publisher": { "@id": "https://novaflow-ops.com/#org" }
     },
     {
@@ -31,7 +31,7 @@
       "@id": "https://novaflow-ops.com/#org",
       "name": "NovaFlow",
       "url": "https://novaflow-ops.com/",
-      "email": "novaflowops@gmail.com",
+      "email": "contact@novaflow-ops.com",
       "description": "Automatisation de processus administratifs pour PME. Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible, ce qui rend les résultats annoncés vérifiables.",
       "areaServed": [
         { "@type": "Country", "name": "France" },
@@ -39,7 +39,7 @@
         { "@type": "Country", "name": "Suisse" },
         { "@type": "Country", "name": "Luxembourg" }
       ],
-      "availableLanguage": ["fr", "en"],
+      "availableLanguage": "fr",
       "knowsAbout": [
         "automatisation de processus",
         "n8n",
@@ -103,14 +103,12 @@
 }
 </script>
 <script>
-/* Applique le thème et la langue avant le premier rendu, pour éviter tout clignotement.
+/* Applique le thème avant le premier rendu, pour éviter tout clignotement.
    Sans choix explicite, aucun attribut n'est posé et le CSS suit le système. */
 (function () {
   try {
     var t = localStorage.getItem('novaflow-theme');
     if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-    var l = localStorage.getItem('novaflow-lang');
-    if (l === 'en' || l === 'fr') document.documentElement.setAttribute('lang', l);
   } catch (e) {}
 })();
 </script>
@@ -229,11 +227,6 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 }
 .skip:focus { left: 0; }
 
-/* Bilingue : le français est visible par défaut, même sans JavaScript. */
-.en { display: none; }
-html[lang="en"] .fr { display: none; }
-html[lang="en"] .en { display: inline; }
-
 /* ------------------------------------------------------------------
    3. En-tête
 ------------------------------------------------------------------ */
@@ -255,15 +248,6 @@ html[lang="en"] .en { display: inline; }
 .nav a:hover { color: var(--ink); background: var(--bg-3); }
 .hdr-tools { display: flex; align-items: center; gap: .4rem; margin-left: auto; }
 .nav + .hdr-tools { margin-left: .6rem; }
-.seg {
-  display: flex; border: 1px solid var(--line-2); border-radius: 10px; overflow: hidden;
-  background: var(--bg-2);
-}
-.seg button {
-  font: inherit; font-size: .8rem; font-weight: 650; letter-spacing: .02em;
-  padding: .34rem .55rem; border: 0; background: transparent; color: var(--ink-3); cursor: pointer;
-}
-.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 .icon-btn {
   display: grid; place-items: center; width: 36px; height: 34px;
   border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg-2);
@@ -633,7 +617,7 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 </head>
 <body>
 
-<a class="skip" href="#main"><span class="fr">Aller au contenu</span><span class="en">Skip to content</span></a>
+<a class="skip" href="#main">Aller au contenu</a>
 
 <header class="hdr">
   <div class="wrap hdr-in">
@@ -648,19 +632,15 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
-      <a href="#realisations"><span class="fr">Réalisations</span><span class="en">Case studies</span></a>
-      <a href="#tarifs"><span class="fr">Tarifs</span><span class="en">Pricing</span></a>
-      <a href="#methode"><span class="fr">Méthode</span><span class="en">How I work</span></a>
-      <a href="#livraison"><span class="fr">Livrables</span><span class="en">Deliverables</span></a>
-      <a href="#contact"><span class="fr">Contact</span><span class="en">Contact</span></a>
+      <a href="#realisations">Réalisations</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#methode">Méthode</a>
+      <a href="#livraison">Livrables</a>
+      <a href="#contact">Contact</a>
     </nav>
 
     <div class="hdr-tools">
-      <div class="seg" role="group" id="langGroup" aria-label="Langue du site">
-        <button type="button" id="btnFr" aria-pressed="true">FR</button>
-        <button type="button" id="btnEn" aria-pressed="false">EN</button>
-      </div>
-      <button type="button" class="icon-btn" id="btnTheme" aria-pressed="false">
+      <button type="button" class="icon-btn" id="btnTheme" aria-pressed="false" aria-label="Basculer entre le thème clair et le thème sombre" title="Basculer entre le thème clair et le thème sombre">
         <svg class="i-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         <svg class="i-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
@@ -675,27 +655,27 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow"><span class="dot"></span><span class="fr">Automatisation de processus : n8n, Node, ERP et RPA</span><span class="en">Process automation: n8n, Node, ERP and RPA</span></span>
+      <span class="eyebrow"><span class="dot"></span>Automatisation de processus : n8n, Node, ERP et RPA</span>
       <h1>
-        <span class="fr">L'automatisation qui trouve l'argent que personne ne voit.</span>
-        <span class="en">Automation that finds the money nobody sees.</span>
+        L'automatisation qui trouve l'argent que personne ne voit.
+        
       </h1>
       <p class="lede">
-        <span class="fr">Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Des processus administratifs qui tournent seuls, et qui remontent ce qui cloche avant que cela ne coûte cher.</span>
-        <span class="en">Invoice reconciliation, inbox extraction, daily data health checks. Back office processes that run on their own, and surface what is wrong before it gets expensive.</span>
+        Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Des processus administratifs qui tournent seuls, et qui remontent ce qui cloche avant que cela ne coûte cher.
+        
       </p>
       <div class="cta-row">
         <a class="btn btn-1" href="#contact">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 6.5h17v11h-17z" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          <span class="fr">Décrire mon cas</span><span class="en">Describe my case</span>
+          Décrire mon cas
         </a>
         <a class="btn btn-2" href="#realisations">
-          <span class="fr">Voir les trois réalisations</span><span class="en">See the three case studies</span>
+          Voir les trois réalisations
         </a>
       </div>
       <p class="hero-note">
-        <span class="fr">Travail entièrement à distance. France, Belgique, Suisse, Luxembourg. Français ou anglais.</span>
-        <span class="en">Fully remote. France, Belgium, Switzerland, Luxembourg. French or English.</span>
+        Travail entièrement à distance. France, Belgique, Suisse, Luxembourg.
+        
       </p>
     </div>
 
@@ -775,8 +755,8 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
   <div class="wrap trust-in">
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.8 4.5 6v6.2c0 4.6 3.1 7.6 7.5 9 4.4-1.4 7.5-4.4 7.5-9V6L12 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m8.6 12 2.5 2.6 4.4-5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <p>
-      <span class="fr"><strong>Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible.</strong> Vous rejouez la démonstration sur votre poste, vous obtenez exactement les chiffres affichés sur cette page. Rien n'est affirmé sans être vérifiable.</span>
-      <span class="en"><strong>Every automation ships with its labelled test dataset and a reproducible demo script.</strong> Run the demo on your own machine and you get exactly the numbers shown on this page. Nothing is claimed that cannot be checked.</span>
+      <strong>Chaque automatisation est livrée avec son jeu de données de test labellé et un script de démonstration reproductible.</strong> Vous rejouez la démonstration sur votre poste, vous obtenez exactement les chiffres affichés sur cette page. Rien n'est affirmé sans être vérifiable.
+      
     </p>
   </div>
 </div>
@@ -785,29 +765,29 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 <section class="stats" aria-labelledby="stats-h">
   <div class="wrap">
     <h2 id="stats-h" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">
-      <span class="fr">Chiffres mesurés</span><span class="en">Measured results</span>
+      Chiffres mesurés
     </h2>
     <div class="stat-grid">
       <div class="stat reveal">
-        <span class="v num"><em><span class="fr">17 994,91 EUR</span><span class="en">EUR 17,994.91</span></em></span>
-        <span class="k"><span class="fr">de doubles paiements détectés sur un seul mois de factures</span><span class="en">in duplicate payments found in a single month of invoices</span></span>
+        <span class="v num"><em>17 994,91 EUR</em></span>
+        <span class="k">de doubles paiements détectés sur un seul mois de factures</span>
       </div>
       <div class="stat reveal">
         <span class="v num"><em>259 / 259</em></span>
-        <span class="k"><span class="fr">valeurs de champ exactes à l'extraction, vérifiées contre un jeu labellé</span><span class="en">field values extracted exactly right, checked against a labelled set</span></span>
+        <span class="k">valeurs de champ exactes à l'extraction, vérifiées contre un jeu labellé</span>
       </div>
       <div class="stat reveal">
         <span class="v num"><em>10 / 10</em></span>
-        <span class="k"><span class="fr">anomalies injectées détectées, avec 4 faux positifs sur 960 jours-série</span><span class="en">injected anomalies caught, with 4 false positives over 960 series-days</span></span>
+        <span class="k">anomalies injectées détectées, avec 4 faux positifs sur 960 jours-série</span>
       </div>
       <div class="stat reveal">
         <span class="v num"><em>0</em></span>
-        <span class="k"><span class="fr">ligne en double lors d'une seconde exécution sur la même boîte mail</span><span class="en">duplicate rows on a second run over the same mailbox</span></span>
+        <span class="k">ligne en double lors d'une seconde exécution sur la même boîte mail</span>
       </div>
     </div>
     <p class="stat-note">
-      <span class="fr">Ces chiffres sont mesurés sur les jeux de données livrés avec chaque automatisation. Ce ne sont pas des estimations.</span>
-      <span class="en">These figures are measured on the datasets shipped with each automation. They are not estimates.</span>
+      Ces chiffres sont mesurés sur les jeux de données livrés avec chaque automatisation. Ce ne sont pas des estimations.
+      
     </p>
   </div>
 </section>
@@ -816,14 +796,14 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 <section id="realisations" aria-labelledby="real-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="kicker"><span class="fr">Réalisations</span><span class="en">Case studies</span></p>
+      <p class="kicker">Réalisations</p>
       <h2 id="real-h">
-        <span class="fr">Trois automatisations qui tournent, avec leurs résultats vérifiés</span>
-        <span class="en">Three automations that run, with verified results</span>
+        Trois automatisations qui tournent, avec leurs résultats vérifiés
+        
       </h2>
       <p>
-        <span class="fr">Pour chacune : le problème tel qu'il se pose au quotidien, ce que fait la solution, et ce qu'elle a trouvé.</span>
-        <span class="en">For each one: the day to day problem, what the solution does, and what it found.</span>
+        Pour chacune : le problème tel qu'il se pose au quotidien, ce que fait la solution, et ce qu'elle a trouvé.
+        
       </p>
     </div>
 
@@ -832,15 +812,15 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-top">
         <div>
           <span class="case-num">01</span>
-          <h3><span class="fr">Rapprochement facture et banque</span><span class="en">Invoice to bank reconciliation</span></h3>
+          <h3>Rapprochement facture et banque</h3>
           <p class="case-sub">
-            <span class="fr">Comparer un export comptable et un relevé bancaire, au centime près, sans y passer la journée.</span>
-            <span class="en">Compare an accounting export and a bank statement, to the cent, without spending the day on it.</span>
+            Comparer un export comptable et un relevé bancaire, au centime près, sans y passer la journée.
+            
           </p>
           <div class="tags">
             <span class="tag">n8n</span><span class="tag">Node</span>
-            <span class="tag"><span class="fr">CSV multi-formats</span><span class="en">Multi-format CSV</span></span>
-            <span class="tag"><span class="fr">Rapport HTML</span><span class="en">HTML report</span></span>
+            <span class="tag">CSV multi-formats</span>
+            <span class="tag">Rapport HTML</span>
           </div>
         </div>
         <div class="case-art" aria-hidden="true">
@@ -876,29 +856,29 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="case-body">
         <div class="blk">
-          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <h4>Le problème</h4>
           <p>
-            <span class="fr">Un export comptable et un relevé bancaire du même mois n'ont jamais le même format : encodages, séparateurs, formats de date et de montant différents, et des libellés bancaires en texte libre. Le rapprochement se fait à la main, et les erreurs passent inaperçues.</span>
-            <span class="en">An accounting export and a bank statement for the same month never share a format: different encodings, separators, date and amount formats, plus free text bank labels. Reconciliation is done by hand, and errors go unnoticed.</span>
+            Un export comptable et un relevé bancaire du même mois n'ont jamais le même format : encodages, séparateurs, formats de date et de montant différents, et des libellés bancaires en texte libre. Le rapprochement se fait à la main, et les erreurs passent inaperçues.
+            
           </p>
         </div>
         <div class="blk">
-          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <h4>La solution</h4>
           <ul>
-            <li><span class="fr">Un workflow n8n qui absorbe les deux formats sans préparation manuelle.</span><span class="en">An n8n workflow that swallows both formats with no manual prep.</span></li>
-            <li><span class="fr">Les encaissements sont agrégés par référence avant comparaison, pas ligne à ligne.</span><span class="en">Payments are aggregated by reference before comparison, not line by line.</span></li>
-            <li><span class="fr">Chaque facture est classée en sept catégories, du rapprochement net au paiement en double.</span><span class="en">Each invoice is sorted into seven categories, from clean match to duplicate payment.</span></li>
-            <li><span class="fr">Chaque euro d'écart entre les deux sources est justifié dans un tableau de bouclage. Si le bouclage ne tombe pas au centime, aucun rapport n'est émis.</span><span class="en">Every euro of gap between the two sources is explained in a bridge table. If the bridge does not balance to the cent, no report is issued.</span></li>
+            <li>Un workflow n8n qui absorbe les deux formats sans préparation manuelle.</li>
+            <li>Les encaissements sont agrégés par référence avant comparaison, pas ligne à ligne.</li>
+            <li>Chaque facture est classée en sept catégories, du rapprochement net au paiement en double.</li>
+            <li>Chaque euro d'écart entre les deux sources est justifié dans un tableau de bouclage. Si le bouclage ne tombe pas au centime, aucun rapport n'est émis.</li>
           </ul>
         </div>
         <div class="blk">
-          <h4><span class="fr">Résultats mesurés</span><span class="en">Measured results</span></h4>
+          <h4>Résultats mesurés</h4>
           <ul>
-            <li><span class="fr">60 factures contre 65 lignes bancaires, 16 anomalies remontées</span><span class="en">60 invoices against 65 bank lines, 16 anomalies raised</span></li>
-            <li class="hi"><span class="fr">2 doubles paiements pour 17 994,91 EUR à se faire rembourser</span><span class="en">2 duplicate payments worth EUR 17,994.91 to claim back</span></li>
-            <li><span class="fr">Bouclage exact au centime</span><span class="en">Bridge balanced to the cent</span></li>
-            <li><span class="fr">100 % de concordance avec un jeu de données labellé, sur les 60 factures</span><span class="en">100% agreement with a labelled dataset, across all 60 invoices</span></li>
-            <li><span class="fr">Moteur : 19 ms</span><span class="en">Engine: 19 ms</span></li>
+            <li>60 factures contre 65 lignes bancaires, 16 anomalies remontées</li>
+            <li class="hi">2 doubles paiements pour 17 994,91 EUR à se faire rembourser</li>
+            <li>Bouclage exact au centime</li>
+            <li>100 % de concordance avec un jeu de données labellé, sur les 60 factures</li>
+            <li>Moteur : 19 ms</li>
           </ul>
         </div>
       </div>
@@ -906,18 +886,18 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-band">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p>
-          <span class="fr"><strong>Ce que ça change.</strong> Le gain n'est pas la demi-journée de saisie économisée, c'est le double paiement de 17 994,91 EUR que personne n'aurait vu.</span>
-          <span class="en"><strong>What it changes.</strong> The value is not the half day of manual work saved, it is the EUR 17,994.91 duplicate payment nobody would have seen.</span>
+          <strong>Ce que ça change.</strong> Le gain n'est pas la demi-journée de saisie économisée, c'est le double paiement de 17 994,91 EUR que personne n'aurait vu.
+          
         </p>
       </div>
 
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">L'ordre de grandeur</span><span class="en">The order of magnitude</span></span>
+          <span class="lbl">L'ordre de grandeur</span>
           <p>
-            <span class="fr">Sur un seul mois de 60 factures, le jeu de démonstration a livré deux doubles paiements pour 17 994,91 EUR. Un seul de ces dossiers suffit généralement à couvrir la mise en place. Le seuil exact se pose au devis, une fois votre volume connu.</span>
-            <span class="en">On a single month of 60 invoices, the demo dataset surfaced two duplicate payments worth EUR 17,994.91. One such case is usually enough to cover the setup. The exact threshold is set in the quote, once your volume is known.</span>
+            Sur un seul mois de 60 factures, le jeu de démonstration a livré deux doubles paiements pour 17 994,91 EUR. Un seul de ces dossiers suffit généralement à couvrir la mise en place. Le seuil exact se pose au devis, une fois votre volume connu.
+            
           </p>
         </div>
       </div>
@@ -925,33 +905,33 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-foot">
         <div class="scope">
           <div>
-            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <h5>Inclus</h5>
             <ul>
-              <li><span class="fr">Workflow n8n, à vous</span><span class="en">n8n workflow, yours to keep</span></li>
-              <li><span class="fr">Adaptation à deux formats de fichier</span><span class="en">Adaptation to two file formats</span></li>
-              <li><span class="fr">Rapport HTML et export CSV</span><span class="en">HTML report and CSV export</span></li>
-              <li><span class="fr">README FR et EN, jeu de test, script de démonstration</span><span class="en">README FR and EN, test dataset, demo script</span></li>
-              <li><span class="fr">Une série de corrections après livraison</span><span class="en">One round of fixes after delivery</span></li>
+              <li>Workflow n8n, à vous</li>
+              <li>Adaptation à deux formats de fichier</li>
+              <li>Rapport HTML et export CSV</li>
+              <li>README d'installation en français, jeu de test, script de démonstration</li>
+              <li>Une série de corrections après livraison</li>
             </ul>
           </div>
           <div class="out">
-            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <h5>Non inclus</h5>
             <ul>
-              <li><span class="fr">Une devise supplémentaire</span><span class="en">An additional currency</span></li>
-              <li><span class="fr">Un troisième fichier source</span><span class="en">A third source file</span></li>
-              <li><span class="fr">L'écriture retour dans le logiciel comptable</span><span class="en">Write-back into the accounting software</span></li>
-              <li><span class="fr">L'hébergement de l'instance n8n</span><span class="en">Hosting of the n8n instance</span></li>
+              <li>Une devise supplémentaire</li>
+              <li>Un troisième fichier source</li>
+              <li>L'écriture retour dans le logiciel comptable</li>
+              <li>L'hébergement de l'instance n8n</li>
             </ul>
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Forfait</span><span class="en">Fixed price</span></span>
-          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
+          <span class="pl">Forfait</span>
+          <span class="pv num">Sur devis</span>
           <span class="pn">
-            <span class="fr">Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a></span>
-            <span class="en">Price agreed after written scoping, for a defined scope. <a href="#tarifs">Terms</a></span>
+            Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a>
+            
           </span>
-          <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
+          <a class="btn btn-1" href="#contact">Demander un devis</a>
         </div>
       </div>
     </article>
@@ -961,15 +941,15 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-top">
         <div>
           <span class="case-num">02</span>
-          <h3><span class="fr">Boîte mail vers tableau</span><span class="en">Mailbox to table</span></h3>
+          <h3>Boîte mail vers tableau</h3>
           <p class="case-sub">
-            <span class="fr">Les commandes reçues par mail arrivent dans un tableau propre, sans doublon et sans ressaisie.</span>
-            <span class="en">Orders received by email land in a clean table, with no duplicates and no retyping.</span>
+            Les commandes reçues par mail arrivent dans un tableau propre, sans doublon et sans ressaisie.
+            
           </p>
           <div class="tags">
             <span class="tag">n8n</span><span class="tag">IMAP</span>
-            <span class="tag"><span class="fr">FR et EN</span><span class="en">FR and EN</span></span>
-            <span class="tag"><span class="fr">Idempotent</span><span class="en">Idempotent</span></span>
+            <span class="tag">FR et EN</span>
+            <span class="tag">Idempotent</span>
           </div>
         </div>
         <div class="case-art" aria-hidden="true">
@@ -1007,29 +987,29 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="case-body">
         <div class="blk">
-          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <h4>Le problème</h4>
           <p>
-            <span class="fr">Les confirmations de commande arrivent par mail et quelqu'un les ressaisit dans un tableur. La ressaisie produit des doublons et des oublis, et personne ne s'en aperçoit avant que le client réclame.</span>
-            <span class="en">Order confirmations arrive by email and someone retypes them into a spreadsheet. Retyping creates duplicates and gaps, and nobody notices until a customer complains.</span>
+            Les confirmations de commande arrivent par mail et quelqu'un les ressaisit dans un tableur. La ressaisie produit des doublons et des oublis, et personne ne s'en aperçoit avant que le client réclame.
+            
           </p>
         </div>
         <div class="blk">
-          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <h4>La solution</h4>
           <ul>
-            <li><span class="fr">Un workflow qui lit la boîte, extrait les champs, et n'ajoute que ce qui est réellement nouveau.</span><span class="en">A workflow that reads the mailbox, extracts the fields, and only adds what is genuinely new.</span></li>
-            <li><span class="fr">Idempotence par message : rejouer le traitement ne crée aucune ligne supplémentaire.</span><span class="en">Idempotency per message: replaying the run creates no extra rows.</span></li>
-            <li><span class="fr">Gestion des révisions : une commande corrigée met à jour la ligne existante, elle n'en crée pas une seconde.</span><span class="en">Revision handling: a corrected order updates the existing row instead of creating a second one.</span></li>
-            <li><span class="fr">Mise en quarantaine plutôt que devinette : un message incomplet part en revue humaine, il n'est jamais complété au jugé.</span><span class="en">Quarantine rather than guessing: an incomplete message goes to human review, it is never filled in by guesswork.</span></li>
+            <li>Un workflow qui lit la boîte, extrait les champs, et n'ajoute que ce qui est réellement nouveau.</li>
+            <li>Idempotence par message : rejouer le traitement ne crée aucune ligne supplémentaire.</li>
+            <li>Gestion des révisions : une commande corrigée met à jour la ligne existante, elle n'en crée pas une seconde.</li>
+            <li>Mise en quarantaine plutôt que devinette : un message incomplet part en revue humaine, il n'est jamais complété au jugé.</li>
           </ul>
         </div>
         <div class="blk">
-          <h4><span class="fr">Résultats mesurés</span><span class="en">Measured results</span></h4>
+          <h4>Résultats mesurés</h4>
           <ul>
-            <li><span class="fr">46 messages traités, 35 lignes écrites, 470 004,01 EUR de commandes extraites</span><span class="en">46 messages processed, 35 rows written, EUR 470,004.01 of orders extracted</span></li>
-            <li class="hi"><span class="fr">259 valeurs de champ exactes sur 259, vérifiées contre un jeu labellé</span><span class="en">259 field values correct out of 259, checked against a labelled set</span></li>
-            <li class="hi"><span class="fr">Deuxième exécution sur la même boîte : 0 ligne en double</span><span class="en">Second run over the same mailbox: 0 duplicate rows</span></li>
-            <li><span class="fr">3 messages incomplets mis en quarantaine, 4 hors sujet ignorés</span><span class="en">3 incomplete messages quarantined, 4 off topic ignored</span></li>
-            <li><span class="fr">Gère l'anglais et le français, le HTML seul, et les mails transférés dont l'historique cité contient une commande plus ancienne</span><span class="en">Handles English and French, HTML only bodies, and forwarded mails whose quoted history contains an older order</span></li>
+            <li>46 messages traités, 35 lignes écrites, 470 004,01 EUR de commandes extraites</li>
+            <li class="hi">259 valeurs de champ exactes sur 259, vérifiées contre un jeu labellé</li>
+            <li class="hi">Deuxième exécution sur la même boîte : 0 ligne en double</li>
+            <li>3 messages incomplets mis en quarantaine, 4 hors sujet ignorés</li>
+            <li>Gère l'anglais et le français, le HTML seul, et les mails transférés dont l'historique cité contient une commande plus ancienne</li>
           </ul>
         </div>
       </div>
@@ -1037,18 +1017,18 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-band">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p>
-          <span class="fr"><strong>Ce que ça change.</strong> Le gain n'est pas la ressaisie évitée, c'est une base sans doublon et sans commande oubliée, sur laquelle vous pouvez enfin compter.</span>
-          <span class="en"><strong>What it changes.</strong> The value is not the typing avoided, it is a table with no duplicates and no missing order, one you can actually rely on.</span>
+          <strong>Ce que ça change.</strong> Le gain n'est pas la ressaisie évitée, c'est une base sans doublon et sans commande oubliée, sur laquelle vous pouvez enfin compter.
+          
         </p>
       </div>
 
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">L'ordre de grandeur</span><span class="en">The order of magnitude</span></span>
+          <span class="lbl">L'ordre de grandeur</span>
           <p>
-            <span class="fr">Sur le jeu de démonstration, la commande moyenne s'élève à 13 428,69 EUR. Une seule commande saisie en double, ou une seule commande oubliée, coûte cet ordre de grandeur. C'est à comparer au coût d'une mise en place, pas au temps de saisie économisé.</span>
-            <span class="en">On the demo dataset the average order is EUR 13,428.69. A single order entered twice, or a single order missed, costs that order of magnitude. Compare that with the cost of a setup, not with the typing time saved.</span>
+            Sur le jeu de démonstration, la commande moyenne s'élève à 13 428,69 EUR. Une seule commande saisie en double, ou une seule commande oubliée, coûte cet ordre de grandeur. C'est à comparer au coût d'une mise en place, pas au temps de saisie économisé.
+            
           </p>
         </div>
       </div>
@@ -1056,33 +1036,33 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-foot">
         <div class="scope">
           <div>
-            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <h5>Inclus</h5>
             <ul>
-              <li><span class="fr">Workflow n8n, à vous</span><span class="en">n8n workflow, yours to keep</span></li>
-              <li><span class="fr">Deux gabarits d'extraction</span><span class="en">Two extraction templates</span></li>
-              <li><span class="fr">Connexion à une boîte mail, doublons et révisions gérés</span><span class="en">One mailbox connected, duplicates and revisions handled</span></li>
-              <li><span class="fr">Fichier de quarantaine et rapport</span><span class="en">Quarantine file and report</span></li>
-              <li><span class="fr">README FR et EN, jeu de test, une série de corrections</span><span class="en">README FR and EN, test dataset, one round of fixes</span></li>
+              <li>Workflow n8n, à vous</li>
+              <li>Deux gabarits d'extraction</li>
+              <li>Connexion à une boîte mail, doublons et révisions gérés</li>
+              <li>Fichier de quarantaine et rapport</li>
+              <li>README d'installation en français, jeu de test, une série de corrections</li>
             </ul>
           </div>
           <div class="out">
-            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <h5>Non inclus</h5>
             <ul>
-              <li><span class="fr">Un troisième gabarit et au-delà</span><span class="en">A third template and beyond</span></li>
-              <li><span class="fr">L'extraction depuis des pièces jointes PDF</span><span class="en">Extraction from PDF attachments</span></li>
-              <li><span class="fr">Une seconde boîte mail</span><span class="en">A second mailbox</span></li>
-              <li><span class="fr">L'écriture directe dans un ERP</span><span class="en">Direct write into an ERP</span></li>
+              <li>Un troisième gabarit et au-delà</li>
+              <li>L'extraction depuis des pièces jointes PDF</li>
+              <li>Une seconde boîte mail</li>
+              <li>L'écriture directe dans un ERP</li>
             </ul>
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Forfait</span><span class="en">Fixed price</span></span>
-          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
+          <span class="pl">Forfait</span>
+          <span class="pv num">Sur devis</span>
           <span class="pn">
-            <span class="fr">Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a></span>
-            <span class="en">Price agreed after written scoping, for a defined scope. <a href="#tarifs">Terms</a></span>
+            Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a>
+            
           </span>
-          <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
+          <a class="btn btn-1" href="#contact">Demander un devis</a>
         </div>
       </div>
     </article>
@@ -1092,15 +1072,15 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-top">
         <div>
           <span class="case-num">03</span>
-          <h3><span class="fr">Contrôle quotidien d'anomalies</span><span class="en">Daily data health check</span></h3>
+          <h3>Contrôle quotidien d'anomalies</h3>
           <p class="case-sub">
-            <span class="fr">Un export qui se fige, une valeur qui s'effondre : vous le savez le jour même, pas trois semaines après.</span>
-            <span class="en">A frozen export, a value that collapses: you know the same day, not three weeks later.</span>
+            Un export qui se fige, une valeur qui s'effondre : vous le savez le jour même, pas trois semaines après.
+            
           </p>
           <div class="tags">
             <span class="tag">n8n</span>
-            <span class="tag"><span class="fr">Statistiques robustes</span><span class="en">Robust statistics</span></span>
-            <span class="tag"><span class="fr">Anti-fatigue d'alerte</span><span class="en">Alert fatigue control</span></span>
+            <span class="tag">Statistiques robustes</span>
+            <span class="tag">Anti-fatigue d'alerte</span>
           </div>
         </div>
         <div class="case-art" aria-hidden="true">
@@ -1127,30 +1107,30 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="case-body">
         <div class="blk">
-          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <h4>Le problème</h4>
           <p>
-            <span class="fr">Un export quotidien que personne ne lit. Un traitement de nuit bloqué qui réécrit la même valeur reste invisible pendant des jours, et les décisions continuent de s'appuyer dessus.</span>
-            <span class="en">A daily export nobody reads. A stuck overnight job rewriting the same value stays invisible for days, while decisions keep being made on it.</span>
+            Un export quotidien que personne ne lit. Un traitement de nuit bloqué qui réécrit la même valeur reste invisible pendant des jours, et les décisions continuent de s'appuyer dessus.
+            
           </p>
         </div>
         <div class="blk">
-          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <h4>La solution</h4>
           <ul>
-            <li><span class="fr">Un contrôle quotidien fondé sur des statistiques robustes : médiane et écart absolu médian, plutôt que moyenne et écart-type.</span><span class="en">A daily check built on robust statistics: median and median absolute deviation rather than mean and standard deviation.</span></li>
-            <li><span class="fr">La saisonnalité hebdomadaire est retirée, donc un lundi n'est pas comparé à un samedi.</span><span class="en">Weekly seasonality is removed, so a Monday is never compared to a Saturday.</span></li>
-            <li><span class="fr">Un mécanisme anti-fatigue d'alerte regroupe les jours d'un même incident au lieu de notifier tous les matins.</span><span class="en">An alert fatigue mechanism groups the days of one incident instead of notifying every morning.</span></li>
-            <li><span class="fr">Détection des valeurs figées, un cas qu'un seuil classique ne voit jamais.</span><span class="en">Frozen value detection, a case a plain threshold never catches.</span></li>
+            <li>Un contrôle quotidien fondé sur des statistiques robustes : médiane et écart absolu médian, plutôt que moyenne et écart-type.</li>
+            <li>La saisonnalité hebdomadaire est retirée, donc un lundi n'est pas comparé à un samedi.</li>
+            <li>Un mécanisme anti-fatigue d'alerte regroupe les jours d'un même incident au lieu de notifier tous les matins.</li>
+            <li>Détection des valeurs figées, un cas qu'un seuil classique ne voit jamais.</li>
           </ul>
         </div>
         <div class="blk">
-          <h4><span class="fr">Résultats mesurés</span><span class="en">Measured results</span></h4>
+          <h4>Résultats mesurés</h4>
           <ul>
-            <li><span class="fr">120 exécutions quotidiennes simulées sur 8 séries, soit 960 jours-série</span><span class="en">120 simulated daily runs over 8 series, that is 960 series-days</span></li>
-            <li class="hi"><span class="fr">10 anomalies injectées sur 10 détectées</span><span class="en">10 injected anomalies out of 10 detected</span></li>
-            <li><span class="fr">7 sur 10 signalées dès le premier jour, délai médian de détection : 0 jour</span><span class="en">7 out of 10 flagged on day one, median detection delay: 0 days</span></li>
-            <li class="hi"><span class="fr">4 faux positifs sur 960 jours-série, soit environ un tous les huit mois par série</span><span class="en">4 false positives over 960 series-days, about one every eight months per series</span></li>
-            <li><span class="fr">Aucun regard vers le futur : les verdicts recalculés en supprimant les données futures sont identiques</span><span class="en">No look ahead: verdicts recomputed with future data removed are identical</span></li>
-            <li><span class="fr">68 détections brutes compressées en 46 notifications</span><span class="en">68 raw detections compressed into 46 notifications</span></li>
+            <li>120 exécutions quotidiennes simulées sur 8 séries, soit 960 jours-série</li>
+            <li class="hi">10 anomalies injectées sur 10 détectées</li>
+            <li>7 sur 10 signalées dès le premier jour, délai médian de détection : 0 jour</li>
+            <li class="hi">4 faux positifs sur 960 jours-série, soit environ un tous les huit mois par série</li>
+            <li>Aucun regard vers le futur : les verdicts recalculés en supprimant les données futures sont identiques</li>
+            <li>68 détections brutes compressées en 46 notifications</li>
           </ul>
         </div>
       </div>
@@ -1158,18 +1138,18 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-band">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p>
-          <span class="fr"><strong>Ce que ça change.</strong> Le gain, ce sont les jours pendant lesquels personne ne voyait que l'export était figé, et pendant lesquels on décidait quand même. Un matin sans notification n'est pas un silence : c'est la preuve que les huit séries ont été vérifiées.</span>
-          <span class="en"><strong>What it changes.</strong> The value is the days during which nobody could see the export was frozen, while decisions were made anyway. A morning with no notification is not silence: it is proof that all eight series were checked.</span>
+          <strong>Ce que ça change.</strong> Le gain, ce sont les jours pendant lesquels personne ne voyait que l'export était figé, et pendant lesquels on décidait quand même. Un matin sans notification n'est pas un silence : c'est la preuve que les huit séries ont été vérifiées.
+          
         </p>
       </div>
 
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">L'ordre de grandeur</span><span class="en">The order of magnitude</span></span>
+          <span class="lbl">L'ordre de grandeur</span>
           <p>
-            <span class="fr">Sur la série chiffre d'affaires de la démonstration, une chute de 58 % pendant quatre jours représente 10 730 EUR par jour. Une détection au premier jour plutôt qu'au quatrième évite 32 190 EUR d'exposition. La valeur d'un tel contrôle se mesure en durée d'incident supprimée.</span>
-            <span class="en">On the demo revenue series, a 58% drop lasting four days represents EUR 10,730 a day. Catching it on day one instead of day four avoids EUR 32,190 of exposure. The value of such a check is measured in incident duration removed.</span>
+            Sur la série chiffre d'affaires de la démonstration, une chute de 58 % pendant quatre jours représente 10 730 EUR par jour. Une détection au premier jour plutôt qu'au quatrième évite 32 190 EUR d'exposition. La valeur d'un tel contrôle se mesure en durée d'incident supprimée.
+            
           </p>
         </div>
       </div>
@@ -1177,33 +1157,33 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-foot">
         <div class="scope">
           <div>
-            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <h5>Inclus</h5>
             <ul>
-              <li><span class="fr">Workflow n8n, à vous</span><span class="en">n8n workflow, yours to keep</span></li>
-              <li><span class="fr">Jusqu'à 8 séries surveillées</span><span class="en">Up to 8 monitored series</span></li>
-              <li><span class="fr">Réglage des seuils sur votre historique, avec mesure du taux de faux positifs</span><span class="en">Thresholds tuned on your own history, with a measured false positive rate</span></li>
-              <li><span class="fr">Un canal d'alerte et un rapport quotidien</span><span class="en">One alert channel and a daily report</span></li>
-              <li><span class="fr">README FR et EN, jeu de test, une série de corrections</span><span class="en">README FR and EN, test dataset, one round of fixes</span></li>
+              <li>Workflow n8n, à vous</li>
+              <li>Jusqu'à 8 séries surveillées</li>
+              <li>Réglage des seuils sur votre historique, avec mesure du taux de faux positifs</li>
+              <li>Un canal d'alerte et un rapport quotidien</li>
+              <li>README d'installation en français, jeu de test, une série de corrections</li>
             </ul>
           </div>
           <div class="out">
-            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <h5>Non inclus</h5>
             <ul>
-              <li><span class="fr">Au-delà de 8 séries</span><span class="en">More than 8 series</span></li>
-              <li><span class="fr">Une saisonnalité mensuelle ou annuelle</span><span class="en">Monthly or yearly seasonality</span></li>
-              <li><span class="fr">Un second canal d'alerte</span><span class="en">A second alert channel</span></li>
-              <li><span class="fr">Le diagnostic des causes</span><span class="en">Root cause diagnosis</span></li>
+              <li>Au-delà de 8 séries</li>
+              <li>Une saisonnalité mensuelle ou annuelle</li>
+              <li>Un second canal d'alerte</li>
+              <li>Le diagnostic des causes</li>
             </ul>
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Forfait</span><span class="en">Fixed price</span></span>
-          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
+          <span class="pl">Forfait</span>
+          <span class="pv num">Sur devis</span>
           <span class="pn">
-            <span class="fr">Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a></span>
-            <span class="en">Price agreed after written scoping, for a defined scope. <a href="#tarifs">Terms</a></span>
+            Prix arrêté après cadrage écrit, pour un périmètre défini. <a href="#tarifs">Conditions</a>
+            
           </span>
-          <a class="btn btn-1" href="#contact"><span class="fr">Demander un devis</span><span class="en">Request a quote</span></a>
+          <a class="btn btn-1" href="#contact">Demander un devis</a>
         </div>
       </div>
     </article>
@@ -1213,16 +1193,16 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-top">
         <div>
           <span class="case-num">04</span>
-          <h3><span class="fr">Plateforme de réclamations client, du formulaire au transporteur</span><span class="en">Customer claims platform, from the form to the carrier</span></h3>
+          <h3>Plateforme de réclamations client, du formulaire au transporteur</h3>
           <p class="case-sub">
-            <span class="fr">Une application complète, en production : le client dépose son dossier, l'IA lit les pièces, un moteur de décision tranche ce qui est décidable, et un agent garde la main sur tout ce qui engage l'entreprise.</span>
-            <span class="en">A complete application, in production: the customer files a claim, AI reads the documents, a decision engine settles what can be settled, and a human keeps control of anything that commits the company.</span>
+            Une application complète, en production : le client dépose son dossier, l'IA lit les pièces, un moteur de décision tranche ce qui est décidable, et un agent garde la main sur tout ce qui engage l'entreprise.
+            
           </p>
           <div class="tags">
             <span class="tag">Next.js 15</span>
             <span class="tag">TypeScript</span>
             <span class="tag">PostgreSQL</span>
-            <span class="tag"><span class="fr">IA</span><span class="en">AI</span></span>
+            <span class="tag">IA</span>
             <span class="tag">n8n</span>
           </div>
         </div>
@@ -1255,30 +1235,30 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="case-body">
         <div class="blk">
-          <h4><span class="fr">Le problème</span><span class="en">The problem</span></h4>
+          <h4>Le problème</h4>
           <p>
-            <span class="fr">Chaque réclamation supposait de lire une facture, vérifier un bordereau de livraison signé, établir si une réserve avait été émise, décider, puis rédiger à la main la réclamation au transporteur. Le formalisme est contraignant et les délais sont courts : trois jours ouvrables pour notifier, huit jours pour la réclamation elle-même en transport routier. Un dossier oublié est un dossier perdu.</span>
-            <span class="en">Every claim meant reading an invoice, checking a signed delivery note, establishing whether a reservation had been raised, deciding, then writing the carrier claim by hand. The formal requirements are strict and the deadlines short: three working days to notify, eight days for the claim itself in road transport. A forgotten file is a lost file.</span>
+            Chaque réclamation supposait de lire une facture, vérifier un bordereau de livraison signé, établir si une réserve avait été émise, décider, puis rédiger à la main la réclamation au transporteur. Le formalisme est contraignant et les délais sont courts : trois jours ouvrables pour notifier, huit jours pour la réclamation elle-même en transport routier. Un dossier oublié est un dossier perdu.
+            
           </p>
         </div>
         <div class="blk">
-          <h4><span class="fr">La solution</span><span class="en">The solution</span></h4>
+          <h4>La solution</h4>
           <ul>
-            <li><span class="fr">Un formulaire client public, dépôt des pièces, lecture automatique de la facture et du bordereau par IA</span><span class="en">A public customer form, document upload, automatic AI reading of the invoice and delivery note</span></li>
-            <li><span class="fr">Un moteur de décision déterministe à 12 règles, écrit comme une fonction pure : ni base, ni réseau, donc testable seul</span><span class="en">A deterministic 12-rule decision engine, written as a pure function: no database, no network, so testable on its own</span></li>
-            <li><span class="fr">Aucune décision automatique irréversible : un refus n'est pas envoyé, il est programmé, et reste annulable par un agent pendant plusieurs heures</span><span class="en">No irreversible automatic decision: a rejection is not sent, it is scheduled, and stays cancellable by an agent for hours</span></li>
-            <li><span class="fr">Les documents déposés sont traités comme non fiables : un document qui contient des consignes adressées à l'IA bascule le dossier en contrôle humain</span><span class="en">Uploaded documents are treated as untrusted: a document containing instructions aimed at the AI sends the file to human review</span></li>
-            <li><span class="fr">Un back-office complet : liste filtrable, chronologie, relance automatique à 15 jours, onglet d'aide documentant chaque règle</span><span class="en">A full back office: filterable list, timeline, automatic 15-day follow-up, help tab documenting every rule</span></li>
+            <li>Un formulaire client public, dépôt des pièces, lecture automatique de la facture et du bordereau par IA</li>
+            <li>Un moteur de décision déterministe à 12 règles, écrit comme une fonction pure : ni base, ni réseau, donc testable seul</li>
+            <li>Aucune décision automatique irréversible : un refus n'est pas envoyé, il est programmé, et reste annulable par un agent pendant plusieurs heures</li>
+            <li>Les documents déposés sont traités comme non fiables : un document qui contient des consignes adressées à l'IA bascule le dossier en contrôle humain</li>
+            <li>Un back-office complet : liste filtrable, chronologie, relance automatique à 15 jours, onglet d'aide documentant chaque règle</li>
           </ul>
         </div>
         <div class="blk">
-          <h4><span class="fr">Ce que ça donne</span><span class="en">What it amounts to</span></h4>
+          <h4>Ce que ça donne</h4>
           <ul>
-            <li><span class="fr">12 règles de décision, 11 statuts de dossier, un vocabulaire distinct côté client et côté agent</span><span class="en">12 decision rules, 11 file statuses, separate wording for customers and for agents</span></li>
-            <li class="hi"><span class="fr">Le moteur de décision est couvert par 50 tests, sur 68 tests au total</span><span class="en">The decision engine is covered by 50 tests, out of 68 in total</span></li>
-            <li><span class="fr">Environ 15 300 lignes de TypeScript, 103 fichiers, livrées en une semaine</span><span class="en">About 15,300 lines of TypeScript across 103 files, delivered in one week</span></li>
-            <li><span class="fr">En production, avec correction des trois points bloquants d'un audit de sécurité : injection de prompt, limitation de débit, durcissement du rappel serveur</span><span class="en">In production, with the three blocking findings of a security audit fixed: prompt injection, rate limiting, callback hardening</span></li>
-            <li><span class="fr">Purge RGPD, journalisation des événements, pièces jointes servies par URL signée à durée limitée</span><span class="en">GDPR purge, event logging, attachments served through time-limited signed URLs</span></li>
+            <li>12 règles de décision, 11 statuts de dossier, un vocabulaire distinct côté client et côté agent</li>
+            <li class="hi">Le moteur de décision est couvert par 50 tests, sur 68 tests au total</li>
+            <li>Environ 15 300 lignes de TypeScript, 103 fichiers, livrées en une semaine</li>
+            <li>En production, avec correction des trois points bloquants d'un audit de sécurité : injection de prompt, limitation de débit, durcissement du rappel serveur</li>
+            <li>Purge RGPD, journalisation des événements, pièces jointes servies par URL signée à durée limitée</li>
           </ul>
         </div>
       </div>
@@ -1286,18 +1266,18 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-band">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p>
-          <span class="fr"><strong>Ce que ça change.</strong> En vérifiant les adresses de réclamation configurées, aucune des trois n'était valide, et deux transporteurs sur trois n'acceptaient de toute façon aucune réclamation par mail. Un envoi à une adresse inexistante ne lève aucune erreur : le dossier serait passé en « transmis », le client aurait reçu son accusé, et personne n'aurait rien su avant l'expiration du délai. Le système refuse désormais d'envoyer sans adresse vérifiée et alerte un agent. Un dossier qui attend un humain se voit, une lettre partie dans le vide, non.</span>
-          <span class="en"><strong>What it changes.</strong> When the configured claims addresses were checked, none of the three was valid, and two carriers out of three accepted no email claims at all. Sending to a non-existent address raises no error: the file would have moved to "sent", the customer would have had their acknowledgement, and nobody would have known until the deadline expired. The system now refuses to send without a verified address and alerts an agent. A file waiting on a human is visible, a letter sent into the void is not.</span>
+          <strong>Ce que ça change.</strong> En vérifiant les adresses de réclamation configurées, aucune des trois n'était valide, et deux transporteurs sur trois n'acceptaient de toute façon aucune réclamation par mail. Un envoi à une adresse inexistante ne lève aucune erreur : le dossier serait passé en « transmis », le client aurait reçu son accusé, et personne n'aurait rien su avant l'expiration du délai. Le système refuse désormais d'envoyer sans adresse vérifiée et alerte un agent. Un dossier qui attend un humain se voit, une lettre partie dans le vide, non.
+          
         </p>
       </div>
 
       <div class="threshold">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 4.5 7.5v9L12 20.8l7.5-4.3v-9L12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.6 12h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <div>
-          <span class="lbl"><span class="fr">La leçon que je facture le plus cher</span><span class="en">The lesson I charge the most for</span></span>
+          <span class="lbl">La leçon que je facture le plus cher</span>
           <p>
-            <span class="fr">Sur un bordereau portant une mention manuscrite, l'IA a répondu « aucune réserve » avec 95 % de confiance. Elle aurait refusé une réclamation fondée. Le prompt a été durci pour répondre « illisible » plutôt que de trancher, et la leçon est écrite noir sur blanc dans l'aide destinée aux agents : une confiance élevée n'autorise personne à ne pas ouvrir le document.</span>
-            <span class="en">On a delivery note carrying a handwritten remark, the AI answered "no reservation" with 95% confidence. It would have rejected a valid claim. The prompt was hardened to answer "unreadable" rather than decide, and the lesson is written plainly in the agent help: high confidence entitles nobody to skip opening the document.</span>
+            Sur un bordereau portant une mention manuscrite, l'IA a répondu « aucune réserve » avec 95 % de confiance. Elle aurait refusé une réclamation fondée. Le prompt a été durci pour répondre « illisible » plutôt que de trancher, et la leçon est écrite noir sur blanc dans l'aide destinée aux agents : une confiance élevée n'autorise personne à ne pas ouvrir le document.
+            
           </p>
         </div>
       </div>
@@ -1305,31 +1285,31 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <div class="case-foot">
         <div class="scope">
           <div>
-            <h5><span class="fr">Inclus</span><span class="en">Included</span></h5>
+            <h5>Inclus</h5>
             <ul>
-              <li><span class="fr">Formulaire client public et dépôt de pièces</span><span class="en">Public customer form and document upload</span></li>
-              <li><span class="fr">Lecture IA des documents et moteur de décision testé</span><span class="en">AI document reading and a tested decision engine</span></li>
-              <li><span class="fr">Back-office, emails transactionnels, relances</span><span class="en">Back office, transactional emails, follow-ups</span></li>
-              <li><span class="fr">Pages légales, purge RGPD, journalisation</span><span class="en">Legal pages, GDPR purge, event logging</span></li>
+              <li>Formulaire client public et dépôt de pièces</li>
+              <li>Lecture IA des documents et moteur de décision testé</li>
+              <li>Back-office, emails transactionnels, relances</li>
+              <li>Pages légales, purge RGPD, journalisation</li>
             </ul>
           </div>
           <div class="out">
-            <h5><span class="fr">Non inclus</span><span class="en">Not included</span></h5>
+            <h5>Non inclus</h5>
             <ul>
-              <li><span class="fr">L'hébergement et les abonnements tiers</span><span class="en">Hosting and third party subscriptions</span></li>
-              <li><span class="fr">La reprise de dossiers historiques</span><span class="en">Migration of historical files</span></li>
-              <li><span class="fr">Le paramétrage juridique des courriers, qui reste votre décision</span><span class="en">The legal wording of letters, which stays your decision</span></li>
+              <li>L'hébergement et les abonnements tiers</li>
+              <li>La reprise de dossiers historiques</li>
+              <li>Le paramétrage juridique des courriers, qui reste votre décision</li>
             </ul>
           </div>
         </div>
         <div class="price-card">
-          <span class="pl"><span class="fr">Projet complet</span><span class="en">Full project</span></span>
-          <span class="pv num"><span class="fr">Sur devis</span><span class="en">On quote</span></span>
+          <span class="pl">Projet complet</span>
+          <span class="pv num">Sur devis</span>
           <span class="pn">
-            <span class="fr">Le périmètre est large et se cadre par écrit avant toute estimation.</span>
-            <span class="en">The scope is broad and gets framed in writing before any estimate.</span>
+            Le périmètre est large et se cadre par écrit avant toute estimation.
+            
           </span>
-          <a class="btn btn-1" href="#contact"><span class="fr">En parler</span><span class="en">Discuss it</span></a>
+          <a class="btn btn-1" href="#contact">En parler</a>
         </div>
       </div>
     </article>
@@ -1338,17 +1318,17 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">05 <span class="fr">Quand plusieurs sites saisissent dans le même outil</span><span class="en">When several sites enter data into the same tool</span></span>
-          <h3><span class="fr">Modération des données d'exploitation, multi-sites, à travers l'ERP</span><span class="en">Multi-site operational data moderation, through the ERP</span></h3>
+          <span class="case-num">05 Quand plusieurs sites saisissent dans le même outil</span>
+          <h3>Modération des données d'exploitation, multi-sites, à travers l'ERP</h3>
           <p class="case-sub">
-            <span class="fr">Plusieurs établissements, le même ERP, et des pratiques qui divergent : des stocks qui ne collent plus au terrain, des articles qui dorment sans que personne ne le voie, des dossiers jamais clôturés, et chaque site qui compte à sa façon. Un robot de modération applique les mêmes règles partout, chaque nuit, et ne remonte à chaque site que ce qui le concerne.</span>
-            <span class="en">Several sites, one ERP, and habits that drift apart: stock that no longer matches the floor, items sitting idle with nobody noticing, records never closed, and each site counting its own way. A moderation robot applies the same rules everywhere, every night, and sends each site only what concerns it.</span>
+            Plusieurs établissements, le même ERP, et des pratiques qui divergent : des stocks qui ne collent plus au terrain, des articles qui dorment sans que personne ne le voie, des dossiers jamais clôturés, et chaque site qui compte à sa façon. Un robot de modération applique les mêmes règles partout, chaque nuit, et ne remonte à chaque site que ce qui le concerne.
+            
           </p>
           <div class="tags">
             <span class="tag">ERP</span>
-            <span class="tag"><span class="fr">Multi-sites</span><span class="en">Multi-site</span></span>
-            <span class="tag"><span class="fr">Stock et rotation</span><span class="en">Stock and ageing</span></span>
-            <span class="tag"><span class="fr">Reporting par site</span><span class="en">Per-site reporting</span></span>
+            <span class="tag">Multi-sites</span>
+            <span class="tag">Stock et rotation</span>
+            <span class="tag">Reporting par site</span>
           </div>
         </div>
         <div aria-hidden="true">
@@ -1374,30 +1354,30 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="rpa-cols">
         <div>
-          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <h4>Ce que ça couvre</h4>
           <ul>
-            <li><span class="fr">Cohérence des stocks : écarts entre la base et le terrain, entrées sans sortie correspondante, articles présents en base et introuvables</span><span class="en">Stock consistency: gaps between the system and the floor, entries with no matching exit, items in the database that cannot be found</span></li>
-            <li><span class="fr">Rotation : ce qui dort, classé par ancienneté, avec le seuil au-delà duquel un article ou un dossier remonte tout seul</span><span class="en">Ageing: what sits idle, ranked by age, with the threshold beyond which an item or a record surfaces on its own</span></li>
-            <li><span class="fr">Uniformisation : la même règle appliquée partout, pour que le chiffre d'un site soit comparable à celui d'un autre</span><span class="en">Standardisation: the same rule applied everywhere, so one site's number is comparable to another's</span></li>
-            <li><span class="fr">Complétude et clôture : champs obligatoires vides, dossiers jamais clôturés, saisies hors délai, doublons d'un site à l'autre</span><span class="en">Completeness and closure: empty mandatory fields, records never closed, late entries, duplicates across sites</span></li>
+            <li>Cohérence des stocks : écarts entre la base et le terrain, entrées sans sortie correspondante, articles présents en base et introuvables</li>
+            <li>Rotation : ce qui dort, classé par ancienneté, avec le seuil au-delà duquel un article ou un dossier remonte tout seul</li>
+            <li>Uniformisation : la même règle appliquée partout, pour que le chiffre d'un site soit comparable à celui d'un autre</li>
+            <li>Complétude et clôture : champs obligatoires vides, dossiers jamais clôturés, saisies hors délai, doublons d'un site à l'autre</li>
           </ul>
         </div>
         <div>
-          <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
+          <h4>Ce que ça demande</h4>
           <ul>
-            <li><span class="fr">Un accès en lecture à la base ou aux exports de l'ERP, rien de plus</span><span class="en">Read access to the database or to the ERP exports, nothing more</span></li>
-            <li><span class="fr">Des règles écrites et validées par les métiers, jamais déduites à leur place</span><span class="en">Rules written and approved by the business, never inferred on their behalf</span></li>
-            <li><span class="fr">Un seuil accepté par tous : à partir de quand un écart ou une ancienneté devient une anomalie</span><span class="en">A threshold everyone agrees on: when a gap or an age becomes an anomaly</span></li>
-            <li><span class="fr">Un correspondant par site : une alerte qui ne tombe chez personne ne sert à rien</span><span class="en">One contact per site: an alert that lands nowhere is useless</span></li>
+            <li>Un accès en lecture à la base ou aux exports de l'ERP, rien de plus</li>
+            <li>Des règles écrites et validées par les métiers, jamais déduites à leur place</li>
+            <li>Un seuil accepté par tous : à partir de quand un écart ou une ancienneté devient une anomalie</li>
+            <li>Un correspondant par site : une alerte qui ne tombe chez personne ne sert à rien</li>
           </ul>
         </div>
         <div class="rpa-limits">
-          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <h4>Les limites, dites d'emblée</h4>
           <ul>
-            <li><span class="fr">Le robot signale un écart, il ne décide pas à la place du site</span><span class="en">The robot flags a gap, it does not decide in the site's place</span></li>
-            <li><span class="fr">Il ne corrige pas le terrain : un écart de stock se solde par un inventaire, pas par une ligne de base</span><span class="en">It does not fix the floor: a stock gap is settled by a physical count, not by a database row</span></li>
-            <li><span class="fr">Sans correspondant identifié, le dispositif s'éteint en quelques semaines</span><span class="en">With no named contact, the whole thing dies within weeks</span></li>
-            <li><span class="fr">Une règle mal écrite produit du bruit, et le bruit tue l'adhésion plus vite que l'erreur</span><span class="en">A badly written rule produces noise, and noise kills adoption faster than the error itself</span></li>
+            <li>Le robot signale un écart, il ne décide pas à la place du site</li>
+            <li>Il ne corrige pas le terrain : un écart de stock se solde par un inventaire, pas par une ligne de base</li>
+            <li>Sans correspondant identifié, le dispositif s'éteint en quelques semaines</li>
+            <li>Une règle mal écrite produit du bruit, et le bruit tue l'adhésion plus vite que l'erreur</li>
           </ul>
         </div>
       </div>
@@ -1406,12 +1386,12 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         <div class="honest">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
           <p>
-            <span class="fr">Ce volet vient d'un contexte industriel multi-sites. Les données et les chiffres appartiennent à leur propriétaire et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.</span>
-            <span class="en">This offer comes from a multi-site industrial context. The data and the figures belong to their owner and are not published here. What I can show, and let you replay, are the three measured automations above.</span>
+            Ce volet vient d'un contexte industriel multi-sites. Les données et les chiffres appartiennent à leur propriétaire et ne sont pas publiés ici. Ce que je peux montrer et faire rejouer, ce sont les trois automatisations mesurées ci-dessus.
+            
           </p>
         </div>
         <p class="price-inline">
-          <span class="fr">Sur devis, selon le nombre de règles et de sites</span><span class="en">On quote, depending on rules and sites</span>
+          Sur devis, selon le nombre de règles et de sites
         </p>
       </div>
     </div>
@@ -1420,17 +1400,17 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">06 <span class="fr">Quand la boîte mail déborde, et surtout quand vous n'êtes pas là</span><span class="en">When the inbox overflows, and above all when you are away</span></span>
-          <h3><span class="fr">Copilote de messagerie, tri, réponse et relevé de retour de congés</span><span class="en">Inbox copilot: triage, replies, and a back-from-leave briefing</span></h3>
+          <span class="case-num">06 Quand la boîte mail déborde, et surtout quand vous n'êtes pas là</span>
+          <h3>Copilote de messagerie, tri, réponse et relevé de retour de congés</h3>
           <p class="case-sub">
-            <span class="fr">Chaque mail reçu est lu, classé par niveau d'urgence, résumé, et assorti de l'action concrète à mener. Une réponse part quand elle est utile, écrite dans votre style. Tout atterrit dans un tableau de suivi. Vous l'activez avant de partir : au retour, vous ne lisez pas trois cents messages, vous lisez ce qui s'est passé et ce qui attend une décision.</span>
-            <span class="en">Every incoming email is read, ranked by urgency, summarised, and paired with the concrete action to take. A reply goes out when it is useful, written in your own style. Everything lands in a tracking table. Switch it on before you leave: when you come back you do not read three hundred messages, you read what happened and what needs a decision.</span>
+            Chaque mail reçu est lu, classé par niveau d'urgence, résumé, et assorti de l'action concrète à mener. Une réponse part quand elle est utile, écrite dans votre style. Tout atterrit dans un tableau de suivi. Vous l'activez avant de partir : au retour, vous ne lisez pas trois cents messages, vous lisez ce qui s'est passé et ce qui attend une décision.
+            
           </p>
           <div class="tags">
             <span class="tag">n8n</span>
-            <span class="tag"><span class="fr">IA</span><span class="en">AI</span></span>
+            <span class="tag">IA</span>
             <span class="tag">Gmail + IMAP</span>
-            <span class="tag"><span class="fr">Mémoire de fil</span><span class="en">Thread memory</span></span>
+            <span class="tag">Mémoire de fil</span>
           </div>
         </div>
         <div aria-hidden="true">
@@ -1470,29 +1450,29 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="rpa-cols">
         <div>
-          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <h4>Ce que ça couvre</h4>
           <ul>
-            <li><span class="fr">Chaque mail classé en quatre niveaux d'urgence, avec un résumé et l'action concrète à mener, jamais un vague « à surveiller »</span><span class="en">Every email ranked across four urgency levels, with a summary and the concrete action to take, never a vague "keep an eye on it"</span></li>
-            <li><span class="fr">Une réponse rédigée dans votre style quand elle est utile, et rien du tout quand elle ne l'est pas</span><span class="en">A reply written in your own style when it is useful, and nothing at all when it is not</span></li>
-            <li><span class="fr">Une mémoire par fil de discussion : le copilote sait ce qu'il a déjà écrit, ne se répète pas et ne redemande pas ce qu'il a déjà obtenu</span><span class="en">Memory per conversation: the copilot knows what it already wrote, does not repeat itself and does not ask twice for the same thing</span></li>
-            <li><span class="fr">Deux boîtes traitées par la même chaîne, une messagerie moderne et une boîte IMAP classique</span><span class="en">Two mailboxes handled by one pipeline, a modern mail service and a plain IMAP box</span></li>
-            <li><span class="fr">Au retour de congés, un relevé unique : ce qui s'est passé, ce qui a été traité, ce qui attend votre décision</span><span class="en">Back from leave, a single briefing: what happened, what was handled, what is waiting on your decision</span></li>
+            <li>Chaque mail classé en quatre niveaux d'urgence, avec un résumé et l'action concrète à mener, jamais un vague « à surveiller »</li>
+            <li>Une réponse rédigée dans votre style quand elle est utile, et rien du tout quand elle ne l'est pas</li>
+            <li>Une mémoire par fil de discussion : le copilote sait ce qu'il a déjà écrit, ne se répète pas et ne redemande pas ce qu'il a déjà obtenu</li>
+            <li>Deux boîtes traitées par la même chaîne, une messagerie moderne et une boîte IMAP classique</li>
+            <li>Au retour de congés, un relevé unique : ce qui s'est passé, ce qui a été traité, ce qui attend votre décision</li>
           </ul>
         </div>
         <div>
-          <h4><span class="fr">Ce que ça demande</span><span class="en">What it requires</span></h4>
+          <h4>Ce que ça demande</h4>
           <ul>
-            <li><span class="fr">Un accès à la boîte, et une adresse d'envoi dédiée au dispositif</span><span class="en">Access to the mailbox, and a sending address dedicated to the system</span></li>
-            <li><span class="fr">Vos règles écrites : qui mérite une réponse, qui n'en reçoit jamais</span><span class="en">Your rules in writing: who deserves a reply, who never gets one</span></li>
-            <li><span class="fr">Une période d'observation en brouillon avant d'autoriser le moindre envoi automatique</span><span class="en">A draft-only observation period before any automatic sending is allowed</span></li>
+            <li>Un accès à la boîte, et une adresse d'envoi dédiée au dispositif</li>
+            <li>Vos règles écrites : qui mérite une réponse, qui n'en reçoit jamais</li>
+            <li>Une période d'observation en brouillon avant d'autoriser le moindre envoi automatique</li>
           </ul>
         </div>
         <div class="rpa-limits">
-          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <h4>Les limites, dites d'emblée</h4>
           <ul>
-            <li><span class="fr">Une réponse automatique engage votre parole : on démarre toujours en brouillon, et vous décidez ensuite de ce qui part seul</span><span class="en">An automatic reply speaks in your name: we always start in draft, and you then decide what goes out on its own</span></li>
-            <li><span class="fr">Le copilote reste prudent plutôt que d'inventer : il ne prend jamais un engagement que vous n'avez pas validé</span><span class="en">The copilot stays cautious rather than inventing: it never commits to anything you have not approved</span></li>
-            <li><span class="fr">Il trie, il résume, il propose. Il ne décide pas à votre place de ce qui compte dans votre métier</span><span class="en">It sorts, summarises and suggests. It does not decide for you what matters in your business</span></li>
+            <li>Une réponse automatique engage votre parole : on démarre toujours en brouillon, et vous décidez ensuite de ce qui part seul</li>
+            <li>Le copilote reste prudent plutôt que d'inventer : il ne prend jamais un engagement que vous n'avez pas validé</li>
+            <li>Il trie, il résume, il propose. Il ne décide pas à votre place de ce qui compte dans votre métier</li>
           </ul>
         </div>
       </div>
@@ -1501,12 +1481,12 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         <div class="honest">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
           <p>
-            <span class="fr"><strong>Le vrai risque n'est pas la qualité des réponses, c'est la boucle.</strong> Deux robots qui se répondent, c'est un échange sans fin et une facture qui grimpe toute la nuit. Le dispositif s'arrête net sur les messages automatiques, les accusés d'absence, les non-remises et vos propres adresses. Les listes de diffusion, elles, sont analysées et résumées, mais ne reçoivent jamais de réponse : elle partirait à toute la liste.</span>
-            <span class="en"><strong>The real risk is not reply quality, it is the loop.</strong> Two robots answering each other means an endless exchange and a bill that climbs all night. The system stops dead on automated messages, out-of-office notices, bounces and your own addresses. Mailing lists are analysed and summarised, but never answered: the reply would go to the entire list.</span>
+            <strong>Le vrai risque n'est pas la qualité des réponses, c'est la boucle.</strong> Deux robots qui se répondent, c'est un échange sans fin et une facture qui grimpe toute la nuit. Le dispositif s'arrête net sur les messages automatiques, les accusés d'absence, les non-remises et vos propres adresses. Les listes de diffusion, elles, sont analysées et résumées, mais ne reçoivent jamais de réponse : elle partirait à toute la liste.
+            
           </p>
         </div>
         <p class="price-inline">
-          <span class="fr">Sur devis, selon le volume et le nombre de boîtes</span><span class="en">On quote, depending on volume and number of mailboxes</span>
+          Sur devis, selon le volume et le nombre de boîtes
         </p>
       </div>
     </div>
@@ -1515,17 +1495,17 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     <div class="rpa reveal">
       <div class="rpa-head">
         <div>
-          <span class="case-num">07 <span class="fr">Et quand il n'y a pas d'API</span><span class="en">And when there is no API</span></span>
-          <h3><span class="fr">Automatisation du poste de travail, RPA</span><span class="en">Desktop automation, RPA</span></h3>
+          <span class="case-num">07 Et quand il n'y a pas d'API</span>
+          <h3>Automatisation du poste de travail, RPA</h3>
           <p class="case-sub">
-            <span class="fr">Certains logiciels métier n'ont ni API ni export propre : un ERP ancien, une application de saisie interne, un portail fournisseur qui n'expose rien. L'automatisation se fait alors sur le poste, avec Power Automate Desktop ou un robot équivalent : il ouvre l'application, saisit, contrôle, et journalise chaque action.</span>
-            <span class="en">Some business applications have no API and no clean export: a legacy ERP, an internal data entry tool, a supplier portal that exposes nothing. Automation then happens on the desktop, with Power Automate Desktop or an equivalent robot: it opens the application, types, checks, and logs every action.</span>
+            Certains logiciels métier n'ont ni API ni export propre : un ERP ancien, une application de saisie interne, un portail fournisseur qui n'expose rien. L'automatisation se fait alors sur le poste, avec Power Automate Desktop ou un robot équivalent : il ouvre l'application, saisit, contrôle, et journalise chaque action.
+            
           </p>
           <div class="tags">
             <span class="tag">Power Automate Desktop</span>
-            <span class="tag"><span class="fr">Windows</span><span class="en">Windows</span></span>
-            <span class="tag"><span class="fr">Sans API</span><span class="en">No API needed</span></span>
-            <span class="tag"><span class="fr">Journalisé</span><span class="en">Fully logged</span></span>
+            <span class="tag">Windows</span>
+            <span class="tag">Sans API</span>
+            <span class="tag">Journalisé</span>
           </div>
         </div>
         <div aria-hidden="true">
@@ -1550,29 +1530,29 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 
       <div class="rpa-cols">
         <div>
-          <h4><span class="fr">Ce que ça couvre</span><span class="en">What it covers</span></h4>
+          <h4>Ce que ça couvre</h4>
           <ul>
-            <li><span class="fr">Saisie répétitive dans une application qui n'expose aucune interface</span><span class="en">Repetitive data entry into an application that exposes no interface</span></li>
-            <li><span class="fr">Récupération de fichiers sur un portail, puis classement et renommage</span><span class="en">Fetching files from a portal, then filing and renaming them</span></li>
-            <li><span class="fr">Report d'un écran vers un tableur, ou d'un logiciel vers un autre qui ne lui parle pas</span><span class="en">Moving data from a screen into a spreadsheet, or between two tools that do not talk</span></li>
-            <li><span class="fr">Enchaînement déclenché à heure fixe, sur un poste ou un serveur Windows</span><span class="en">Scheduled runs on a Windows workstation or server</span></li>
+            <li>Saisie répétitive dans une application qui n'expose aucune interface</li>
+            <li>Récupération de fichiers sur un portail, puis classement et renommage</li>
+            <li>Report d'un écran vers un tableur, ou d'un logiciel vers un autre qui ne lui parle pas</li>
+            <li>Enchaînement déclenché à heure fixe, sur un poste ou un serveur Windows</li>
           </ul>
         </div>
         <div>
-          <h4><span class="fr">Les règles que je m'impose</span><span class="en">The rules I hold myself to</span></h4>
+          <h4>Les règles que je m'impose</h4>
           <ul>
-            <li><span class="fr">Le robot journalise chaque action, donc un contrôle a posteriori est toujours possible</span><span class="en">The robot logs every action, so after the fact review is always possible</span></li>
-            <li><span class="fr">Il s'arrête plutôt que de deviner : un cas non prévu part en revue humaine</span><span class="en">It stops rather than guesses: an unforeseen case goes to human review</span></li>
-            <li><span class="fr">Il est testé sur une liste de cas connus avant d'être lancé en production</span><span class="en">It is tested against a list of known cases before going live</span></li>
-            <li><span class="fr">Aucun identifiant en clair dans le robot</span><span class="en">No credentials stored in clear text inside the robot</span></li>
+            <li>Le robot journalise chaque action, donc un contrôle a posteriori est toujours possible</li>
+            <li>Il s'arrête plutôt que de deviner : un cas non prévu part en revue humaine</li>
+            <li>Il est testé sur une liste de cas connus avant d'être lancé en production</li>
+            <li>Aucun identifiant en clair dans le robot</li>
           </ul>
         </div>
         <div class="rpa-limits">
-          <h4><span class="fr">Les limites, dites d'emblée</span><span class="en">The limits, stated up front</span></h4>
+          <h4>Les limites, dites d'emblée</h4>
           <ul>
-            <li><span class="fr">Un robot de poste dépend de l'interface : un changement d'écran peut le casser</span><span class="en">A desktop robot depends on the interface: a screen change can break it</span></li>
-            <li><span class="fr">Il occupe une session Windows pendant qu'il travaille</span><span class="en">It occupies a Windows session while it works</span></li>
-            <li><span class="fr">Quand une API ou un export existe, c'est toujours plus solide, et je vous le dirai</span><span class="en">When an API or an export exists, it is always sturdier, and I will say so</span></li>
+            <li>Un robot de poste dépend de l'interface : un changement d'écran peut le casser</li>
+            <li>Il occupe une session Windows pendant qu'il travaille</li>
+            <li>Quand une API ou un export existe, c'est toujours plus solide, et je vous le dirai</li>
           </ul>
         </div>
       </div>
@@ -1581,12 +1561,12 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         <div class="honest">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
           <p>
-            <span class="fr">Aucun chiffre n'est affiché sur ce volet. Les trois automatisations ci-dessus sont mesurées sur des jeux de données labellés, celle-ci ne l'est pas encore, et je préfère l'écrire plutôt que d'aligner des pourcentages invérifiables.</span>
-            <span class="en">No figures are shown for this offer. The three automations above are measured against labelled datasets, this one is not yet, and I would rather write that than line up numbers you cannot check.</span>
+            Aucun chiffre n'est affiché sur ce volet. Les trois automatisations ci-dessus sont mesurées sur des jeux de données labellés, celle-ci ne l'est pas encore, et je préfère l'écrire plutôt que d'aligner des pourcentages invérifiables.
+            
           </p>
         </div>
         <p class="price-inline">
-          <span class="fr">Sur devis, selon le nombre d'écrans</span><span class="en">On quote, depending on the number of screens</span>
+          Sur devis, selon le nombre d'écrans
         </p>
       </div>
     </div>
@@ -1597,14 +1577,14 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 <section id="tarifs" aria-labelledby="tarifs-h" style="padding-top: 0">
   <div class="wrap">
     <div class="sec-head">
-      <p class="kicker"><span class="fr">Tarifs</span><span class="en">Pricing</span></p>
+      <p class="kicker">Tarifs</p>
       <h2 id="tarifs-h">
-        <span class="fr">Un prix arrêté avant de commencer</span>
-        <span class="en">A price agreed before anything starts</span>
+        Un prix arrêté avant de commencer
+        
       </h2>
       <p>
-        <span class="fr">Forfait pour un périmètre écrit. Pas de facturation à l'heure, pas de compteur qui tourne : ce que vous signez est ce que vous payez.</span>
-        <span class="en">A fixed price for a written scope. No hourly billing, no meter running: what you sign is what you pay.</span>
+        Forfait pour un périmètre écrit. Pas de facturation à l'heure, pas de compteur qui tourne : ce que vous signez est ce que vous payez.
+        
       </p>
     </div>
 
@@ -1612,61 +1592,61 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.2" fill="currentColor"/></svg>
       <div>
         <p>
-          <span class="fr"><strong>Je ne promets aucun montant récupéré.</strong> Je n'ai aucun moyen de savoir ce que contiennent vos données avant de les avoir vues. Ce qui figure sur cette page, c'est ce que chaque automatisation a trouvé sur un jeu de données représentatif.</span>
-          <span class="en"><strong>I promise no recovered amount.</strong> I have no way of knowing what your data contains before seeing it. What this page shows is what each automation found on a representative dataset.</span>
+          <strong>Je ne promets aucun montant récupéré.</strong> Je n'ai aucun moyen de savoir ce que contiennent vos données avant de les avoir vues. Ce qui figure sur cette page, c'est ce que chaque automatisation a trouvé sur un jeu de données représentatif.
+          
         </p>
         <p>
-          <span class="fr"><strong>Chaque prix est établi sur devis</strong>, après un cadrage écrit du périmètre. Aucun tarif n'est affiché ici, parce qu'un tarif publié sans connaître vos formats, vos volumes et vos contraintes ne veut rien dire, et se révèle toujours faux dans un sens ou dans l'autre.</span>
-          <span class="en"><strong>Every price is set by quote</strong>, after the scope has been framed in writing. No rate is shown here, because a rate published without knowing your formats, volumes and constraints means nothing, and always turns out wrong one way or the other.</span>
+          <strong>Chaque prix est établi sur devis</strong>, après un cadrage écrit du périmètre. Aucun tarif n'est affiché ici, parce qu'un tarif publié sans connaître vos formats, vos volumes et vos contraintes ne veut rien dire, et se révèle toujours faux dans un sens ou dans l'autre.
+          
         </p>
       </div>
     </div>
 
     <div class="tbl-wrap reveal">
       <table>
-        <caption><span class="fr">Options, chiffrées séparément au devis</span><span class="en">Options, quoted separately</span></caption>
+        <caption>Options, chiffrées séparément au devis</caption>
         <thead>
           <tr>
-            <th scope="col"><span class="fr">Option</span><span class="en">Option</span></th>
-            <th scope="col"><span class="fr">Quand elle se justifie</span><span class="en">When it applies</span></th>
+            <th scope="col">Option</th>
+            <th scope="col">Quand elle se justifie</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td><span class="fr">Gabarit d'extraction supplémentaire</span><span class="en">Additional extraction template</span></td><td><span class="fr">Au-delà des deux gabarits inclus, un fournisseur de plus à traiter</span><span class="en">Beyond the two templates included, one more supplier to handle</span></td></tr>
-          <tr><td><span class="fr">Format de fichier source supplémentaire</span><span class="en">Additional source file format</span></td><td><span class="fr">Un troisième export, une autre banque, une autre devise</span><span class="en">A third export, another bank, another currency</span></td></tr>
-          <tr><td><span class="fr">Séries supplémentaires surveillées</span><span class="en">Additional monitored series</span></td><td><span class="fr">Au-delà des 8 séries incluses dans le contrôle quotidien</span><span class="en">Beyond the 8 series included in the daily check</span></td></tr>
-          <tr><td><span class="fr">Canal de diffusion supplémentaire</span><span class="en">Additional delivery channel</span></td><td><span class="fr">Slack, Teams ou une API en plus du canal inclus</span><span class="en">Slack, Teams or an API on top of the channel included</span></td></tr>
-          <tr><td><span class="fr">Traduction des documents produits</span><span class="en">Translation of the produced documents</span></td><td><span class="fr">Une troisième langue au-delà du français et de l'anglais</span><span class="en">A third language beyond French and English</span></td></tr>
-          <tr><td><span class="fr">Reprise d'historique et rejeu</span><span class="en">History backfill and replay</span></td><td><span class="fr">Faire tourner le dispositif sur vos données passées</span><span class="en">Running the system over your past data</span></td></tr>
-          <tr><td><span class="fr">Maintenance et surveillance</span><span class="en">Maintenance and monitoring</span></td><td><span class="fr">Un forfait mensuel, si vous voulez que je garde un œil dessus</span><span class="en">A monthly retainer, if you want me keeping an eye on it</span></td></tr>
+          <tr><td>Gabarit d'extraction supplémentaire</td><td>Au-delà des deux gabarits inclus, un fournisseur de plus à traiter</td></tr>
+          <tr><td>Format de fichier source supplémentaire</td><td>Un troisième export, une autre banque, une autre devise</td></tr>
+          <tr><td>Séries supplémentaires surveillées</td><td>Au-delà des 8 séries incluses dans le contrôle quotidien</td></tr>
+          <tr><td>Canal de diffusion supplémentaire</td><td>Slack, Teams ou une API en plus du canal inclus</td></tr>
+          <tr><td>Traduction des documents produits</td><td>Une deuxième langue, si vos correspondants ne lisent pas le français</td></tr>
+          <tr><td>Reprise d'historique et rejeu</td><td>Faire tourner le dispositif sur vos données passées</td></tr>
+          <tr><td>Maintenance et surveillance</td><td>Un forfait mensuel, si vous voulez que je garde un œil dessus</td></tr>
         </tbody>
       </table>
     </div>
     <p class="tbl-note">
-      <span class="fr">Chaque option est chiffrée dans le devis, avec le forfait principal. Le régime de TVA applicable y est précisé.</span>
-      <span class="en">Each option is priced in the quote, alongside the main fee. The applicable VAT status is stated there.</span>
+      Chaque option est chiffrée dans le devis, avec le forfait principal. Le régime de TVA applicable y est précisé.
+      
     </p>
 
     <div class="cond">
       <div class="mcard">
         <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.8" y="5.5" width="18.4" height="13" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 10h18.4" stroke="currentColor" stroke-width="1.8"/></svg>
-        <h4><span class="fr">Paiement</span><span class="en">Payment</span></h4>
-        <p><span class="fr">50 % à la commande, 50 % à la livraison acceptée. Le travail démarre à réception du premier versement.</span><span class="en">50% on order, 50% on accepted delivery. Work starts once the first payment is received.</span></p>
+        <h4>Paiement</h4>
+        <p>50 % à la commande, 50 % à la livraison acceptée. Le travail démarre à réception du premier versement.</p>
       </div>
       <div class="mcard">
         <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.3l3.4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h4><span class="fr">Délai</span><span class="en">Lead time</span></h4>
-        <p><span class="fr">10 jours ouvrés, comptés à partir de la réception de vos données d'exemple et non de la commande.</span><span class="en">10 working days, counted from receipt of your sample data, not from the order.</span></p>
+        <h4>Délai</h4>
+        <p>10 jours ouvrés, comptés à partir de la réception de vos données d'exemple et non de la commande.</p>
       </div>
       <div class="mcard">
         <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20.4 4.4v4.2h-4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h4><span class="fr">Corrections</span><span class="en">Fixes</span></h4>
-        <p><span class="fr">Une série incluse, dans les 14 jours suivant la livraison. Au-delà, au tarif des options.</span><span class="en">One round included, within 14 days of delivery. Beyond that, at the option rate.</span></p>
+        <h4>Corrections</h4>
+        <p>Une série incluse, dans les 14 jours suivant la livraison. Au-delà, au tarif des options.</p>
       </div>
       <div class="mcard">
         <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3.5h8.5L19 8v12.5H6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3.5V8h5M9 13h6M9 16.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <h4><span class="fr">Ce que vous fournissez</span><span class="en">What you provide</span></h4>
-        <p><span class="fr">Les exports d'exemple, les accès nécessaires, un interlocuteur unique et une réponse sous 48 h. Sans cela, le délai est suspendu.</span><span class="en">Sample exports, the required access, a single point of contact and a reply within 48 hours. Without these, the clock stops.</span></p>
+        <h4>Ce que vous fournissez</h4>
+        <p>Les exports d'exemple, les accès nécessaires, un interlocuteur unique et une réponse sous 48 h. Sans cela, le délai est suspendu.</p>
       </div>
     </div>
   </div>
@@ -1678,54 +1658,54 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     <div class="split">
       <div>
         <div class="sec-head" style="margin-bottom: 1.5rem">
-          <p class="kicker"><span class="fr">Méthode</span><span class="en">How I work</span></p>
+          <p class="kicker">Méthode</p>
           <h2 id="meth-h">
-            <span class="fr">Un cadre simple, écrit, sans surprise</span>
-            <span class="en">A simple written frame, no surprises</span>
+            Un cadre simple, écrit, sans surprise
+            
           </h2>
           <p>
-            <span class="fr">Vous savez ce que vous payez, ce que vous recevez et quand vous le recevez, avant de commencer.</span>
-            <span class="en">You know what you pay, what you get and when you get it, before anything starts.</span>
+            Vous savez ce que vous payez, ce que vous recevez et quand vous le recevez, avant de commencer.
+            
           </p>
         </div>
 
         <div class="mcards">
           <div class="mcard">
             <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <h4><span class="fr">Forfait</span><span class="en">Fixed price</span></h4>
-            <p><span class="fr">Un prix arrêté pour un périmètre écrit. Pas de facturation à l'heure, pas de compteur qui tourne.</span><span class="en">One agreed price for a written scope. No hourly billing, no meter running.</span></p>
+            <h4>Forfait</h4>
+            <p>Un prix arrêté pour un périmètre écrit. Pas de facturation à l'heure, pas de compteur qui tourne.</p>
           </div>
           <div class="mcard">
             <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <h4><span class="fr">Livrables datés</span><span class="en">Dated deliverables</span></h4>
-            <p><span class="fr">Chaque livrable a une date annoncée à la commande, et cette date figure au devis.</span><span class="en">Every deliverable has a date agreed up front, and that date is in the quote.</span></p>
+            <h4>Livrables datés</h4>
+            <p>Chaque livrable a une date annoncée à la commande, et cette date figure au devis.</p>
           </div>
           <div class="mcard">
             <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.6 12h16.8M12 3.6c4.5 5 4.5 11.8 0 16.8-4.5-5-4.5-11.8 0-16.8Z" stroke="currentColor" stroke-width="1.6"/></svg>
-            <h4><span class="fr">Tout à distance</span><span class="en">Fully remote</span></h4>
-            <p><span class="fr">Aucun rendez-vous physique, aucun déplacement. Le périmètre géographique n'a pas d'importance.</span><span class="en">No on site meetings, no travel. Location is irrelevant.</span></p>
+            <h4>Tout à distance</h4>
+            <p>Aucun rendez-vous physique, aucun déplacement. Le périmètre géographique n'a pas d'importance.</p>
           </div>
           <div class="mcard">
             <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 14.5c0 1.7-1.4 3-3 3H8l-4.5 3.5v-13c0-1.7 1.4-3 3-3h11c1.6 0 3 1.3 3 3v6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            <h4><span class="fr">Communication écrite</span><span class="en">Written communication</span></h4>
-            <p><span class="fr">Les échanges se font par écrit. Les décisions restent tracées et relisables par les deux parties.</span><span class="en">Exchanges happen in writing. Decisions stay traceable and re-readable on both sides.</span></p>
+            <h4>Communication écrite</h4>
+            <p>Les échanges se font par écrit. Les décisions restent tracées et relisables par les deux parties.</p>
           </div>
         </div>
 
         <div class="about">
           <p>
-            <span class="fr"><strong>17 ans en environnement industriel</strong>, dont le pilotage de la digitalisation d'un groupe multi-sites. Ce site présente des réalisations, pas un parcours.</span>
-            <span class="en"><strong>17 years in industrial environments</strong>, including leading the digitalisation of a multi-site group. This site presents work, not a resume.</span>
+            <strong>17 ans en environnement industriel</strong>, dont le pilotage de la digitalisation d'un groupe multi-sites. Ce site présente des réalisations, pas un parcours.
+            
           </p>
         </div>
       </div>
 
       <div id="livraison">
         <div class="sec-head" style="margin-bottom: 1.5rem">
-          <p class="kicker"><span class="fr">Livrables</span><span class="en">Deliverables</span></p>
+          <p class="kicker">Livrables</p>
           <h2>
-            <span class="fr">Ce qui vous est remis</span>
-            <span class="en">What you receive</span>
+            Ce qui vous est remis
+            
           </h2>
         </div>
         <div class="deliver">
@@ -1733,36 +1713,36 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
             <li>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div>
-                <strong><span class="fr">Le workflow, exportable</span><span class="en">The workflow, exportable</span></strong>
-                <span class="d"><span class="fr">Un fichier JSON que vous importez dans votre propre instance. Il vous appartient.</span><span class="en">A JSON file you import into your own instance. It belongs to you.</span></span>
+                <strong>Le workflow, exportable</strong>
+                <span class="d">Un fichier JSON que vous importez dans votre propre instance. Il vous appartient.</span>
               </div>
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div>
-                <strong><span class="fr">Un jeu de données d'exemple labellé</span><span class="en">A labelled sample dataset</span></strong>
-                <span class="d"><span class="fr">Le résultat attendu est connu à l'avance, donc l'exactitude se vérifie, elle ne se promet pas.</span><span class="en">The expected result is known in advance, so accuracy is checked rather than promised.</span></span>
+                <strong>Un jeu de données d'exemple labellé</strong>
+                <span class="d">Le résultat attendu est connu à l'avance, donc l'exactitude se vérifie, elle ne se promet pas.</span>
               </div>
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div>
-                <strong><span class="fr">Un script de démonstration</span><span class="en">A demo script</span></strong>
-                <span class="d"><span class="fr">Une commande, et la démonstration rejoue l'ensemble du traitement sur votre poste.</span><span class="en">One command replays the whole run on your own machine.</span></span>
+                <strong>Un script de démonstration</strong>
+                <span class="d">Une commande, et la démonstration rejoue l'ensemble du traitement sur votre poste.</span>
               </div>
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div>
-                <strong><span class="fr">Un README d'installation, en français et en anglais</span><span class="en">An install README, in French and English</span></strong>
-                <span class="d"><span class="fr">Installation, configuration, et ce qu'il faut vérifier avant la première exécution réelle.</span><span class="en">Install, configure, and what to check before the first real run.</span></span>
+                <strong>Un README d'installation en français</strong>
+                <span class="d">Installation, configuration, et ce qu'il faut vérifier avant la première exécution réelle.</span>
               </div>
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="m8 12.2 2.6 2.6L16 9.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div>
-                <strong><span class="fr">Le rapport produit par la démonstration</span><span class="en">The report produced by the demo</span></strong>
-                <span class="d"><span class="fr">Un rapport HTML autonome, lisible par une personne qui n'est pas technique.</span><span class="en">A self-contained HTML report, readable by a non technical person.</span></span>
+                <strong>Le rapport produit par la démonstration</strong>
+                <span class="d">Un rapport HTML autonome, lisible par une personne qui n'est pas technique.</span>
               </div>
             </li>
           </ul>
@@ -1777,26 +1757,26 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
   <div class="wrap">
     <div class="contact-card reveal">
       <h2 id="contact-h">
-        <span class="fr">Décrivez votre cas en quelques lignes</span>
-        <span class="en">Describe your case in a few lines</span>
+        Décrivez votre cas en quelques lignes
+        
       </h2>
       <p>
-        <span class="fr">Le format des fichiers, le volume mensuel, et ce qui vous coûte le plus de temps aujourd'hui. Une réponse écrite vous dira si c'est automatisable, et à quelles conditions.</span>
-        <span class="en">File formats, monthly volume, and what costs you the most time today. A written answer will tell you whether it can be automated, and on what terms.</span>
+        Le format des fichiers, le volume mensuel, et ce qui vous coûte le plus de temps aujourd'hui. Une réponse écrite vous dira si c'est automatisable, et à quelles conditions.
+        
       </p>
       <div class="mailrow">
-        <a class="btn btn-1" id="mailBtn" href="mailto:novaflowops@gmail.com">
+        <a class="btn btn-1" id="mailBtn" href="mailto:contact@novaflow-ops.com">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 6.5h17v11h-17z" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          <span class="fr">Écrire à NovaFlow</span><span class="en">Email NovaFlow</span>
+          Écrire à NovaFlow
         </a>
       </div>
       <p class="mail-lit">
-        <span class="fr">Ou directement : </span><span class="en">Or directly: </span>
-        <a href="mailto:novaflowops@gmail.com">novaflowops@gmail.com</a>
+        Ou directement : 
+        <a href="mailto:contact@novaflow-ops.com">contact@novaflow-ops.com</a>
       </p>
       <p class="mail-lit" style="margin-top:.4rem">
-        <span class="fr">Pas de formulaire, pas de traceur, pas de service tiers. Ce site n'enregistre rien.</span>
-        <span class="en">No form, no tracker, no third party service. This site records nothing.</span>
+        Pas de formulaire, pas de traceur, pas de service tiers. Ce site n'enregistre rien.
+        
       </p>
     </div>
   </div>
@@ -1806,8 +1786,8 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 <footer>
   <div class="wrap foot-in">
     <p>
-      <span class="fr">NovaFlow, automatisation de processus documentés. 2026.</span>
-      <span class="en">NovaFlow, documented process automation. 2026.</span>
+      NovaFlow, automatisation de processus documentés. 2026.
+      
     </p>
     <p><a href="https://novaflow-ops.com/" style="color:inherit;text-decoration:none">novaflow-ops.com</a></p>
   </div>
@@ -1817,65 +1797,57 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
 (function () {
   'use strict';
 
-  var root = document.documentElement;
+  var root    = document.documentElement;
+  var btnTh   = document.getElementById('btnTheme');
+  var mailBtn = document.getElementById('mailBtn');
+
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   };
 
-  /* ---------- Textes qui ne peuvent pas vivre dans le HTML ---------- */
-  var META = {
-    fr: {
-      title: 'NovaFlow, automatisation de processus',
-      desc: "Automatisation de processus administratifs : rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Chaque livraison inclut son jeu de données de test labellé et un script de démonstration reproductible.",
-      themeLabel: 'Basculer entre le thème clair et le thème sombre',
-      navLabel: 'Navigation principale',
-      langLabel: 'Langue du site',
-      mailSubject: 'NovaFlow, demande sur un processus a automatiser',
-      mailBody: "Bonjour,\n\nVoici mon cas :\n\n- Processus concerne :\n- Formats de fichiers ou source (CSV, boite mail, base, autre) :\n- Volume mensuel approximatif :\n- Ce qui prend le plus de temps aujourd'hui :\n- Echeance souhaitee :\n\nMerci."
-    },
-    en: {
-      title: 'NovaFlow, process automation',
-      desc: 'Back office process automation: invoice reconciliation, mailbox extraction, daily data health checks. Every delivery ships with a labelled test dataset and a reproducible demo script.',
-      themeLabel: 'Switch between light and dark theme',
-      navLabel: 'Main navigation',
-      langLabel: 'Site language',
-      mailSubject: 'NovaFlow, enquiry about a process to automate',
-      mailBody: 'Hello,\n\nHere is my case:\n\n- Process involved:\n- File formats or source (CSV, mailbox, database, other):\n- Approximate monthly volume:\n- What takes the most time today:\n- Target date:\n\nThank you.'
-    }
+  /* ---------- Contact ----------
+     Objet et corps sont trop longs pour rester lisibles dans un attribut href. */
+  var MAIL = {
+    to: 'contact@novaflow-ops.com',
+    subject: 'NovaFlow, demande sur un processus a automatiser',
+    body: "Bonjour,\n\nVoici mon cas :\n\n- Processus concerne :\n- Formats de fichiers ou source (CSV, boite mail, base, autre) :\n- Volume mensuel approximatif :\n- Ce qui prend le plus de temps aujourd'hui :\n- Echeance souhaitee :\n\nMerci."
   };
 
-  var descEl  = document.querySelector('meta[name="description"]');
-  var navEl   = document.querySelector('nav.nav');
-  var langGrp = document.getElementById('langGroup');
-  var btnFr   = document.getElementById('btnFr');
-  var btnEn   = document.getElementById('btnEn');
-  var btnTh   = document.getElementById('btnTheme');
-  var mailBtn = document.getElementById('mailBtn');
+  if (mailBtn) {
+    mailBtn.setAttribute('href',
+      'mailto:' + MAIL.to +
+      '?subject=' + encodeURIComponent(MAIL.subject) +
+      '&body=' + encodeURIComponent(MAIL.body));
+  }
 
-  function applyLang(lang) {
-    var m = META[lang] || META.fr;
-    root.setAttribute('lang', lang);
-    document.title = m.title;
-    if (descEl) descEl.setAttribute('content', m.desc);
-    if (navEl) navEl.setAttribute('aria-label', m.navLabel);
-    if (langGrp) langGrp.setAttribute('aria-label', m.langLabel);
-    if (btnTh) {
-      btnTh.setAttribute('aria-label', m.themeLabel);
-      btnTh.setAttribute('title', m.themeLabel);
-    }
-    if (btnFr) btnFr.setAttribute('aria-pressed', String(lang === 'fr'));
-    if (btnEn) btnEn.setAttribute('aria-pressed', String(lang === 'en'));
-    if (mailBtn) {
-      mailBtn.setAttribute('href',
-        'mailto:novaflowops@gmail.com?subject=' + encodeURIComponent(m.mailSubject) +
-        '&body=' + encodeURIComponent(m.mailBody));
+  /* ---------- Copie de l'adresse ----------
+     API native uniquement, repli silencieux si le navigateur ne la propose pas. */
+  var copyBtn = document.getElementById('btnCopy');
+
+  if (copyBtn) {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      copyBtn.hidden = true;
+    } else {
+      copyBtn.addEventListener('click', function () {
+        navigator.clipboard.writeText(MAIL.to).then(function () {
+          var initial = copyBtn.getAttribute('data-label') || copyBtn.textContent;
+          copyBtn.setAttribute('data-label', initial);
+          copyBtn.textContent = 'Adresse copiée';
+          copyBtn.classList.add('ok');
+          setTimeout(function () {
+            copyBtn.textContent = initial;
+            copyBtn.classList.remove('ok');
+          }, 2400);
+        }, function () {});
+      });
     }
   }
 
+  /* ---------- Thème ----------
+     Sans choix explicite, c'est la préférence système qui décide. */
   var prefersDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-  /* Sans choix explicite, c'est la préférence système qui décide. */
   function currentTheme() {
     var t = root.getAttribute('data-theme');
     if (t === 'light' || t === 'dark') return t;
@@ -1897,21 +1869,20 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
     });
   }
 
-  if (btnFr) btnFr.addEventListener('click', function () { store.set('novaflow-lang', 'fr'); applyLang('fr'); });
-  if (btnEn) btnEn.addEventListener('click', function () { store.set('novaflow-lang', 'en'); applyLang('en'); });
-  if (btnTh) btnTh.addEventListener('click', function () {
-    var next = currentTheme() === 'dark' ? 'light' : 'dark';
-    store.set('novaflow-theme', next);
-    applyTheme(next);
-  });
-
-  applyLang(root.getAttribute('lang') === 'en' ? 'en' : 'fr');
-  /* Pas d'attribut posé au chargement sans choix mémorisé : le CSS suit le système. */
-  if (btnTh) btnTh.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+  if (btnTh) {
+    btnTh.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      store.set('novaflow-theme', next);
+      applyTheme(next);
+    });
+    /* Pas d'attribut posé au chargement sans choix mémorisé : le CSS suit le système. */
+    btnTh.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+  }
 
   /* ---------- Apparition au défilement, coupée si l'utilisateur refuse les animations ---------- */
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var items = document.querySelectorAll('.reveal');
+
   if (reduce || !('IntersectionObserver' in window)) {
     for (var i = 0; i < items.length; i++) items[i].classList.add('on');
   } else {
@@ -1920,6 +1891,7 @@ footer p { margin: 0; font-size: .87rem; color: var(--ink-3); }
         if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+
     for (var j = 0; j < items.length; j++) io.observe(items[j]);
   }
 })();
