@@ -6,6 +6,8 @@
 > reproductible : les chiffres publies sont mesures, pas estimes.
 
 Site : https://novaflow-ops.com
+Signature : le travail de robot, fait par les robots
+Mentions legales : https://novaflow-ops.com/mentions-legales.html
 Contact : contact@novaflow-ops.com
 Langue : francais
 Outils : n8n, Node.js, Power Automate Desktop, controles sur base ou exports ERP
@@ -17,9 +19,19 @@ des jeux de donnees labelles, livres au client. Le resultat attendu est connu a
 l'avance, donc l'exactitude se verifie au lieu de se promettre. Aucun temoignage
 client n'est publie : il n'y en a pas encore, et rien n'est fabrique.
 
-## Les trois automatisations mesurees
+## Une application en production
 
-### 1. Rapprochement facture et banque
+### 1. Plateforme de reclamations client, du formulaire au transporteur
+Voir le detail plus bas, section 4 de l ancienne numerotation : cette application
+complete tourne aujourd hui chez un client. Elle est presentee en tete du site.
+
+## Trois automatisations mesurees sur jeu de demonstration
+
+Ces jeux de donnees sont construits pour la demonstration : les anomalies y sont
+connues a l avance, c est ce qui permet de verifier que le traitement les trouve
+toutes. Ils ne predisent pas ce que contient la base d un client.
+
+### 2. Rapprochement facture et banque
 Compare un export comptable et un releve bancaire aux formats differents, agrege
 les encaissements par reference, classe chaque facture en sept categories, et
 justifie chaque euro d'ecart dans un tableau de bouclage. Si le bouclage ne tombe
@@ -28,7 +40,7 @@ Mesure : 60 factures contre 65 lignes bancaires, 16 anomalies remontees,
 2 doubles paiements pour 17 994,91 EUR, bouclage exact au centime,
 100 % de concordance avec le jeu labelle, moteur en 19 ms.
 
-### 2. Boite mail vers tableau
+### 3. Boite mail vers tableau
 Lit une boite mail, extrait les champs des confirmations de commande, et
 n'ajoute que ce qui est reellement nouveau. Idempotence par message, gestion des
 revisions, mise en quarantaine plutot que devinette.
@@ -36,7 +48,7 @@ Mesure : 46 messages traites, 35 lignes ecrites, 470 004,01 EUR de commandes,
 259 valeurs de champ exactes sur 259, 0 doublon a la seconde execution,
 3 messages incomplets mis en quarantaine, 4 hors sujet ignores.
 
-### 3. Controle quotidien d'anomalies
+### 4. Controle quotidien d'anomalies
 Controle quotidien fonde sur la mediane et l'ecart absolu median plutot que la
 moyenne et l'ecart-type, saisonnalite hebdomadaire retiree, anti-fatigue
 d'alerte, detection des valeurs figees.
@@ -45,9 +57,9 @@ Mesure : 120 executions quotidiennes sur 8 series, soit 960 jours-serie,
 4 faux positifs sur 960 jours-serie, aucun regard vers le futur,
 68 detections brutes compressees en 46 notifications.
 
-## Une plateforme complete, livree et en production
+## Detail de l application en production
 
-### 4. Plateforme de reclamations client, du formulaire au transporteur
+### Plateforme de reclamations client
 Application complete : formulaire client public avec depot de pieces, lecture
 des documents par IA, moteur de decision deterministe a 12 regles ecrit comme
 une fonction pure, 11 statuts de dossier, back-office avec chronologie et
@@ -66,15 +78,17 @@ PostgreSQL, n8n, deploiement continu. Les trois points bloquants d'un audit de
 securite ont ete corriges : injection de prompt, limitation de debit,
 durcissement du rappel serveur.
 
-## Trois offres sans chiffres publies
+## Autres interventions, sans chiffre publie
 
-### 5. Moderation des donnees d'exploitation, multi-sites, via ERP
+Ces trois volets figurent sur une page dediee : https://novaflow-ops.com/autres-interventions.html
+
+### Moderation des donnees d'exploitation, multi-sites, via ERP
 Memes regles appliquees a tous les sites chaque nuit : coherence des stocks,
 rotation et anciennete, uniformisation des pratiques, completude et cloture.
 Chaque site ne recoit que ce qui le concerne. Aucun chiffre n'est publie sur ce
 volet, les donnees appartiennent a leur proprietaire.
 
-### 6. Copilote de messagerie, tri, reponse et relevé de retour de conges
+### Copilote de messagerie, tri, reponse et relevé de retour de conges
 Lit les messages de plusieurs boites, une messagerie moderne et une boite IMAP
 classique, les classe en quatre niveaux d'urgence, et produit pour chacun un
 resume et l'action concrete a mener dans un tableau de suivi. Une reponse est
@@ -91,14 +105,16 @@ resumees mais ne recoivent jamais de reponse. Le demarrage se fait toujours en
 mode brouillon avant d'autoriser le moindre envoi automatique.
 Aucun chiffre n'est publie sur ce volet.
 
-### 7. Automatisation du poste de travail, RPA
+### Automatisation du poste de travail, RPA
 Pour les logiciels sans API ni export propre : Power Automate Desktop ou
 equivalent, chaque action journalisee, arret plutot que devinette, test sur une
 liste de cas connus, aucun identifiant en clair. Aucun chiffre publie.
 
 ## Conditions
 
-Forfait pour un perimetre ecrit, pas de facturation horaire. Aucun tarif n'est
+Forfait pour un perimetre ecrit, pas de facturation horaire. Les missions
+d automatisation demarrent a partir de 1 800 EUR HT, un projet complet se situe
+dans un autre ordre de grandeur. Aucun tarif n'est
 publie : chaque prix est etabli sur devis apres un cadrage ecrit, parce qu'un
 tarif affiche sans connaitre les formats, les volumes et les contraintes du
 client se revele toujours faux. Paiement 50 % a la commande

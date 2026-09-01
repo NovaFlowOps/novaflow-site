@@ -550,3 +550,18 @@ code {
 }
 .btn-copy { padding: .45rem .85rem; font-size: .87rem; }
 .btn-copy.ok { border-color: var(--good); color: var(--good); }
+
+.tag-demo {
+  background: var(--bg-3);
+  border-color: var(--line-2);
+  /* --ink-2 et non --ink-3 : à cette taille, --ink-3 tombait à 4,43 en thème clair,
+     sous le seuil AA de 4,5. */
+  color: var(--ink-2);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: .5rem;
+  vertical-align: middle;
+}
+.autres-lien { margin: .5rem 0 0; font-size: .95rem; }
+.autres-lien a { color: var(--ink-2); }
+.autres-lien a:hover { color: var(--accent); }
