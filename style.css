@@ -205,23 +205,6 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 .trust svg { width: 22px; height: 22px; flex: none; color: var(--accent); margin-top: .18rem; }
 .trust p { margin: 0; font-size: .97rem; }
 
-/* ------------------------------------------------------------------
-   6. Chiffres
------------------------------------------------------------------- */
-.stats { padding-top: clamp(2.5rem, 6vw, 4rem); }
-.stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
-@media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 480px) { .stat-grid { grid-template-columns: minmax(0, 1fr); } }
-.stat {
-  background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 1.3rem 1.25rem; box-shadow: var(--shadow); min-width: 0;
-}
-.stat .v {
-  display: block; font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2rem); font-weight: 700;
-  letter-spacing: -.03em; color: var(--ink); line-height: 1.15; word-break: break-word;
-}
-.stat .v em { font-style: normal; color: var(--accent); }
-.stat .k { display: block; margin-top: .5rem; font-size: .9rem; color: var(--ink-2); line-height: 1.45; }
 
 /* ------------------------------------------------------------------
    7. Titres de section
