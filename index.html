@@ -60,7 +60,7 @@
             "@type": "Service",
             "name": "Rapprochement facture et banque",
             "serviceType": "Automatisation de rapprochement comptable",
-            "description": "Compare un export comptable et un relevé bancaire de formats différents, agrège les encaissements par référence, classe chaque facture en sept catégories, et justifie chaque euro d'écart dans un tableau de bouclage. Aucun rapport n'est émis si le bouclage ne tombe pas au centime. Sur le jeu de démonstration livré : 60 factures contre 65 lignes bancaires, 16 anomalies, 2 doubles paiements pour 17 994,91 EUR, 100 % de concordance avec le jeu labellé."
+            "description": "Compare un export comptable et un relevé bancaire de formats différents, agrège les encaissements par référence, classe chaque facture en sept catégories, et justifie chaque euro d'écart dans un tableau de bouclage. Aucun rapport n'est émis si le bouclage ne tombe pas au centime. Sur le jeu de démonstration livré : 60 factures contre 65 lignes bancaires, 16 anomalies, 2 doubles paiements, 100 % de concordance avec le jeu labellé."
           },
           {
             "@type": "Service",
@@ -158,11 +158,11 @@
     <div>
       <span class="eyebrow"><span class="dot"></span>Automatisation de processus : n8n, Node, ERP et RPA</span>
       <h1>
-        L'automatisation qui trouve l'argent que personne ne voit.
+        Le temps que la saisie vous prend, l'automatisation vous le rend.
         
       </h1>
       <p class="lede">
-        Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Des processus administratifs qui tournent seuls, et qui remontent ce qui cloche avant que cela ne coûte cher.
+        Rapprochement de factures, extraction de boîte mail, contrôle quotidien d'anomalies. Des processus administratifs qui tournent seuls, la nuit, le week-end, pendant vos congés, et qui remontent ce qui cloche avant que quelqu'un ait à le chercher.
         
       </p>
       <div class="cta-row">
@@ -171,7 +171,7 @@
           Décrire mon cas
         </a>
         <a class="btn btn-2" href="#realisations">
-          Voir les trois réalisations
+          Voir les réalisations
         </a>
       </div>
       <p class="hero-note">
@@ -272,8 +272,8 @@
     </h2>
     <div class="stat-grid">
       <div class="stat reveal">
-        <span class="v num"><em>17 994,91 EUR</em></span>
-        <span class="k">de doubles paiements détectés sur un seul mois de factures</span>
+        <span class="v num"><em>2</em></span>
+        <span class="k">doubles paiements détectés sur un seul mois de 60 factures, invisibles dans un rapprochement manuel</span>
       </div>
       <div class="stat reveal">
         <span class="v num"><em>259 / 259</em></span>
@@ -504,7 +504,7 @@
           <h4>Résultats mesurés</h4>
           <ul>
             <li>60 factures contre 65 lignes bancaires, 16 anomalies remontées</li>
-            <li class="hi">2 doubles paiements pour 17 994,91 EUR à se faire rembourser</li>
+            <li class="hi">2 doubles paiements à se faire rembourser</li>
             <li>Bouclage exact au centime</li>
             <li>100 % de concordance avec un jeu de données labellé, sur les 60 factures</li>
             <li>Moteur : 19 ms</li>
@@ -515,7 +515,7 @@
       <div class="case-band">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.4v5.2l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p>
-          <strong>Ce que ça change.</strong> Le gain n'est pas la demi-journée de saisie économisée, c'est le double paiement de 17 994,91 EUR que personne n'aurait vu.
+          <strong>Ce que ça change.</strong> Le gain n'est pas seulement la demi-journée de saisie économisée, c'est le double paiement que personne n'aurait vu.
           
         </p>
       </div>
@@ -525,7 +525,7 @@
         <div>
           <span class="lbl">L'ordre de grandeur</span>
           <p>
-            Sur un seul mois de 60 factures, le jeu de démonstration a livré deux doubles paiements pour 17 994,91 EUR. C'est l'ordre de grandeur de ce qu'un rapprochement manuel laisse passer, pas une promesse sur vos données.
+            Un double paiement ne ressemble pas à une erreur : deux lignes propres, deux dates différentes, deux références qui se ressemblent. Sur le jeu de démonstration, il y en avait deux sur un seul mois de 60 factures. C'est précisément le genre d'écart qu'une relecture manuelle laisse passer.
             
           </p>
         </div>
@@ -634,7 +634,7 @@
         <div class="blk">
           <h4>Résultats mesurés</h4>
           <ul>
-            <li>46 messages traités, 35 lignes écrites, 470 004,01 EUR de commandes extraites</li>
+            <li>46 messages traités, 35 lignes écrites, aucune ressaisie</li>
             <li class="hi">259 valeurs de champ exactes sur 259, vérifiées contre un jeu labellé</li>
             <li class="hi">Deuxième exécution sur la même boîte : 0 ligne en double</li>
             <li>3 messages incomplets mis en quarantaine, 4 hors sujet ignorés</li>
@@ -656,7 +656,7 @@
         <div>
           <span class="lbl">L'ordre de grandeur</span>
           <p>
-            Sur le jeu de démonstration, la commande moyenne s'élève à 13 428,69 EUR. Une seule commande saisie en double, ou une seule commande oubliée, coûte cet ordre de grandeur. C'est à comparer au coût d'une mise en place, pas au temps de saisie économisé.
+            Une commande saisie deux fois, ou oubliée, ne se voit pas dans le tableur. Elle se voit chez le client, plus tard, quand il réclame. Le temps gagné à la saisie est réel, mais c'est le second effet qui compte : une base sur laquelle on peut compter.
             
           </p>
         </div>
@@ -777,7 +777,7 @@
         <div>
           <span class="lbl">L'ordre de grandeur</span>
           <p>
-            Sur la série chiffre d'affaires de la démonstration, une chute de 58 % pendant quatre jours représente 10 730 EUR par jour. Une détection au premier jour plutôt qu'au quatrième évite 32 190 EUR d'exposition. La valeur d'un tel contrôle se mesure en durée d'incident supprimée.
+            Sur la série de démonstration, une chute de 58 % a duré quatre jours. Détectée au premier jour plutôt qu'au quatrième, ce sont trois jours d'exposition en moins. La valeur d'un tel contrôle ne se mesure pas en alertes envoyées, mais en durée d'incident supprimée.
             
           </p>
         </div>

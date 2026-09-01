@@ -4,6 +4,7 @@
 > en France, en Belgique, en Suisse et au Luxembourg. Chaque automatisation est
 > livree avec son jeu de donnees de test labelle et un script de demonstration
 > reproductible : les chiffres publies sont mesures, pas estimes.
+> Signature : le temps que la saisie vous prend, l automatisation vous le rend.
 
 Site : https://novaflow-ops.com
 Signature : le travail de robot, fait par les robots
@@ -37,14 +38,14 @@ les encaissements par reference, classe chaque facture en sept categories, et
 justifie chaque euro d'ecart dans un tableau de bouclage. Si le bouclage ne tombe
 pas au centime, aucun rapport n'est emis.
 Mesure : 60 factures contre 65 lignes bancaires, 16 anomalies remontees,
-2 doubles paiements pour 17 994,91 EUR, bouclage exact au centime,
+2 doubles paiements detectes, bouclage exact au centime,
 100 % de concordance avec le jeu labelle, moteur en 19 ms.
 
 ### 3. Boite mail vers tableau
 Lit une boite mail, extrait les champs des confirmations de commande, et
 n'ajoute que ce qui est reellement nouveau. Idempotence par message, gestion des
 revisions, mise en quarantaine plutot que devinette.
-Mesure : 46 messages traites, 35 lignes ecrites, 470 004,01 EUR de commandes,
+Mesure : 46 messages traites, 35 lignes ecrites,
 259 valeurs de champ exactes sur 259, 0 doublon a la seconde execution,
 3 messages incomplets mis en quarantaine, 4 hors sujet ignores.
 
